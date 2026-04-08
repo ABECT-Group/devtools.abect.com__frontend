@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://tools.abect.com/sitemap.xml
+Sitemap: https://devtools.abect.com/sitemap.xml

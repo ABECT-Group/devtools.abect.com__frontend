@@ -88,9 +88,9 @@ export default function WebPConverter() {
   return (
     <div className="WebPConverter">
       <Helmet>
-        <title>WebP Converter — tools.abect.com</title>
+        <title>WebP Converter — devtools.abect.com</title>
         <meta name="description" content="Convert JPG, PNG, AVIF, GIF and other images to WebP format directly in your browser. No upload, no server, 100% private." />
-        <link rel="canonical" href="https://tools.abect.com/webp-converter" />
+        <link rel="canonical" href="https://devtools.abect.com/webp-converter" />
       </Helmet>
       <h1 className="WebPConverter__title">WebP converter</h1>
       <p className="WebPConverter__sub">Processed locally in browser — files never leave your device</p>

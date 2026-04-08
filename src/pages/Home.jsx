@@ -34,9 +34,9 @@ export default function Home() {
   return (
     <main className="Home">
       <Helmet>
-        <title>Developer Tools — tools.abect.com</title>
+        <title>Developer Tools — devtools.abect.com</title>
         <meta name="description" content="Free browser-based tools for developers. WebP converter, JSON-LD generator, HTML to JSX converter and more. No server, 100% private." />
-        <link rel="canonical" href="https://tools.abect.com/" />
+        <link rel="canonical" href="https://devtools.abect.com/" />
       </Helmet>
       <h1 className="Home__heading">Developer Tools</h1>
       <p className="Home__sub">Browser-based tools. No server, 100% private.</p>

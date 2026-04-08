@@ -6,7 +6,7 @@ export default defineConfig({
   plugins: [
     react(),
     sitemap({
-      hostname: 'https://tools.abect.com',
+      hostname: 'https://devtools.abect.com',
       routes: [
         '/',
         '/webp-converter',
