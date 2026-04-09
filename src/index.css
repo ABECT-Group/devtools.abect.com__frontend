@@ -31,14 +31,15 @@
 }
 
 html {
-  /* Fluid base: 16px on ≤800px, scales to 20px on 2K */
   font-size: clamp(16px, 0.5vw + 12px, 20px);
+  min-height: 100%;
+  background: var(--bg-page);
+  overflow-x: clip;
 }
 
-html,
 body,
 #root {
-  height: 100%;
+  min-height: 100%;
 }
 
 body {
@@ -47,11 +48,9 @@ body {
   background: var(--bg-page);
   color: var(--text-primary);
   -webkit-font-smoothing: antialiased;
+  overflow-x: clip;
 }
 
-/* ============================================================
-   DARK THEME (default)
-   ============================================================ */
 :root {
   /* Backgrounds */
   --bg-page: #0a0f1a;
@@ -66,7 +65,6 @@ body {
   --border-blue: #1e3a5f;
   --border-green: #166534;
   --border-row: #131e2d;
-  /* FileRow separator line */
 
   /* Accent */
   --accent: #3b82f6;
@@ -104,53 +102,10 @@ body {
   --header-height: 60px;
   --sidebar-width: 300px;
   --header-height-mobile: 48px;
+
+  /* Safe area */
+  --safe-area-top: env(safe-area-inset-top, 0px);
+  --safe-area-right: env(safe-area-inset-right, 0px);
+  --safe-area-bottom: env(safe-area-inset-bottom, 0px);
+  --safe-area-left: env(safe-area-inset-left, 0px);
 }
-
-/* ============================================================
-   LIGHT THEME (experiment — swap :root block above with this)
-   ============================================================ */
-/*
-:root {
-  --bg-page:      #f0f4f8;
-  --bg-sidebar:   #e8edf4;
-  --bg-content:   #f8fafc;
-  --bg-card:      #ffffff;
-  --bg-hover:     #eef2f7;
-  --bg-active:    #dbeafe;
-
-  --border-base:  #cbd5e1;
-  --border-blue:  #93c5fd;
-  --border-green: #86efac;
-  --border-row:   #e2e8f0;
-
-  --accent:       #2563eb;
-  --accent-hover: #1d4ed8;
-  --accent-light: #3b82f6;
-  --accent-code:  #1e40af;
-
-  --text-primary:   #0f172a;
-  --text-secondary: #334155;
-  --text-muted:     #64748b;
-  --text-faint:     #94a3b8;
-
-  --green:        #16a34a;
-  --green-bg:     #dcfce7;
-  --green-border: #86efac;
-
-  --color-error:           #dc2626;
-  --color-error-bg:        rgba(220, 38, 38, 0.08);
-  --color-error-bg-strong: #fee2e2;
-  --color-error-border:    #fca5a5;
-
-  --scrollbar-thumb:       #93c5fd;
-  --scrollbar-thumb-hover: #60a5fa;
-
-  --radius-sm: 5px;
-  --radius-md: 8px;
-  --radius-lg: 10px;
-
-  --header-height: 60px;
-  --sidebar-width: 300px;
-  --header-height-mobile: 48px;
-}
-*/

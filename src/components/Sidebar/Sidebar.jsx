@@ -20,8 +20,10 @@ export default function Sidebar({ isOpen, onClose }) {
   return (
     <>
       {isOpen && <div className="Sidebar__backdrop" onClick={onClose} />}
-      <aside className={`Sidebar${isOpen ? ' Sidebar--open' : ''}`}>
-        <button className="Sidebar__close" onClick={onClose} aria-label="Close menu">x</button>
+      <aside
+        id="sidebar-navigation"
+        className={`Sidebar${isOpen ? ' Sidebar--open' : ''}`}
+      >
         <nav className="Sidebar__nav">
           {NAV_SECTIONS.map(section => (
             <div key={section.label}>

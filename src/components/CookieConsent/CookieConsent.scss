@@ -1,8 +1,8 @@
 .CookieConsent {
   position: fixed;
-  left: 10px;
-  bottom: 10px;
-  z-index: 300;
+  left: max(10px, var(--safe-area-left));
+  bottom: max(10px, var(--safe-area-bottom));
+  z-index: 280;
   width: 280px;
   padding: 14px;
   background: var(--bg-page);
@@ -67,7 +67,7 @@
 
     &--reject {
       background: transparent;
-      border: 3px solid var(--bg-sidebar);
+      border: 1px solid var(--bg-sidebar);
       color: var(--text-secondary);
 
       &:hover {
@@ -87,7 +87,9 @@
   }
 
   @media (max-width: 768px) {
+    left: max(10px, var(--safe-area-left));
+    right: max(10px, var(--safe-area-right));
+    bottom: max(10px, var(--safe-area-bottom));
     width: auto;
-    right: 10px;
   }
 }

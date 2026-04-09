@@ -55,26 +55,43 @@
     font-weight: 600;
     color: var(--text-secondary);
 
-    &--green { color: var(--green); }
+    &--green {
+      color: var(--green);
+    }
   }
 
   &__actions {
     display: flex;
     gap: 8px;
+    align-items: center;
   }
 
   &__btn-clear-all {
-    font-size: 0.875rem;
-    font-weight: 500;
-    padding: 8px 18px;
+    width: 32px;
+    height: 32px;
+    padding: 0;
     background: transparent;
-    color: var(--text-muted);
-    border: 1px solid var(--border-base);
-    border-radius: var(--radius-md);
+    color: var(--color-error);
+    border: 1px solid var(--color-error-border);
+    border-radius: 50%;
     cursor: pointer;
-    transition: color 0.15s, border-color 0.15s;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.15s, border-color 0.15s, background 0.15s;
 
-    &:hover { color: var(--color-error); border-color: var(--color-error-border); }
+    &:hover {
+      border-color: var(--color-error);
+      background: var(--color-error-bg);
+    }
+
+    svg {
+      width: 16px;
+      height: 16px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 1.8;
+    }
   }
 
   &__btn-convert-all {
@@ -88,7 +105,9 @@
     cursor: pointer;
     transition: background 0.15s;
 
-    &:hover { background: var(--accent-hover); }
+    &:hover {
+      background: var(--accent-hover);
+    }
   }
 
   &__btn-download-all {
@@ -101,6 +120,39 @@
     border-radius: var(--radius-md);
     cursor: pointer;
 
-    &:disabled { opacity: 0.35; cursor: default; }
+    &:disabled {
+      opacity: 0.35;
+      cursor: default;
+    }
+  }
+
+  @media (max-width: 767px) {
+    &__head {
+      display: none;
+    }
+
+    &__footer {
+      padding: 16px;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 18px;
+    }
+
+    &__stats {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    &__actions {
+      display: grid;
+      grid-template-columns: 32px 1fr 1fr;
+      align-items: center;
+    }
+
+    &__btn-convert-all,
+    &__btn-download-all {
+      width: 100%;
+    }
   }
 }

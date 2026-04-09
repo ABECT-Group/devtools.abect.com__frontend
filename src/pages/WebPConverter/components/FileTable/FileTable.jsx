@@ -3,10 +3,10 @@ import FileRow from '../FileRow/FileRow'
 import './FileTable.scss'
 
 export default function FileTable({ files, onQualityChange, onConvert, onConvertAll, onDownload, onDownloadAll, onDelete, onClearAll }) {
-  const doneFiles = files.filter(f => f.status === 'done')
-  const totalSize = files.reduce((sum, f) => sum + f.originalSize, 0)
-  const compressedSize = doneFiles.reduce((sum, f) => sum + (f.resultSize ?? 0), 0)
-  const savedBytes = doneFiles.reduce((sum, f) => sum + (f.originalSize - (f.resultSize ?? f.originalSize)), 0)
+  const doneFiles = files.filter(file => file.status === 'done')
+  const totalSize = files.reduce((sum, file) => sum + file.originalSize, 0)
+  const compressedSize = doneFiles.reduce((sum, file) => sum + (file.resultSize ?? 0), 0)
+  const savedBytes = doneFiles.reduce((sum, file) => sum + (file.originalSize - (file.resultSize ?? file.originalSize)), 0)
   const hasConverted = doneFiles.length > 0
 
   return (
@@ -48,19 +48,27 @@ export default function FileTable({ files, onQualityChange, onConvert, onConvert
           <div className="FileTable__stat">
             <span className="FileTable__stat-label">Compressed</span>
             <span className="FileTable__stat-value">
-              {compressedSize > 0 ? formatSize(compressedSize) : '—'}
+              {compressedSize > 0 ? formatSize(compressedSize) : '-'}
             </span>
           </div>
           <div className="FileTable__stat">
             <span className="FileTable__stat-label">Saved</span>
             <span className={`FileTable__stat-value${savedBytes > 0 ? ' FileTable__stat-value--green' : ''}`}>
-              {savedBytes > 0 ? formatSize(savedBytes) : '—'}
+              {savedBytes > 0 ? formatSize(savedBytes) : '-'}
             </span>
           </div>
         </div>
         <div className="FileTable__actions">
-          <button className="FileTable__btn-clear-all" onClick={onClearAll}>
-            Clear all
+          <button
+            className="FileTable__btn-clear-all"
+            onClick={onClearAll}
+            aria-label="Clear all files"
+            title="Clear all"
+          >
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <circle cx="12" cy="12" r="8.5" />
+              <line x1="8.5" y1="15.5" x2="15.5" y2="8.5" />
+            </svg>
           </button>
           <button className="FileTable__btn-convert-all" onClick={onConvertAll}>
             Convert all
@@ -70,7 +78,7 @@ export default function FileTable({ files, onQualityChange, onConvert, onConvert
             onClick={onDownloadAll}
             disabled={!hasConverted}
           >
-            Download all .zip
+            Download all
           </button>
         </div>
       </div>

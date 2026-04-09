@@ -1,9 +1,20 @@
 import { formatSize } from '../../utils/formatSize'
 import './FileRow.scss'
 
+function shortenFileName(name) {
+  const extensionIndex = name.lastIndexOf('.')
+  const hasExtension = extensionIndex > 0
+  const extension = hasExtension ? name.slice(extensionIndex) : ''
+  const baseName = hasExtension ? name.slice(0, extensionIndex) : name
+
+  if (baseName.length <= 10) return name
+  return `${baseName.slice(0, 10)}...${extension}`
+}
+
 export default function FileRow({ file, onQualityChange, onConvert, onDownload, onDelete }) {
   const isConverting = file.status === 'converting'
   const isDone = file.status === 'done'
+  const mobileFileName = shortenFileName(file.name)
 
   return (
     <div className="FileRow">
@@ -41,11 +52,14 @@ export default function FileRow({ file, onQualityChange, onConvert, onDownload, 
           )}
         </div>
         <div className="FileRow__file">
-          <div className="FileRow__file-name">{file.name}</div>
+          <div className="FileRow__file-name" title={file.name}>
+            <span className="FileRow__file-name-desktop">{file.name}</span>
+            <span className="FileRow__file-name-mobile">{mobileFileName}</span>
+          </div>
           <div className="FileRow__file-meta">
             {file.type} · {formatSize(file.originalSize)}
             {isDone && file.resultSize != null && (
-              <> → <span>{formatSize(file.resultSize)}</span></>
+              <>{' -> '}<span>{formatSize(file.resultSize)}</span></>
             )}
           </div>
         </div>
@@ -59,14 +73,14 @@ export default function FileRow({ file, onQualityChange, onConvert, onDownload, 
           min="10"
           max="100"
           value={file.quality}
-          onChange={e => onQualityChange(file.id, Number(e.target.value))}
+          onChange={event => onQualityChange(file.id, Number(event.target.value))}
         />
       </div>
 
       <div className="FileRow__status">
         <span className={`FileRow__status-badge FileRow__status-badge--${file.status}`}>
           {file.status === 'ready' && 'Ready'}
-          {file.status === 'converting' && 'Converting…'}
+          {file.status === 'converting' && 'Converting...'}
           {file.status === 'done' && 'Done'}
           {file.status === 'error' && 'Error'}
         </span>

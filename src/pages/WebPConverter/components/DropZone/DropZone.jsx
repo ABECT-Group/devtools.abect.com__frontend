@@ -5,8 +5,8 @@ export default function DropZone({ onFilesAdded }) {
   const [dragover, setDragover] = useState(false)
   const inputRef = useRef(null)
 
-  function handleDragOver(e) {
-    e.preventDefault()
+  function handleDragOver(event) {
+    event.preventDefault()
     setDragover(true)
   }
 
@@ -14,17 +14,17 @@ export default function DropZone({ onFilesAdded }) {
     setDragover(false)
   }
 
-  function handleDrop(e) {
-    e.preventDefault()
+  function handleDrop(event) {
+    event.preventDefault()
     setDragover(false)
-    const files = e.dataTransfer.files
+    const files = event.dataTransfer.files
     if (files.length > 0) onFilesAdded(files)
   }
 
-  function handleChange(e) {
-    if (e.target.files.length > 0) {
-      onFilesAdded(e.target.files)
-      e.target.value = ''
+  function handleChange(event) {
+    if (event.target.files.length > 0) {
+      onFilesAdded(event.target.files)
+      event.target.value = ''
     }
   }
 
@@ -56,10 +56,13 @@ export default function DropZone({ onFilesAdded }) {
         </svg>
       </div>
       <p className="DropZone__title">Drop images here or click to select</p>
-      <p className="DropZone__subtitle">JPG, PNG, GIF, AVIF, BMP, TIFF — multiple files supported</p>
+      <p className="DropZone__subtitle">JPG, PNG, GIF, AVIF, BMP, TIFF - multiple files supported</p>
       <button
         className="DropZone__btn"
-        onClick={e => { e.stopPropagation(); inputRef.current.click() }}
+        onClick={event => {
+          event.stopPropagation()
+          inputRef.current.click()
+        }}
       >
         Choose files
       </button>

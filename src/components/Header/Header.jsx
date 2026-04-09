@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom'
 import './Header.scss'
 
-export default function Header({ onBurgerClick }) {
+export default function Header({ isSidebarOpen, onMenuToggle }) {
   return (
     <header className="Header">
       <Link to="/" className="Header__logo">
@@ -12,7 +12,13 @@ export default function Header({ onBurgerClick }) {
         <div className="Header__avatar">
           <div className="Header__avatar-dot" />
         </div>
-        <button className="Header__burger" onClick={onBurgerClick} aria-label="Open menu">
+        <button
+          className={`Header__burger${isSidebarOpen ? ' Header__burger--open' : ''}`}
+          onClick={onMenuToggle}
+          aria-label={isSidebarOpen ? 'Close menu' : 'Open menu'}
+          aria-expanded={isSidebarOpen}
+          aria-controls="sidebar-navigation"
+        >
           <span />
           <span />
           <span />
