@@ -2,19 +2,24 @@ import { Helmet } from 'react-helmet-async'
 import { Link } from 'react-router-dom'
 import './Home.scss'
 
+const PAGE_TITLE = 'Developer Tools: Free Browser-Based Web Tools | Abect'
+const PAGE_DESCRIPTION = 'Free browser-based developer tools for SEO, images, JSON, HTML, CSS, and more. Private by default, with no uploads and no server processing.'
+const PAGE_URL = 'https://devtools.abect.com/'
+const OG_IMAGE_URL = 'https://devtools.abect.com/seo/og.jpg'
+
 const TOOLS = [
   { category: 'Images', name: 'WebP converter', description: 'Convert any image to WebP format', route: '/webp-converter', ready: true },
   { category: 'Images', name: 'Favicon generator', description: 'Generate favicons from text or image', route: '/favicon-generator', ready: false },
   { category: 'Images', name: 'OG image', description: 'Create Open Graph images', route: '/og-image', ready: false },
-  { category: 'Images', name: 'SVG → JSX', description: 'Convert SVG files to React components', route: '/svg-to-jsx', ready: false },
-  { category: 'Converters', name: 'HTML ↔ JSX / TSX', description: 'Convert HTML to JSX or TSX and back', route: '/html-to-jsx', ready: false },
-  { category: 'Converters', name: 'CSS ↔ Tailwind', description: 'Convert plain CSS to Tailwind classes', route: '/css-to-tailwind', ready: false },
-  { category: 'Converters', name: 'JSON ↔ TS types', description: 'Generate TypeScript types from JSON', route: '/json-to-ts', ready: false },
-  { category: 'Converters', name: 'JSON ↔ Zod schema', description: 'Generate Zod schemas from JSON', route: '/json-to-zod', ready: false },
-  { category: 'Converters', name: 'JSON ↔ Mongoose', description: 'Generate Mongoose schemas from JSON', route: '/json-to-mongoose', ready: false },
-  { category: 'Converters', name: 'Markdown ↔ HTML', description: 'Convert between Markdown and HTML', route: '/markdown-to-html', ready: false },
-  { category: 'Converters', name: 'YAML ↔ JSON', description: 'Convert between YAML and JSON', route: '/yaml-to-json', ready: false },
-  { category: 'Converters', name: 'CSV ↔ JSON', description: 'Convert between CSV and JSON', route: '/csv-to-json', ready: false },
+  { category: 'Images', name: 'SVG -> JSX', description: 'Convert SVG files to React components', route: '/svg-to-jsx', ready: false },
+  { category: 'Converters', name: 'HTML <-> JSX / TSX', description: 'Convert HTML to JSX or TSX and back', route: '/html-to-jsx', ready: false },
+  { category: 'Converters', name: 'CSS <-> Tailwind', description: 'Convert plain CSS to Tailwind classes', route: '/css-to-tailwind', ready: false },
+  { category: 'Converters', name: 'JSON <-> TS types', description: 'Generate TypeScript types from JSON', route: '/json-to-ts', ready: false },
+  { category: 'Converters', name: 'JSON <-> Zod schema', description: 'Generate Zod schemas from JSON', route: '/json-to-zod', ready: false },
+  { category: 'Converters', name: 'JSON <-> Mongoose', description: 'Generate Mongoose schemas from JSON', route: '/json-to-mongoose', ready: false },
+  { category: 'Converters', name: 'Markdown <-> HTML', description: 'Convert between Markdown and HTML', route: '/markdown-to-html', ready: false },
+  { category: 'Converters', name: 'YAML <-> JSON', description: 'Convert between YAML and JSON', route: '/yaml-to-json', ready: false },
+  { category: 'Converters', name: 'CSV <-> JSON', description: 'Convert between CSV and JSON', route: '/csv-to-json', ready: false },
   { category: 'SEO / Schema', name: 'JSON-LD generator', description: 'AI-powered structured data generator', route: '/json-ld', ready: false },
   { category: 'SEO / Schema', name: 'Meta tags', description: 'Generate meta tags for any page', route: '/meta-tags', ready: false },
   { category: 'SEO / Schema', name: 'OG preview', description: 'Preview Open Graph cards', route: '/og-preview', ready: false },
@@ -34,9 +39,21 @@ export default function Home() {
   return (
     <main className="Home">
       <Helmet>
-        <title>Developer Tools — devtools.abect.com</title>
-        <meta name="description" content="Free browser-based tools for developers. WebP converter, JSON-LD generator, HTML to JSX converter and more. No server, 100% private." />
-        <link rel="canonical" href="https://devtools.abect.com/" />
+        <title>{PAGE_TITLE}</title>
+        <meta name="description" content={PAGE_DESCRIPTION} />
+        <link rel="canonical" href={PAGE_URL} />
+        <meta property="og:title" content={PAGE_TITLE} />
+        <meta property="og:description" content={PAGE_DESCRIPTION} />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content={PAGE_URL} />
+        <meta property="og:image" content={OG_IMAGE_URL} />
+        <meta property="og:image:type" content="image/jpeg" />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+        <meta name="twitter:card" content="summary" />
+        <meta name="twitter:title" content={PAGE_TITLE} />
+        <meta name="twitter:description" content={PAGE_DESCRIPTION} />
+        <meta name="twitter:image" content={OG_IMAGE_URL} />
       </Helmet>
       <h1 className="Home__heading">Developer Tools</h1>
       <p className="Home__sub">Browser-based tools. No server, 100% private.</p>

@@ -1,0 +1,46 @@
+import { mkdir, readFile, rm, writeFile } from 'node:fs/promises'
+import path from 'node:path'
+import { fileURLToPath, pathToFileURL } from 'node:url'
+import { prerenderRoutes } from '../src/prerender-routes.js'
+
+const SITE_ORIGIN = 'https://devtools.abect.com'
+const currentFile = fileURLToPath(import.meta.url)
+const rootDir = path.resolve(path.dirname(currentFile), '..')
+const distDir = path.join(rootDir, 'dist')
+const templatePath = path.join(distDir, 'index.html')
+const serverEntryPath = path.join(distDir, 'server', 'entry-server.js')
+
+const template = await readFile(templatePath, 'utf8')
+const { render } = await import(pathToFileURL(serverEntryPath).href)
+
+for (const route of prerenderRoutes) {
+  const { appHtml, headTags } = render(route)
+  const pageHtml = template
+    .replace('<!--app-head-->', headTags)
+    .replace('<div id="root"></div>', `<div id="root">${appHtml}</div>`)
+
+  const outputPath = route === '/'
+    ? templatePath
+    : path.join(distDir, route.slice(1), 'index.html')
+
+  await mkdir(path.dirname(outputPath), { recursive: true })
+  await writeFile(outputPath, pageHtml)
+}
+
+const lastmod = new Date().toISOString()
+const sitemapXml = [
+  '<?xml version="1.0" encoding="UTF-8"?>',
+  '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">',
+  ...prerenderRoutes.map(route => [
+    '  <url>',
+    `    <loc>${new URL(route, SITE_ORIGIN).href}</loc>`,
+    `    <lastmod>${lastmod}</lastmod>`,
+    '    <changefreq>weekly</changefreq>',
+    route === '/' ? '    <priority>1.0</priority>' : '    <priority>0.8</priority>',
+    '  </url>',
+  ].join('\n')),
+  '</urlset>',
+].join('\n')
+
+await writeFile(path.join(distDir, 'sitemap.xml'), sitemapXml)
+await rm(path.join(distDir, 'server'), { recursive: true, force: true })

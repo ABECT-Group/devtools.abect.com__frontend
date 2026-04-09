@@ -1,25 +1,16 @@
 import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { hydrateRoot } from 'react-dom/client'
+import { BrowserRouter } from 'react-router-dom'
 import { HelmetProvider } from 'react-helmet-async'
+import App from './App'
 import './index.css'
 
-import Layout from './components/Layout/Layout'
-import Home from './pages/Home'
-import WebPConverter from './pages/WebPConverter/WebPConverter'
-import ComingSoon from './components/ComingSoon/ComingSoon'
-
-createRoot(document.getElementById('root')).render(
+hydrateRoot(
+  document.getElementById('root'),
   <StrictMode>
     <HelmetProvider>
       <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Layout />}>
-            <Route index element={<Home />} />
-            <Route path="webp-converter" element={<WebPConverter />} />
-            <Route path="*" element={<ComingSoon />} />
-          </Route>
-        </Routes>
+        <App />
       </BrowserRouter>
     </HelmetProvider>
   </StrictMode>

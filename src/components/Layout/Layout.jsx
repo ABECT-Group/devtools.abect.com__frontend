@@ -16,9 +16,9 @@ export default function Layout() {
     <div className="Layout">
       <Header onBurgerClick={() => setSidebarOpen(true)} />
       <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
-      <main className="Layout__content">
+      <div className="Layout__content">
         <Outlet />
-      </main>
+      </div>
     </div>
   )
 }
