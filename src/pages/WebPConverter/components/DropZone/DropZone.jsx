@@ -4,18 +4,26 @@ import './DropZone.scss'
 export default function DropZone({ onFilesAdded }) {
   const [dragover, setDragover] = useState(false)
   const inputRef = useRef(null)
+  const dragCounter = useRef(0)
 
-  function handleDragOver(event) {
+  function handleDragEnter(event) {
     event.preventDefault()
+    dragCounter.current++
     setDragover(true)
   }
 
+  function handleDragOver(event) {
+    event.preventDefault()
+  }
+
   function handleDragLeave() {
-    setDragover(false)
+    dragCounter.current--
+    if (dragCounter.current === 0) setDragover(false)
   }
 
   function handleDrop(event) {
     event.preventDefault()
+    dragCounter.current = 0
     setDragover(false)
     const files = event.dataTransfer.files
     if (files.length > 0) onFilesAdded(files)
@@ -35,6 +43,7 @@ export default function DropZone({ onFilesAdded }) {
   return (
     <div
       className={`DropZone${dragover ? ' DropZone--dragover' : ''}`}
+      onDragEnter={handleDragEnter}
       onDragOver={handleDragOver}
       onDragLeave={handleDragLeave}
       onDrop={handleDrop}
@@ -44,7 +53,7 @@ export default function DropZone({ onFilesAdded }) {
         ref={inputRef}
         type="file"
         multiple
-        accept="image/*"
+        accept="image/jpeg,image/png,image/gif,image/avif,image/bmp,image/webp"
         style={{ display: 'none' }}
         onChange={handleChange}
       />
@@ -56,7 +65,7 @@ export default function DropZone({ onFilesAdded }) {
         </svg>
       </div>
       <p className="DropZone__title">Drop images here or click to select</p>
-      <p className="DropZone__subtitle">JPG, PNG, GIF, AVIF, BMP, TIFF - multiple files supported</p>
+      <p className="DropZone__subtitle">JPG, PNG, GIF, AVIF, BMP — multiple files supported</p>
       <button
         className="DropZone__btn"
         onClick={event => {

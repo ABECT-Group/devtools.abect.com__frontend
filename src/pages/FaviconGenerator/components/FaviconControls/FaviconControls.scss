@@ -1,0 +1,315 @@
+.FaviconControls {
+  background: var(--bg-sidebar);
+  border: 1px solid var(--border-base);
+  border-radius: var(--radius-lg);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+
+  // ── Mode toggle ──────────────────────────────────────────
+  &__mode-tabs {
+    display: flex;
+    background: var(--bg-content);
+    border: 1px solid var(--border-base);
+    border-radius: var(--radius-md);
+    padding: 3px;
+    gap: 3px;
+  }
+
+  &__mode-tab {
+    flex: 1;
+    padding: 8px 12px;
+    border: none;
+    border-radius: calc(var(--radius-md) - 2px);
+    font-size: 0.875rem;
+    font-weight: 500;
+    cursor: pointer;
+    color: var(--text-muted);
+    background: transparent;
+    transition: background 0.15s, color 0.15s;
+
+    &--active {
+      background: var(--bg-card);
+      color: var(--text-primary);
+    }
+
+    &:hover:not(&--active) {
+      color: var(--text-secondary);
+    }
+  }
+
+  // ── Field / Label ─────────────────────────────────────────
+  &__field {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  &__label {
+    display: block;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--text-faint);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 8px;
+  }
+
+  &__label-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 8px;
+  }
+
+  &__value {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--text-muted);
+  }
+
+  &__hint {
+    font-size: 0.8125rem;
+    color: var(--text-muted);
+    margin-top: 6px;
+    line-height: 1.5;
+  }
+
+  &__error {
+    font-size: 0.875rem;
+    color: var(--color-error);
+    background: var(--color-error-bg);
+    border: 1px solid var(--color-error-border);
+    border-radius: var(--radius-md);
+    padding: 10px 14px;
+    line-height: 1.5;
+  }
+
+  // ── Inputs ────────────────────────────────────────────────
+  &__input,
+  &__select {
+    width: 100%;
+    background: var(--bg-content);
+    border: 1px solid var(--border-blue);
+    border-radius: var(--radius-md);
+    color: var(--text-primary);
+    font-size: 0.9375rem;
+    padding: 10px 14px;
+    outline: none;
+    transition: border-color 0.15s;
+
+    &:focus {
+      border-color: var(--accent);
+    }
+  }
+
+  &__range {
+    width: 100%;
+    accent-color: var(--accent);
+    cursor: pointer;
+  }
+
+  // ── Colors ────────────────────────────────────────────────
+  &__colors {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+  }
+
+  &__color-field {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  &__color-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border: 1px solid var(--border-blue);
+    border-radius: var(--radius-md);
+    padding: 8px 12px;
+    background: var(--bg-content);
+    cursor: pointer;
+    transition: border-color 0.15s;
+
+    &:focus-within {
+      border-color: var(--accent);
+    }
+  }
+
+  &__color-swatch {
+    width: 28px;
+    height: 28px;
+    border: none;
+    border-radius: 6px;
+    padding: 0;
+    cursor: pointer;
+    flex-shrink: 0;
+    background: none;
+  }
+
+  &__color-hex {
+    font-size: 0.875rem;
+    font-family: 'SFMono-Regular', Consolas, monospace;
+    color: var(--text-secondary);
+    letter-spacing: 0.04em;
+  }
+
+  // ── Row (side-by-side fields) ─────────────────────────────
+  &__row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    align-items: start;
+  }
+
+  &__row-half {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  // ── Download button ───────────────────────────────────────
+  &__btn-download {
+    width: 100%;
+    padding: 13px 20px;
+    background: var(--accent);
+    border: none;
+    border-radius: var(--radius-md);
+    color: #fff;
+    font-size: 0.9375rem;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: background 0.15s, opacity 0.15s;
+    margin-top: 2px;
+
+    &:hover:not(:disabled) {
+      background: var(--accent-hover);
+    }
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: default;
+    }
+  }
+
+  &__btn-icon {
+    width: 18px;
+    height: 18px;
+    stroke: currentColor;
+    fill: none;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    flex-shrink: 0;
+  }
+
+  &__spinner {
+    width: 16px;
+    height: 16px;
+    border: 2px solid rgba(255, 255, 255, 0.35);
+    border-top-color: #fff;
+    border-radius: 50%;
+    animation: FaviconControls-spin 0.7s linear infinite;
+    flex-shrink: 0;
+  }
+
+  @keyframes FaviconControls-spin {
+    to { transform: rotate(360deg); }
+  }
+
+  // ── HTML snippet ──────────────────────────────────────────
+  &__snippet {
+    border: 1px solid var(--border-base);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+  }
+
+  &__snippet-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 7px 12px;
+    background: var(--bg-card);
+    border-bottom: 1px solid var(--border-base);
+  }
+
+  &__snippet-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--text-faint);
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+  }
+
+  &__copy-btn {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 0.8125rem;
+    font-weight: 500;
+    color: var(--accent-light);
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 3px 7px;
+    border-radius: 4px;
+    transition: background 0.15s, color 0.15s;
+    line-height: 1;
+
+    svg {
+      width: 13px;
+      height: 13px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      flex-shrink: 0;
+    }
+
+    &:hover {
+      background: var(--bg-hover);
+    }
+
+    &--copied {
+      color: var(--green);
+    }
+  }
+
+  &__snippet-code {
+    margin: 0;
+    padding: 12px 14px;
+    font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', monospace;
+    font-size: 0.7875rem;
+    color: var(--accent-code);
+    line-height: 1.7;
+    background: var(--bg-content);
+    overflow-x: auto;
+    white-space: pre;
+
+    code {
+      font-family: inherit;
+    }
+  }
+
+  // ── Responsive ────────────────────────────────────────────
+  @media (max-width: 767px) {
+    padding: 16px;
+    gap: 16px;
+
+    &__colors {
+      grid-template-columns: 1fr;
+    }
+
+    &__row {
+      grid-template-columns: 1fr;
+    }
+  }
+}

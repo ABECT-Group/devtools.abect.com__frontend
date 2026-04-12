@@ -1,0 +1,22 @@
+# Abect Developer Tools
+
+> Free browser-based developer tools. All processing happens locally — no uploads, no server, 100% private.
+
+## Available Tools
+
+- [WebP Converter](https://devtools.abect.com/webp-converter): Convert JPG, PNG, GIF, AVIF, BMP and TIFF images to WebP format. Supports batch conversion, adjustable quality, and ZIP download.
+- [Favicon Generator](https://devtools.abect.com/favicon-generator): Generate favicon files from text, emoji, or an uploaded image. Exports PNG set (16, 32, 180, 192, 512 px) and favicon.ico.
+
+## Coming Soon
+
+Image tools: OG image generator, SVG to JSX converter.
+Converters: HTML to JSX, CSS to Tailwind, JSON to TypeScript types, JSON to Zod schema, JSON to Mongoose schema, Markdown to HTML, YAML to JSON, CSV to JSON.
+SEO tools: JSON-LD generator, meta tag generator, OG preview, sitemap generator, hreflang builder.
+Utilities: JSON formatter, JWT decoder, regex tester, Base64 encoder/decoder, cron builder, color converter, UUID generator, diff viewer.
+
+## About
+
+Built by Abect. All tools run entirely in the browser — files are never uploaded to any server.
+
+- Site: https://devtools.abect.com
+- Privacy Policy: https://devtools.abect.com/privacy-policy

@@ -11,6 +11,7 @@ const NAV_SECTIONS = [
   {
     label: 'Images',
     items: [
+      { name: 'Favicon generator', route: '/favicon-generator', ready: true },
       { name: 'WebP converter', route: '/webp-converter', ready: true },
     ],
   },

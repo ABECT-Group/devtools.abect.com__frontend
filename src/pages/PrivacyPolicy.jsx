@@ -16,7 +16,7 @@ export default function PrivacyPolicy() {
         <meta property="og:description" content={PAGE_DESCRIPTION} />
         <meta property="og:type" content="article" />
         <meta property="og:url" content={PAGE_URL} />
-        <meta name="twitter:card" content="summary" />
+        <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content={PAGE_TITLE} />
         <meta name="twitter:description" content={PAGE_DESCRIPTION} />
       </Helmet>

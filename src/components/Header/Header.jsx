@@ -8,7 +8,7 @@ export default function Header({ isSidebarOpen, onMenuToggle }) {
         tools.<span>abect</span>.com
       </Link>
       <div className="Header__right">
-        <button className="Header__signin">Sign in</button>
+        {/* <button className="Header__signin">Sign in</button> */}
         <div className="Header__avatar">
           <div className="Header__avatar-dot" />
         </div>

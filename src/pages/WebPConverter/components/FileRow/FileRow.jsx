@@ -59,7 +59,7 @@ export default function FileRow({ file, onQualityChange, onConvert, onDownload, 
           <div className="FileRow__file-meta">
             {file.type} · {formatSize(file.originalSize)}
             {isDone && file.resultSize != null && (
-              <>{' -> '}<span>{formatSize(file.resultSize)}</span></>
+              <>{' → '}<span>{formatSize(file.resultSize)}</span></>
             )}
           </div>
         </div>

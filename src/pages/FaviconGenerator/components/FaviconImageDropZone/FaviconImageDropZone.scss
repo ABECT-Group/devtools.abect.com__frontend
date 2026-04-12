@@ -1,0 +1,89 @@
+.FaviconImageDropZone {
+  border: 1.5px dashed var(--border-blue);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  min-height: 220px;
+  background: var(--bg-content);
+  text-align: center;
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  &--dragover {
+    border-color: var(--accent);
+    background: var(--bg-card);
+  }
+
+  &__icon {
+    width: 48px;
+    height: 48px;
+    border-radius: var(--radius-md);
+    background: var(--bg-card);
+    border: 1px solid var(--border-blue);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 14px;
+
+    svg {
+      width: 20px;
+      height: 20px;
+      stroke: var(--accent);
+      fill: none;
+      stroke-width: 1.5;
+    }
+  }
+
+  &__title {
+    font-size: 0.9375rem;
+    color: var(--text-secondary);
+    margin-bottom: 6px;
+  }
+
+  &__subtitle {
+    font-size: 0.8125rem;
+    color: var(--text-faint);
+    line-height: 1.5;
+  }
+
+  &__preview-wrap {
+    width: 100%;
+  }
+
+  &__preview {
+    display: block;
+    width: min(100%, 220px);
+    aspect-ratio: 1;
+    object-fit: contain;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border-blue);
+    margin: 0 auto;
+    background: #fff;
+  }
+
+  &__preview-actions {
+    margin-top: 14px;
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  &__btn {
+    font-size: 0.8125rem;
+    padding: 7px 14px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border-blue);
+    background: transparent;
+    color: var(--accent-light);
+    cursor: pointer;
+
+    &--danger {
+      border-color: var(--color-error-border);
+      color: var(--color-error);
+    }
+  }
+}

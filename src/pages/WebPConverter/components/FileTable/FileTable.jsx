@@ -4,10 +4,11 @@ import './FileTable.scss'
 
 export default function FileTable({ files, onQualityChange, onConvert, onConvertAll, onDownload, onDownloadAll, onDelete, onClearAll }) {
   const doneFiles = files.filter(file => file.status === 'done')
-  const totalSize = files.reduce((sum, file) => sum + file.originalSize, 0)
-  const compressedSize = doneFiles.reduce((sum, file) => sum + (file.resultSize ?? 0), 0)
-  const savedBytes = doneFiles.reduce((sum, file) => sum + (file.originalSize - (file.resultSize ?? file.originalSize)), 0)
   const hasConverted = doneFiles.length > 0
+  // Compare only converted files: original vs result (apples-to-apples)
+  const originalSize = doneFiles.reduce((sum, file) => sum + file.originalSize, 0)
+  const webpSize = doneFiles.reduce((sum, file) => sum + (file.resultSize ?? 0), 0)
+  const savedBytes = originalSize - webpSize  // can be negative if WebP is larger
 
   return (
     <div className="FileTable">

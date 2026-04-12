@@ -1,0 +1,87 @@
+import { useRef, useState } from 'react'
+import './FaviconImageDropZone.scss'
+
+export default function FaviconImageDropZone({ imagePreviewUrl, onImageSelect, onImageClear }) {
+  const inputRef = useRef(null)
+  const [isDragOver, setIsDragOver] = useState(false)
+  const dragCounter = useRef(0)
+
+  function handleFileList(fileList) {
+    const file = fileList?.[0]
+    if (file) {
+      onImageSelect(file)
+    }
+  }
+
+  return (
+    <div
+      className={`FaviconImageDropZone${isDragOver ? ' FaviconImageDropZone--dragover' : ''}`}
+      onClick={() => inputRef.current?.click()}
+      onDragEnter={event => {
+        event.preventDefault()
+        dragCounter.current++
+        setIsDragOver(true)
+      }}
+      onDragOver={event => event.preventDefault()}
+      onDragLeave={() => {
+        dragCounter.current--
+        if (dragCounter.current === 0) setIsDragOver(false)
+      }}
+      onDrop={event => {
+        event.preventDefault()
+        dragCounter.current = 0
+        setIsDragOver(false)
+        handleFileList(event.dataTransfer.files)
+      }}
+    >
+      <input
+        ref={inputRef}
+        type="file"
+        accept="image/*"
+        hidden
+        onChange={event => {
+          handleFileList(event.target.files)
+          event.target.value = ''
+        }}
+      />
+
+      {imagePreviewUrl ? (
+        <div className="FaviconImageDropZone__preview-wrap">
+          <img src={imagePreviewUrl} alt="Selected source" className="FaviconImageDropZone__preview" />
+          <div className="FaviconImageDropZone__preview-actions">
+            <button
+              className="FaviconImageDropZone__btn"
+              onClick={event => {
+                event.stopPropagation()
+                inputRef.current?.click()
+              }}
+            >
+              Replace image
+            </button>
+            <button
+              className="FaviconImageDropZone__btn FaviconImageDropZone__btn--danger"
+              onClick={event => {
+                event.stopPropagation()
+                onImageClear()
+              }}
+            >
+              Remove
+            </button>
+          </div>
+        </div>
+      ) : (
+        <>
+          <div className="FaviconImageDropZone__icon">
+            <svg viewBox="0 0 24 24">
+              <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4" />
+              <polyline points="17 8 12 3 7 8" />
+              <line x1="12" y1="3" x2="12" y2="15" />
+            </svg>
+          </div>
+          <p className="FaviconImageDropZone__title">Drop one image here or click to select</p>
+          <p className="FaviconImageDropZone__subtitle">PNG, JPG, WebP, SVG screenshots, logos, or icons</p>
+        </>
+      )}
+    </div>
+  )
+}
