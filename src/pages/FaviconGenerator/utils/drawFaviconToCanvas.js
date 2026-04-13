@@ -62,9 +62,16 @@ function drawText(context, size, text, foregroundColor, fontScale) {
 
   context.fillStyle = foregroundColor
   context.textAlign = 'center'
-  context.textBaseline = 'middle'
   context.font = `600 ${fontSize}px system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI Emoji", "Apple Color Emoji", sans-serif`
-  context.fillText(safeText, size / 2, size / 2)
+
+  // textBaseline 'middle' aligns to the EM box center, not the visual glyph center.
+  // Use actualBoundingBoxAscent/Descent to compute the true visual midpoint.
+  context.textBaseline = 'alphabetic'
+  const metrics = context.measureText(safeText)
+  // baseline position that puts the glyph bounding box exactly centered
+  const y = size / 2 + (metrics.actualBoundingBoxAscent - metrics.actualBoundingBoxDescent) / 2
+
+  context.fillText(safeText, size / 2, y)
 }
 
 function drawImage(context, size, image, fitMode) {

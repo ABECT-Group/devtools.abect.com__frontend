@@ -102,7 +102,7 @@ export default function FaviconControls({
               id="favicon-font-scale"
               className="FaviconControls__range"
               type="range"
-              min="1"
+              min="10"
               max="100"
               value={fontScale}
               onChange={event => onFontScaleChange(Number(event.target.value))}

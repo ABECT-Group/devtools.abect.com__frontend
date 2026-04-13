@@ -40,7 +40,7 @@ export default function FaviconGenerator() {
   const [text, setText] = useState('A')
   const [backgroundColor, setBackgroundColor] = useState('#1d4ed8')
   const [foregroundColor, setForegroundColor] = useState('#ffffff')
-  const [fontScale, setFontScale] = useState(72)
+  const [fontScale, setFontScale] = useState(72)  // min 10 enforced in FaviconControls
   const [borderRadius, setBorderRadius] = useState(0)
   const [fitMode, setFitMode] = useState('cover')
   const [imageFile, setImageFile] = useState(null)

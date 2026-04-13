@@ -58,6 +58,10 @@
     &--green {
       color: var(--green);
     }
+
+    &--red {
+      color: var(--color-error);
+    }
   }
 
   &__actions {

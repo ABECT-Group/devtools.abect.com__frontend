@@ -43,19 +43,32 @@ export default function FileTable({ files, onQualityChange, onConvert, onConvert
             <span className="FileTable__stat-value">{doneFiles.length} / {files.length}</span>
           </div>
           <div className="FileTable__stat">
-            <span className="FileTable__stat-label">Total size</span>
-            <span className="FileTable__stat-value">{formatSize(totalSize)}</span>
+            <span className="FileTable__stat-label">Original</span>
+            <span className="FileTable__stat-value">
+              {hasConverted ? formatSize(originalSize) : '-'}
+            </span>
           </div>
           <div className="FileTable__stat">
-            <span className="FileTable__stat-label">Compressed</span>
+            <span className="FileTable__stat-label">WebP size</span>
             <span className="FileTable__stat-value">
-              {compressedSize > 0 ? formatSize(compressedSize) : '-'}
+              {hasConverted ? formatSize(webpSize) : '-'}
             </span>
           </div>
           <div className="FileTable__stat">
             <span className="FileTable__stat-label">Saved</span>
-            <span className={`FileTable__stat-value${savedBytes > 0 ? ' FileTable__stat-value--green' : ''}`}>
-              {savedBytes > 0 ? formatSize(savedBytes) : '-'}
+            <span className={`FileTable__stat-value${
+              !hasConverted ? '' :
+              savedBytes > 0 ? ' FileTable__stat-value--green' :
+              savedBytes < 0 ? ' FileTable__stat-value--red' : ''
+            }`}>
+              {!hasConverted
+                ? '-'
+                : savedBytes > 0
+                  ? formatSize(savedBytes)
+                  : savedBytes < 0
+                    ? `−${formatSize(-savedBytes)}`
+                    : '0 B'
+              }
             </span>
           </div>
         </div>

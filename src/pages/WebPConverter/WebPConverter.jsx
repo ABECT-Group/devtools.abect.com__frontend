@@ -103,11 +103,11 @@ export default function WebPConverter() {
   }
 
   async function handleConvertAll() {
-    const readyIds = filesRef.current
-      .filter(file => file.status === 'ready')
+    const pendingIds = filesRef.current
+      .filter(file => file.status === 'ready' || file.status === 'error')
       .map(file => file.id)
 
-    for (const id of readyIds) {
+    for (const id of pendingIds) {
       await handleConvert(id)
     }
   }
@@ -132,7 +132,11 @@ export default function WebPConverter() {
   }
 
   async function handleDownloadAll() {
-    await buildZip(files)
+    try {
+      await buildZip(files)
+    } catch {
+      // buildZip failed (e.g. out of memory) — silently ignore, nothing to show the user
+    }
   }
 
   return (
@@ -256,7 +260,7 @@ export default function WebPConverter() {
           <li>Improved LCP score (Core Web Vitals)</li>
           <li>Supported in all modern browsers: Chrome, Firefox, Safari, Edge</li>
           <li>Supports transparency — can replace both JPEG and PNG</li>
-          <li>Supports animation — a lightweight alternative to GIF</li>
+          <li>Supports animation — a lightweight alternative to GIF (note: this converter exports the first frame of animated GIFs as a static image)</li>
         </ul>
       </section>
 
