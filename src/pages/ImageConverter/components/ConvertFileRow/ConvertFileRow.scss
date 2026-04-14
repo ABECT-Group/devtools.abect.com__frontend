@@ -1,0 +1,203 @@
+.ConvertFileRow {
+  display: grid;
+  grid-template-columns: 44px 1fr 100px 110px 44px;
+  padding: 0 12px;
+  border-bottom: 1px solid var(--border-base);
+  align-items: center;
+  background: var(--bg-content);
+  transition: background 0.1s;
+
+  &:last-child { border-bottom: none; }
+  &:hover { background: var(--bg-hover); }
+
+  &__delete {
+    padding: 10px 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &__btn-delete {
+    width: 30px;
+    height: 30px;
+    background: transparent;
+    border: none;
+    border-radius: var(--radius-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: var(--text-faint);
+    transition: color 0.15s, background 0.15s;
+
+    &:hover {
+      color: var(--color-error);
+      background: var(--color-error-bg);
+    }
+
+    svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 1.8; }
+  }
+
+  &__info {
+    padding: 12px 6px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    min-width: 0;
+  }
+
+  &__thumb-wrap { flex-shrink: 0; }
+
+  &__thumb {
+    width: 44px;
+    height: 44px;
+    border-radius: var(--radius-sm);
+    object-fit: cover;
+    border: 1px solid var(--border-blue);
+    display: block;
+
+    &--done { border-color: var(--border-green); }
+  }
+
+  &__thumb-placeholder {
+    width: 44px;
+    height: 44px;
+    border-radius: var(--radius-sm);
+    background: var(--bg-card);
+    border: 1px solid var(--border-blue);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    svg { width: 18px; height: 18px; stroke: var(--accent-light); fill: none; }
+  }
+
+  &__file { min-width: 0; }
+
+  &__file-name {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--text-primary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  &__file-name-mobile { display: none; }
+
+  &__file-meta {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    margin-top: 3px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  &__result-size { color: var(--green); }
+
+  &__status { padding: 12px 6px; }
+
+  &__status-badge {
+    font-size: 0.75rem;
+    padding: 4px 10px;
+    border-radius: 4px;
+    display: inline-block;
+    white-space: nowrap;
+
+    &--ready      { background: var(--bg-active); color: var(--accent-light); border: 1px solid var(--border-blue); }
+    &--converting { background: var(--bg-card); color: var(--text-secondary); border: 1px solid var(--border-base); }
+    &--done       { background: var(--green-bg); color: var(--green); border: 1px solid var(--green-border); }
+    &--error      { background: var(--color-error-bg-strong); color: var(--color-error); border: 1px solid var(--color-error-border); }
+  }
+
+  &__convert { padding: 12px 6px; }
+
+  &__btn-convert {
+    font-size: 0.8125rem;
+    padding: 6px 14px;
+    border: 1px solid var(--border-blue);
+    border-radius: var(--radius-sm);
+    color: var(--accent-light);
+    background: transparent;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: border-color 0.1s, color 0.1s;
+
+    &:hover   { border-color: var(--accent); color: var(--accent); }
+    &:disabled { opacity: 0.4; cursor: default; }
+  }
+
+  &__download {
+    padding: 12px 6px;
+    display: flex;
+    align-items: center;
+  }
+
+  &__btn-download {
+    width: 30px;
+    height: 30px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border-green);
+    background: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    opacity: 0;
+    pointer-events: none;
+    transition: background 0.1s, opacity 0.15s;
+
+    &--visible { opacity: 1; pointer-events: auto; }
+    &:hover { background: var(--green-bg); }
+
+    svg { width: 14px; height: 14px; stroke: var(--green); fill: none; stroke-width: 2; }
+  }
+
+  @media (max-width: 767px) {
+    position: relative;
+    grid-template-columns: auto 1fr auto;
+    grid-template-areas:
+      'delete info info'
+      '. status convert';
+    gap: 0 12px;
+    padding: 0 16px 14px;
+
+    &__delete {
+      grid-area: delete;
+      padding: 14px 0 12px;
+      justify-content: flex-start;
+      align-self: start;
+    }
+
+    &__info {
+      grid-area: info;
+      padding: 14px 40px 12px 0;
+      align-items: center;
+      min-width: 0;
+    }
+
+    &__file-name-desktop { display: none; }
+    &__file-name-mobile  { display: inline; }
+
+    &__status {
+      grid-area: status;
+      padding: 0;
+      align-self: center;
+    }
+
+    &__convert {
+      grid-area: convert;
+      padding: 0;
+      justify-self: end;
+      align-self: center;
+    }
+
+    &__download {
+      position: absolute;
+      top: 14px;
+      right: 16px;
+      padding: 0;
+    }
+  }
+}

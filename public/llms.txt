@@ -7,6 +7,29 @@
 - [WebP Converter](https://devtools.abect.com/webp-converter): Convert JPG, PNG, GIF, AVIF, BMP and TIFF images to WebP format. Supports batch conversion, adjustable quality, and ZIP download.
 - [Favicon Generator](https://devtools.abect.com/favicon-generator): Generate favicon files from text, emoji, or an uploaded image. Exports PNG set (16, 32, 180, 192, 512 px) and favicon.ico.
 
+### Image Converter — format conversion (20 tools)
+
+- [PNG to JPG](https://devtools.abect.com/png-to-jpg): Convert PNG images to JPG online, free, in browser.
+- [JPG to PNG](https://devtools.abect.com/jpg-to-png): Convert JPG images to PNG online, lossless output.
+- [WebP to JPG](https://devtools.abect.com/webp-to-jpg): Convert WebP images to JPG for universal compatibility.
+- [WebP to PNG](https://devtools.abect.com/webp-to-png): Convert WebP to PNG, preserves transparency.
+- [PNG to WebP](https://devtools.abect.com/png-to-webp): Convert PNG to WebP, up to 26% smaller files.
+- [JPG to WebP](https://devtools.abect.com/jpg-to-webp): Convert JPG to WebP, 25–34% smaller files.
+- [JPEG to PNG](https://devtools.abect.com/jpeg-to-png): Convert JPEG images to PNG, lossless output.
+- [JPEG to WebP](https://devtools.abect.com/jpeg-to-webp): Convert JPEG to WebP for smaller web images.
+- [GIF to JPG](https://devtools.abect.com/gif-to-jpg): Convert GIF to JPG, first frame exported.
+- [GIF to PNG](https://devtools.abect.com/gif-to-png): Convert GIF to PNG, preserves transparency.
+- [GIF to WebP](https://devtools.abect.com/gif-to-webp): Convert GIF to WebP, smaller file size.
+- [BMP to JPG](https://devtools.abect.com/bmp-to-jpg): Convert BMP to JPG, dramatically reduce file size.
+- [BMP to PNG](https://devtools.abect.com/bmp-to-png): Convert BMP to PNG, lossless compression.
+- [BMP to WebP](https://devtools.abect.com/bmp-to-webp): Convert BMP to WebP, 95%+ smaller files.
+- [AVIF to JPG](https://devtools.abect.com/avif-to-jpg): Convert AVIF to JPG for universal compatibility.
+- [AVIF to PNG](https://devtools.abect.com/avif-to-png): Convert AVIF to PNG, preserves transparency.
+- [AVIF to WebP](https://devtools.abect.com/avif-to-webp): Convert AVIF to WebP for better tool support.
+- [TIFF to JPG](https://devtools.abect.com/tiff-to-jpg): Convert TIFF to JPG, make images web-ready.
+- [TIFF to PNG](https://devtools.abect.com/tiff-to-png): Convert TIFF to PNG, lossless, smaller files.
+- [TIFF to WebP](https://devtools.abect.com/tiff-to-webp): Convert TIFF to WebP for modern web delivery.
+
 ## Coming Soon
 
 Image tools: OG image generator, SVG to JSX converter.

@@ -27,18 +27,36 @@ for (const route of prerenderRoutes) {
   await writeFile(outputPath, pageHtml)
 }
 
-const lastmod = new Date().toISOString()
+// Priority map — based on search volume and page importance
+const ROUTE_CONFIG = {
+  '/':                  { priority: '1.0', changefreq: 'weekly'  },
+  '/webp-converter':    { priority: '0.9', changefreq: 'monthly' },
+  '/favicon-generator': { priority: '0.9', changefreq: 'monthly' },
+  '/png-to-jpg':        { priority: '0.8', changefreq: 'monthly' },
+  '/jpg-to-png':        { priority: '0.8', changefreq: 'monthly' },
+  '/webp-to-jpg':       { priority: '0.8', changefreq: 'monthly' },
+  '/webp-to-png':       { priority: '0.8', changefreq: 'monthly' },
+  '/png-to-webp':       { priority: '0.8', changefreq: 'monthly' },
+  '/jpg-to-webp':       { priority: '0.8', changefreq: 'monthly' },
+  '/privacy-policy':    { priority: '0.3', changefreq: 'yearly'  },
+}
+const DEFAULT_ROUTE_CONFIG = { priority: '0.7', changefreq: 'monthly' }
+
+const lastmod = new Date().toISOString().split('T')[0] // YYYY-MM-DD
 const sitemapXml = [
   '<?xml version="1.0" encoding="UTF-8"?>',
   '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">',
-  ...prerenderRoutes.map(route => [
-    '  <url>',
-    `    <loc>${new URL(route, SITE_ORIGIN).href}</loc>`,
-    `    <lastmod>${lastmod}</lastmod>`,
-    '    <changefreq>weekly</changefreq>',
-    route === '/' ? '    <priority>1.0</priority>' : '    <priority>0.8</priority>',
-    '  </url>',
-  ].join('\n')),
+  ...prerenderRoutes.map(route => {
+    const cfg = ROUTE_CONFIG[route] ?? DEFAULT_ROUTE_CONFIG
+    return [
+      '  <url>',
+      `    <loc>${new URL(route, SITE_ORIGIN).href}</loc>`,
+      `    <lastmod>${lastmod}</lastmod>`,
+      `    <changefreq>${cfg.changefreq}</changefreq>`,
+      `    <priority>${cfg.priority}</priority>`,
+      '  </url>',
+    ].join('\n')
+  }),
   '</urlset>',
 ].join('\n')
 

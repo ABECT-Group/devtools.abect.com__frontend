@@ -21,34 +21,39 @@ function loadClarity() {
 }
 
 export default function CookieConsent() {
-  const [status, setStatus] = useState('pending')
+  const [visible, setVisible] = useState(false)
 
   useEffect(() => {
     const storedStatus = window.localStorage.getItem(CONSENT_KEY)
-    const nextStatus = storedStatus ?? 'unanswered'
     const frameId = window.requestAnimationFrame(() => {
-      setStatus(nextStatus)
+      if (!storedStatus) setVisible(true)
     })
 
     if (storedStatus === 'accepted') {
       loadClarity()
     }
 
-    return () => window.cancelAnimationFrame(frameId)
+    function handleOpen() { setVisible(true) }
+    window.addEventListener('open-cookie-consent', handleOpen)
+
+    return () => {
+      window.cancelAnimationFrame(frameId)
+      window.removeEventListener('open-cookie-consent', handleOpen)
+    }
   }, [])
 
   function handleAccept() {
     window.localStorage.setItem(CONSENT_KEY, 'accepted')
     loadClarity()
-    setStatus('accepted')
+    setVisible(false)
   }
 
   function handleReject() {
     window.localStorage.setItem(CONSENT_KEY, 'rejected')
-    setStatus('rejected')
+    setVisible(false)
   }
 
-  if (status !== 'unanswered') return null
+  if (!visible) return null
 
   return (
     <aside className="CookieConsent" aria-label="Cookie consent">

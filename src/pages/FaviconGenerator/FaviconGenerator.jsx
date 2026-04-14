@@ -33,7 +33,7 @@ const FAVICON_FAQ = [
 ]
 const PAGE_DESCRIPTION = 'Generate favicon files from text, emoji, or image — free and instant. Download .ico or PNG set. No uploads, no signup. Try it now.'
 const PAGE_URL = 'https://devtools.abect.com/favicon-generator'
-const OG_IMAGE_URL = 'https://devtools.abect.com/seo/og.jpg'
+const OG_IMAGE_URL = 'https://devtools.abect.com/seo/favicon-generator-og.jpg'
 
 export default function FaviconGenerator() {
   const [mode, setMode] = useState('text')
