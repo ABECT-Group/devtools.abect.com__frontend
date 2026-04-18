@@ -7,6 +7,8 @@ const IMAGE_CONVERTER_SLUGS = new Set([
   'png-to-webp', 'jpg-to-webp', 'jpeg-to-webp', 'gif-to-webp', 'bmp-to-webp', 'avif-to-webp', 'tiff-to-webp',
 ])
 
+const COMPRESS_SLUGS = new Set(['compress-jpg', 'compress-png', 'compress-webp'])
+
 const NAV_SECTIONS = [
   {
     label: 'General',
@@ -19,14 +21,17 @@ const NAV_SECTIONS = [
     items: [
       { name: 'Favicon generator', route: '/favicon-generator', ready: true },
       { name: 'WebP converter',    route: '/webp-converter',    ready: true },
-      { name: 'Image converter',   route: '/png-to-jpg',        ready: true, customActive: true },
+      { name: 'Image converter',   route: '/png-to-jpg',        ready: true, customActive: 'imageConverter' },
+      { name: 'Compress image',    route: '/compress-jpg',      ready: true, customActive: 'compress' },
     ],
   },
 ]
 
 export default function Sidebar({ isOpen, onClose }) {
   const { pathname } = useLocation()
-  const isImageConverterActive = IMAGE_CONVERTER_SLUGS.has(pathname.slice(1))
+  const slug = pathname.slice(1)
+  const isImageConverterActive = IMAGE_CONVERTER_SLUGS.has(slug)
+  const isCompressActive = COMPRESS_SLUGS.has(slug)
 
   function handleCookieSettingsClick() {
     window.dispatchEvent(new Event('open-cookie-consent'))
@@ -50,7 +55,11 @@ export default function Sidebar({ isOpen, onClose }) {
                     <NavLink
                       key={item.route}
                       to={item.route}
-                      className={`Sidebar__nav-item${isImageConverterActive ? ' Sidebar__nav-item--active' : ''}`}
+                      className={`Sidebar__nav-item${
+                        item.customActive === 'imageConverter' && isImageConverterActive ? ' Sidebar__nav-item--active' :
+                        item.customActive === 'compress' && isCompressActive ? ' Sidebar__nav-item--active' :
+                        ''
+                      }`}
                       onClick={onClose}
                     >
                       {item.name}

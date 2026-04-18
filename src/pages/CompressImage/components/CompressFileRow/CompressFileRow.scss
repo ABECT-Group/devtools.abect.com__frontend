@@ -1,11 +1,15 @@
-.FileRow {
+.CompressFileRow {
   display: grid;
   grid-template-columns: 44px 1fr 130px 100px 110px 44px;
   padding: 0 12px;
-  border-bottom: 1px solid var(--border-row);
+  border-bottom: 1px solid var(--border-base);
   align-items: center;
   background: var(--bg-content);
   transition: background 0.1s;
+
+  &--lossless {
+    grid-template-columns: 44px 1fr 100px 110px 44px;
+  }
 
   &:last-child { border-bottom: none; }
   &:hover { background: var(--bg-hover); }
@@ -35,13 +39,7 @@
       background: var(--color-error-bg);
     }
 
-    svg {
-      width: 16px;
-      height: 16px;
-      stroke: currentColor;
-      fill: none;
-      stroke-width: 1.8;
-    }
+    svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 1.8; }
   }
 
   &__info {
@@ -52,9 +50,7 @@
     min-width: 0;
   }
 
-  &__thumb-wrap {
-    flex-shrink: 0;
-  }
+  &__thumb-wrap { flex-shrink: 0; }
 
   &__thumb {
     width: 44px;
@@ -63,8 +59,6 @@
     object-fit: cover;
     border: 1px solid var(--border-blue);
     display: block;
-
-    &--done { border-color: var(--border-green); }
   }
 
   &__thumb-placeholder {
@@ -80,9 +74,7 @@
     svg { width: 18px; height: 18px; stroke: var(--accent-light); fill: none; }
   }
 
-  &__file {
-    min-width: 0;
-  }
+  &__file { min-width: 0; }
 
   &__file-name {
     font-size: 0.875rem;
@@ -93,9 +85,7 @@
     text-overflow: ellipsis;
   }
 
-  &__file-name-mobile {
-    display: none;
-  }
+  &__file-name-mobile { display: none; }
 
   &__file-meta {
     font-size: 0.75rem;
@@ -104,8 +94,15 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+  }
 
-    span { color: var(--green); }
+  &__result-size { color: var(--green); }
+
+  &__saved-pct {
+    font-weight: 600;
+
+    &--green { color: var(--green); }
+    &--red   { color: var(--color-error); }
   }
 
   &__quality {
@@ -140,8 +137,18 @@
       background: var(--accent);
       cursor: pointer;
     }
+
+    &::-moz-range-thumb {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: var(--accent);
+      cursor: pointer;
+      border: none;
+    }
   }
 
+  // Preview column
   &__preview {
     padding: 10px 6px;
     display: flex;
@@ -159,7 +166,9 @@
     overflow: hidden;
     display: block;
 
-    &:hover .FileRow__preview-zoom { opacity: 1; }
+    &:hover .CompressFileRow__preview-zoom {
+      opacity: 1;
+    }
   }
 
   &__preview-thumb {
@@ -202,9 +211,9 @@
   }
 
   &__preview-spinner {
-    animation: webp-spin 0.8s linear infinite;
+    animation: compress-spin 0.8s linear infinite;
 
-    @keyframes webp-spin {
+    @keyframes compress-spin {
       to { transform: rotate(360deg); }
     }
   }
@@ -222,7 +231,7 @@
     white-space: nowrap;
     transition: border-color 0.1s, color 0.1s;
 
-    &:hover { border-color: var(--accent); color: var(--accent); }
+    &:hover   { border-color: var(--accent); color: var(--accent); }
     &:disabled { opacity: 0.4; cursor: default; }
   }
 
@@ -246,11 +255,7 @@
     pointer-events: none;
     transition: background 0.1s, opacity 0.15s;
 
-    &--visible {
-      opacity: 1;
-      pointer-events: auto;
-    }
-
+    &--visible { opacity: 1; pointer-events: auto; }
     &:hover { background: var(--green-bg); }
 
     svg { width: 14px; height: 14px; stroke: var(--green); fill: none; stroke-width: 2; }
@@ -264,6 +269,12 @@
       'quality quality convert';
     gap: 0 12px;
     padding: 0 16px 14px;
+
+    &--lossless {
+      grid-template-areas:
+        'delete info info'
+        '. preview convert';
+    }
 
     &__delete {
       grid-area: delete;
@@ -279,13 +290,8 @@
       min-width: 0;
     }
 
-    &__file-name-desktop {
-      display: none;
-    }
-
-    &__file-name-mobile {
-      display: inline;
-    }
+    &__file-name-desktop { display: none; }
+    &__file-name-mobile  { display: inline; }
 
     &__quality {
       grid-area: quality;
@@ -294,11 +300,16 @@
       min-width: 0;
     }
 
-    &__quality-slider {
-      width: 100%;
-    }
+    &__quality-slider { width: 100%; }
 
     &__preview {
+      grid-area: preview;
+      padding: 0;
+      justify-content: flex-start;
+    }
+
+    // hide preview on mobile when quality slider takes that row
+    &:not(.CompressFileRow--lossless) &__preview {
       display: none;
     }
 

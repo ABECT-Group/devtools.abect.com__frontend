@@ -10,6 +10,9 @@ const OG_IMAGE_URL = 'https://devtools.abect.com/seo/og.jpg'
 const TOOLS = [
   { category: 'Images', name: 'WebP converter',  description: 'Convert any image to WebP format',              route: '/webp-converter',  ready: true },
   { category: 'Images', name: 'Favicon generator', description: 'Generate favicons from text, emoji, or image', route: '/favicon-generator', ready: true },
+  { category: 'Images', name: 'Compress JPG',  description: 'Reduce JPEG file size with quality control',       route: '/compress-jpg',  ready: true },
+  { category: 'Images', name: 'Compress PNG',  description: 'Lossless PNG compression, strip metadata',         route: '/compress-png',  ready: true },
+  { category: 'Images', name: 'Compress WebP', description: 'Reduce WebP file size, adjustable quality',        route: '/compress-webp', ready: true },
   // Image Converter — 20 routes
   { category: 'Images', name: 'PNG to JPG',   description: 'Convert PNG images to JPG',          route: '/png-to-jpg',   ready: true },
   { category: 'Images', name: 'JPG to PNG',   description: 'Convert JPG images to PNG',          route: '/jpg-to-png',   ready: true },

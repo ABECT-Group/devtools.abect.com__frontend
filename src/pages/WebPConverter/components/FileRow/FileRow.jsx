@@ -1,3 +1,4 @@
+import { useEffect, useMemo } from 'react'
 import { formatSize } from '../../utils/formatSize'
 import './FileRow.scss'
 
@@ -11,10 +12,21 @@ function shortenFileName(name) {
   return `${baseName.slice(0, 10)}...${extension}`
 }
 
-export default function FileRow({ file, onQualityChange, onConvert, onDownload, onDelete }) {
+export default function FileRow({ file, onQualityChange, onConvert, onDownload, onDelete, onPreviewClick }) {
   const isConverting = file.status === 'converting'
   const isDone = file.status === 'done'
   const mobileFileName = shortenFileName(file.name)
+
+  const resultPreviewUrl = useMemo(() => {
+    if (!file.resultBlob) return null
+    return URL.createObjectURL(file.resultBlob)
+  }, [file.resultBlob])
+
+  useEffect(() => {
+    return () => {
+      if (resultPreviewUrl) URL.revokeObjectURL(resultPreviewUrl)
+    }
+  }, [resultPreviewUrl])
 
   return (
     <div className="FileRow">
@@ -39,7 +51,7 @@ export default function FileRow({ file, onQualityChange, onConvert, onDownload, 
             <img
               src={file.previewUrl}
               alt={file.name}
-              className={`FileRow__thumb${isDone ? ' FileRow__thumb--done' : ''}`}
+              className="FileRow__thumb"
             />
           ) : (
             <div className="FileRow__thumb-placeholder">
@@ -77,13 +89,31 @@ export default function FileRow({ file, onQualityChange, onConvert, onDownload, 
         />
       </div>
 
-      <div className="FileRow__status">
-        <span className={`FileRow__status-badge FileRow__status-badge--${file.status}`}>
-          {file.status === 'ready' && 'Ready'}
-          {file.status === 'converting' && 'Converting...'}
-          {file.status === 'done' && 'Done'}
-          {file.status === 'error' && 'Error'}
-        </span>
+      <div className="FileRow__preview">
+        {resultPreviewUrl ? (
+          <button
+            className="FileRow__preview-btn"
+            onClick={() => onPreviewClick(resultPreviewUrl)}
+            aria-label="Preview converted image"
+          >
+            <img src={resultPreviewUrl} alt="Result preview" className="FileRow__preview-thumb" />
+            <span className="FileRow__preview-zoom">
+              <svg viewBox="0 0 24 24" fill="none">
+                <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+            </span>
+          </button>
+        ) : (
+          <div className={`FileRow__preview-placeholder${isConverting ? ' FileRow__preview-placeholder--loading' : ''}`}>
+            {isConverting ? (
+              <svg className="FileRow__preview-spinner" viewBox="0 0 24 24" fill="none">
+                <circle cx="12" cy="12" r="9" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeDasharray="28 56"/>
+              </svg>
+            ) : (
+              <span className="FileRow__preview-dash">—</span>
+            )}
+          </div>
+        )}
       </div>
 
       <div className="FileRow__convert">

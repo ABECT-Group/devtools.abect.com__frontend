@@ -1,0 +1,131 @@
+.CompressImage {
+  &__title {
+    font-size: 1.375rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 6px;
+  }
+
+  &__sub {
+    font-size: 0.875rem;
+    color: var(--text-muted);
+    margin-bottom: 24px;
+  }
+
+  &__tool {
+    margin-bottom: 80px;
+    padding-bottom: 80px;
+    border-bottom: 1px solid var(--border-base);
+  }
+
+  &__section {
+    margin-bottom: 48px;
+  }
+
+  &__section-title {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 16px;
+  }
+
+  &__subsection-title {
+    font-size: 0.9375rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-top: 24px;
+    margin-bottom: 10px;
+  }
+
+  &__text {
+    font-size: 0.9375rem;
+    color: var(--text-secondary);
+    line-height: 1.7;
+    max-width: 720px;
+    margin-bottom: 12px;
+
+    strong { color: var(--text-primary); font-weight: 600; }
+  }
+
+  &__steps,
+  &__list {
+    padding-left: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-width: 720px;
+
+    li {
+      font-size: 0.9375rem;
+      color: var(--text-secondary);
+      line-height: 1.65;
+      strong { color: var(--text-primary); font-weight: 600; }
+    }
+  }
+
+  &__related {
+    margin-bottom: 48px;
+  }
+
+  &__related-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  &__related-card {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 16px 20px;
+    background: var(--bg-sidebar);
+    border: 1px solid var(--border-blue);
+    border-radius: var(--radius-md);
+    text-decoration: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+
+    &:hover {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 1px var(--accent);
+    }
+  }
+
+  &__related-name {
+    font-size: 0.9375rem;
+    font-weight: 600;
+    color: var(--text-primary);
+  }
+
+  &__related-desc {
+    font-size: 0.8125rem;
+    color: var(--text-muted);
+  }
+
+  &__all-compressors {
+    margin-bottom: 48px;
+  }
+
+  &__all-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  &__all-link {
+    font-size: 0.8125rem;
+    font-weight: 500;
+    color: var(--accent-light);
+    text-decoration: none;
+    padding: 5px 12px;
+    border: 1px solid var(--border-blue);
+    border-radius: var(--radius-sm);
+    background: var(--bg-sidebar);
+    transition: border-color 0.15s, color 0.15s;
+    white-space: nowrap;
+
+    &:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+  }
+}

@@ -1,4 +1,4 @@
-.FileTable {
+.CompressFileTable {
   border: 1px solid var(--border-base);
   border-radius: var(--radius-lg);
   overflow: hidden;
@@ -9,6 +9,10 @@
     background: var(--bg-sidebar);
     border-bottom: 1px solid var(--border-base);
     padding: 0 12px;
+  }
+
+  &--lossless &__head {
+    grid-template-columns: 44px 1fr 100px 110px 44px;
   }
 
   &__th {
@@ -29,7 +33,7 @@
     align-items: center;
     cursor: default;
 
-    &:hover .FileTable__tooltip {
+    &:hover .CompressFileTable__tooltip {
       opacity: 1;
       pointer-events: auto;
       transform: translateX(-50%) translateY(0);
@@ -43,7 +47,7 @@
     transition: color 0.15s;
     flex-shrink: 0;
 
-    .FileTable__tooltip-wrap:hover & {
+    .CompressFileTable__tooltip-wrap:hover & {
       color: var(--accent-light);
     }
   }
@@ -67,6 +71,7 @@
     transition: opacity 0.15s, transform 0.15s;
     box-shadow: 0 4px 16px rgba(0,0,0,0.3);
 
+    // Arrow
     &::before {
       content: '';
       position: absolute;
@@ -130,13 +135,8 @@
     font-weight: 600;
     color: var(--text-secondary);
 
-    &--green {
-      color: var(--green);
-    }
-
-    &--red {
-      color: var(--color-error);
-    }
+    &--green { color: var(--green); }
+    &--red   { color: var(--color-error); }
   }
 
   &__actions {
@@ -164,16 +164,10 @@
       background: var(--color-error-bg);
     }
 
-    svg {
-      width: 16px;
-      height: 16px;
-      stroke: currentColor;
-      fill: none;
-      stroke-width: 1.8;
-    }
+    svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 1.8; }
   }
 
-  &__btn-convert-all {
+  &__btn-compress-all {
     font-size: 0.875rem;
     font-weight: 600;
     padding: 8px 20px;
@@ -184,9 +178,7 @@
     cursor: pointer;
     transition: background 0.15s;
 
-    &:hover {
-      background: var(--accent-hover);
-    }
+    &:hover { background: var(--accent-hover); }
   }
 
   &__btn-download-all {
@@ -199,16 +191,11 @@
     border-radius: var(--radius-md);
     cursor: pointer;
 
-    &:disabled {
-      opacity: 0.35;
-      cursor: default;
-    }
+    &:disabled { opacity: 0.35; cursor: default; }
   }
 
   @media (max-width: 767px) {
-    &__head {
-      display: none;
-    }
+    &__head { display: none; }
 
     &__footer {
       padding: 16px;
@@ -229,9 +216,7 @@
       align-items: center;
     }
 
-    &__btn-convert-all,
-    &__btn-download-all {
-      width: 100%;
-    }
+    &__btn-compress-all,
+    &__btn-download-all { width: 100%; }
   }
 }

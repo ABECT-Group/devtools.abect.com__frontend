@@ -2,7 +2,7 @@ import { formatSize } from '../../utils/formatSize'
 import FileRow from '../FileRow/FileRow'
 import './FileTable.scss'
 
-export default function FileTable({ files, onQualityChange, onConvert, onConvertAll, onDownload, onDownloadAll, onDelete, onClearAll }) {
+export default function FileTable({ files, onQualityChange, onConvert, onConvertAll, onDownload, onDownloadAll, onDelete, onClearAll, onPreviewClick }) {
   const doneFiles = files.filter(file => file.status === 'done')
   const hasConverted = doneFiles.length > 0
   // Compare only converted files: original vs result (apples-to-apples)
@@ -15,8 +15,22 @@ export default function FileTable({ files, onQualityChange, onConvert, onConvert
       <div className="FileTable__head">
         <div className="FileTable__th"></div>
         <div className="FileTable__th">File</div>
-        <div className="FileTable__th">Quality</div>
-        <div className="FileTable__th">Status</div>
+        <div className="FileTable__th">
+          Quality
+          <span className="FileTable__tooltip-wrap" aria-label="Quality guide">
+            <svg className="FileTable__tooltip-icon" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+              <circle cx="8" cy="8" r="7" stroke="currentColor" strokeWidth="1.4"/>
+              <path d="M8 7v5" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round"/>
+              <circle cx="8" cy="4.5" r="0.75" fill="currentColor"/>
+            </svg>
+            <span className="FileTable__tooltip" role="tooltip">
+              <span className="FileTable__tooltip-row"><b>100%</b> — max quality, file barely shrinks</span>
+              <span className="FileTable__tooltip-row"><b>82%</b> — recommended: −50–70% size, quality looks the same</span>
+              <span className="FileTable__tooltip-row"><b>10%</b> — max compression, visible artifacts</span>
+            </span>
+          </span>
+        </div>
+        <div className="FileTable__th">Preview</div>
         <div className="FileTable__th">Convert</div>
         <div className="FileTable__th"></div>
       </div>
@@ -27,6 +41,7 @@ export default function FileTable({ files, onQualityChange, onConvert, onConvert
           file={file}
           onQualityChange={onQualityChange}
           onConvert={onConvert}
+          onPreviewClick={onPreviewClick}
           onDownload={onDownload}
           onDelete={onDelete}
         />

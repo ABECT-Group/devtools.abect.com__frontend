@@ -24,4 +24,8 @@ export const prerenderRoutes = [
   '/bmp-to-webp',
   '/avif-to-webp',
   '/tiff-to-webp',
+  // Compress Image — 3 routes
+  '/compress-jpg',
+  '/compress-png',
+  '/compress-webp',
 ]

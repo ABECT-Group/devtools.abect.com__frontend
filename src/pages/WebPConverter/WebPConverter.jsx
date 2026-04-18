@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { Helmet } from 'react-helmet-async'
 import { Link } from 'react-router-dom'
 import FAQ from '../../components/FAQ/FAQ'
+import Lightbox from '../../components/Lightbox/Lightbox'
 import DropZone from './components/DropZone/DropZone'
 import FileTable from './components/FileTable/FileTable'
 import { convertToWebP } from './utils/convertWebp'
@@ -38,6 +39,7 @@ const OG_IMAGE_URL = 'https://devtools.abect.com/seo/webp-converter-og.jpg'
 
 export default function WebPConverter() {
   const [files, setFiles] = useState([])
+  const [lightboxUrl, setLightboxUrl] = useState(null)
   const filesRef = useRef(files)
   filesRef.current = files  // синхронне оновлення — завжди актуальне значення в хендлерах
 
@@ -140,6 +142,8 @@ export default function WebPConverter() {
   }
 
   return (
+    <>
+    {lightboxUrl && <Lightbox url={lightboxUrl} onClose={() => setLightboxUrl(null)} />}
     <main className="WebPConverter">
       <Helmet>
         <title>{PAGE_TITLE}</title>
@@ -231,6 +235,7 @@ export default function WebPConverter() {
             onDownloadAll={handleDownloadAll}
             onDelete={handleDelete}
             onClearAll={handleClearAll}
+            onPreviewClick={setLightboxUrl}
           />
         )}
       </section>
@@ -276,5 +281,6 @@ export default function WebPConverter() {
         </div>
       </nav>
     </main>
+    </>
   )
 }

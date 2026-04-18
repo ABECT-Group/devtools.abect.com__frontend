@@ -2,6 +2,7 @@ import { Route, Routes } from 'react-router-dom'
 import Layout from './components/Layout/Layout'
 import ComingSoon from './components/ComingSoon/ComingSoon'
 import Home from './pages/Home'
+import CompressImage from './pages/CompressImage/CompressImage'
 import FaviconGenerator from './pages/FaviconGenerator/FaviconGenerator'
 import ImageConverter from './pages/ImageConverter/ImageConverter'
 import PrivacyPolicy from './pages/PrivacyPolicy'
@@ -13,6 +14,8 @@ const IMAGE_CONVERTER_SLUGS = [
   'png-to-webp', 'jpg-to-webp', 'jpeg-to-webp', 'gif-to-webp', 'bmp-to-webp', 'avif-to-webp', 'tiff-to-webp',
 ]
 
+const COMPRESS_SLUGS = ['compress-jpg', 'compress-png', 'compress-webp']
+
 export default function App() {
   return (
     <Routes>
@@ -23,6 +26,9 @@ export default function App() {
         <Route path="webp-converter" element={<WebPConverter />} />
         {IMAGE_CONVERTER_SLUGS.map(slug => (
           <Route key={slug} path={slug} element={<ImageConverter />} />
+        ))}
+        {COMPRESS_SLUGS.map(slug => (
+          <Route key={slug} path={slug} element={<CompressImage />} />
         ))}
         <Route path="*" element={<ComingSoon />} />
       </Route>

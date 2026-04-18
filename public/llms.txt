@@ -30,6 +30,12 @@
 - [TIFF to PNG](https://devtools.abect.com/tiff-to-png): Convert TIFF to PNG, lossless, smaller files.
 - [TIFF to WebP](https://devtools.abect.com/tiff-to-webp): Convert TIFF to WebP for modern web delivery.
 
+### Image Compressor — reduce file size (3 tools)
+
+- [Compress JPG](https://devtools.abect.com/compress-jpg): Compress JPEG images online. Adjustable per-file quality slider, batch compression, live fullscreen preview of result, ZIP download. No uploads.
+- [Compress PNG](https://devtools.abect.com/compress-png): Lossless PNG compression in browser. Strips metadata to reduce file size. Live preview of compressed result, batch processing, ZIP download.
+- [Compress WebP](https://devtools.abect.com/compress-webp): Compress WebP images with adjustable quality. Typically 50–80% size reduction. Live fullscreen preview, batch compression, ZIP download. No uploads.
+
 ## Coming Soon
 
 Image tools: OG image generator, SVG to JSX converter.
