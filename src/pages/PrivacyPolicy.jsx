@@ -2,7 +2,7 @@ import { Helmet } from 'react-helmet-async'
 import './PrivacyPolicy.scss'
 
 const PAGE_TITLE = 'Privacy Policy | Abect'
-const PAGE_DESCRIPTION = 'Privacy Policy for devtools.abect.com, including analytics, cookies, Microsoft Clarity usage, and data handling.'
+const PAGE_DESCRIPTION = 'Privacy Policy for devtools.abect.com, including analytics, cookies, Google Analytics, Microsoft Clarity usage, and data handling.'
 const PAGE_URL = 'https://devtools.abect.com/privacy-policy'
 
 export default function PrivacyPolicy() {
@@ -38,9 +38,9 @@ export default function PrivacyPolicy() {
       <section className="PrivacyPolicy__section">
         <h2>Analytics</h2>
         <p>
-          If you accept analytics cookies, we may use Microsoft Clarity to understand how visitors
-          use this website, including page views, clicks, scrolling behavior, device information,
-          and general usage patterns.
+          If you accept analytics cookies, we use Google Analytics 4 and Microsoft Clarity to
+          understand how visitors use this website, including page views, clicks, scrolling
+          behavior, device information, and general usage patterns.
         </p>
         <p>
           We use this information to improve the website, identify usability issues, and make our
@@ -51,16 +51,17 @@ export default function PrivacyPolicy() {
       <section className="PrivacyPolicy__section">
         <h2>Cookies</h2>
         <p>
-          Microsoft Clarity loads only after you explicitly accept analytics cookies through the
-          consent banner. If you reject analytics cookies, Clarity does not load.
+          Google Analytics and Microsoft Clarity load only after you explicitly accept analytics
+          cookies through the consent banner. If you reject analytics cookies, neither service loads.
         </p>
       </section>
 
       <section className="PrivacyPolicy__section">
-        <h2>Third-Party Service</h2>
+        <h2>Third-Party Services</h2>
         <p>
-          Analytics data may be processed by Microsoft Clarity. You can read more in Microsoft
-          privacy and Microsoft Clarity documentation.
+          Analytics data may be processed by Google Analytics 4 (Google LLC) and Microsoft Clarity
+          (Microsoft Corporation). Both services collect anonymous usage data according to their
+          respective privacy policies.
         </p>
       </section>
 

@@ -3,21 +3,10 @@ import { Link } from 'react-router-dom'
 import './CookieConsent.scss'
 
 const CONSENT_KEY = 'toolsabect_cookie_consent'
-const CLARITY_PROJECT_ID = 'w935ym1qlb'
 
-function loadClarity() {
-  if (typeof window === 'undefined') return
-  if (window.clarity || document.getElementById('clarity-script')) return
-
-  window.clarity = window.clarity || function () {
-    (window.clarity.q = window.clarity.q || []).push(arguments)
-  }
-
-  const script = document.createElement('script')
-  script.id = 'clarity-script'
-  script.async = true
-  script.src = `https://www.clarity.ms/tag/${CLARITY_PROJECT_ID}`
-  document.head.appendChild(script)
+function pushConsentGranted() {
+  window.dataLayer = window.dataLayer || []
+  window.dataLayer.push({ event: 'consent_accepted' })
 }
 
 export default function CookieConsent() {
@@ -30,7 +19,7 @@ export default function CookieConsent() {
     })
 
     if (storedStatus === 'accepted') {
-      loadClarity()
+      pushConsentGranted()
     }
 
     function handleOpen() { setVisible(true) }
@@ -44,7 +33,7 @@ export default function CookieConsent() {
 
   function handleAccept() {
     window.localStorage.setItem(CONSENT_KEY, 'accepted')
-    loadClarity()
+    pushConsentGranted()
     setVisible(false)
   }
 
@@ -67,8 +56,8 @@ export default function CookieConsent() {
       </button>
       <div className="CookieConsent__title">Cookies</div>
       <p className="CookieConsent__text">
-        We use Microsoft Clarity to collect anonymous usage analytics and improve this website.
-        Clarity loads only if you accept.
+        We use Google Analytics and Microsoft Clarity to collect anonymous usage data and improve this website.
+        Analytics tools load only if you accept.
       </p>
       <Link className="CookieConsent__link" to="/privacy-policy">
         Privacy Policy
