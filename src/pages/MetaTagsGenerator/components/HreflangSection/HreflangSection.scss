@@ -1,0 +1,93 @@
+.HreflangSection {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  &__item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  &__row {
+    display: grid;
+    grid-template-columns: 76px 1fr 28px;
+    gap: 8px;
+    align-items: center;
+  }
+
+  &__input {
+    width: 100%;
+    background: var(--bg-content);
+    border: 1px solid var(--border-blue);
+    border-radius: var(--radius-md);
+    color: var(--text-primary);
+    font-size: 0.9375rem;
+    padding: 10px 14px;
+    outline: none;
+    transition: border-color 0.15s;
+
+    &::placeholder {
+      color: var(--text-faint);
+    }
+
+    &:focus {
+      border-color: var(--accent);
+    }
+
+    &--lang {
+      padding: 10px 8px;
+    }
+  }
+
+  &__xdefault {
+    font-size: 0.75rem;
+    color: var(--text-faint);
+    margin: 0;
+    padding-left: 2px;
+
+    code {
+      font-family: 'SFMono-Regular', Consolas, monospace;
+      font-size: 0.9em;
+      color: var(--accent-code);
+    }
+  }
+
+  &__remove {
+    background: transparent;
+    border: none;
+    color: var(--text-faint);
+    font-size: 1.125rem;
+    line-height: 1;
+    cursor: pointer;
+    padding: 4px;
+    border-radius: var(--radius-sm);
+    transition: color 0.15s, background 0.15s;
+    text-align: center;
+
+    &:hover {
+      color: var(--color-error);
+      background: var(--color-error-bg);
+    }
+  }
+
+  &__add {
+    align-self: flex-start;
+    font-size: 0.8125rem;
+    font-weight: 500;
+    color: var(--accent);
+    background: transparent;
+    border: 1px dashed var(--border-blue);
+    border-radius: var(--radius-md);
+    padding: 7px 14px;
+    cursor: pointer;
+    transition: border-color 0.15s, color 0.15s;
+    margin-top: 4px;
+
+    &:hover {
+      border-color: var(--accent);
+      color: var(--accent-light);
+    }
+  }
+}

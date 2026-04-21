@@ -38,7 +38,8 @@ const ROUTE_CONFIG = {
   '/webp-to-png':       { priority: '0.8', changefreq: 'monthly' },
   '/png-to-webp':       { priority: '0.8', changefreq: 'monthly' },
   '/jpg-to-webp':       { priority: '0.8', changefreq: 'monthly' },
-  '/privacy-policy':    { priority: '0.3', changefreq: 'yearly'  },
+  '/meta-tags-generator': { priority: '0.8', changefreq: 'monthly' },
+  '/privacy-policy':      { priority: '0.3', changefreq: 'yearly'  },
 }
 const DEFAULT_ROUTE_CONFIG = { priority: '0.7', changefreq: 'monthly' }
 

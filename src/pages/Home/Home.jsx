@@ -1,6 +1,6 @@
 import { Helmet } from 'react-helmet-async'
 import { Link } from 'react-router-dom'
-import { TOOLS } from '../config/tools'
+import { TOOLS } from '../../config/tools'
 import './Home.scss'
 
 const PAGE_TITLE = 'Developer Tools: Free Browser-Based Web Tools | Abect'

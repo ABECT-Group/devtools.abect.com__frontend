@@ -17,6 +17,12 @@ const NAV_SECTIONS = [
     ],
   },
   {
+    label: 'SEO & Schema',
+    items: [
+      { name: 'Meta tag generator', route: '/meta-tags-generator', ready: true },
+    ],
+  },
+  {
     label: 'Images',
     items: [
       { name: 'Favicon generator', route: '/favicon-generator', ready: true },

@@ -1,11 +1,12 @@
 import { Route, Routes } from 'react-router-dom'
 import Layout from './components/Layout/Layout'
-import Home from './pages/Home'
-import NotFound from './pages/NotFound'
+import Home from './pages/Home/Home'
+import NotFound from './pages/NotFound/NotFound'
 import CompressImage from './pages/CompressImage/CompressImage'
+import MetaTagsGenerator from './pages/MetaTagsGenerator/MetaTagsGenerator'
 import FaviconGenerator from './pages/FaviconGenerator/FaviconGenerator'
 import ImageConverter from './pages/ImageConverter/ImageConverter'
-import PrivacyPolicy from './pages/PrivacyPolicy'
+import PrivacyPolicy from './pages/PrivacyPolicy/PrivacyPolicy'
 import WebPConverter from './pages/WebPConverter/WebPConverter'
 
 const IMAGE_CONVERTER_SLUGS = [
@@ -22,6 +23,7 @@ export default function App() {
       <Route path="/" element={<Layout />}>
         <Route index element={<Home />} />
         <Route path="privacy-policy" element={<PrivacyPolicy />} />
+        <Route path="meta-tags-generator" element={<MetaTagsGenerator />} />
         <Route path="favicon-generator" element={<FaviconGenerator />} />
         <Route path="webp-converter" element={<WebPConverter />} />
         {IMAGE_CONVERTER_SLUGS.map(slug => (

@@ -1,0 +1,52 @@
+.SnippetPreview {
+  &__label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--text-faint);
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    margin-bottom: 10px;
+  }
+
+  &__card {
+    background: #fff;
+    border-radius: var(--radius-md);
+    padding: 16px 20px;
+    transition: opacity 0.2s;
+
+    &--empty {
+      opacity: 0.45;
+    }
+  }
+
+  &__url {
+    font-size: 0.8125rem;
+    color: #202124;
+    margin-bottom: 4px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  &__title {
+    font-size: 1.125rem;
+    color: #1a0dab;
+    line-height: 1.3;
+    margin-bottom: 4px;
+    cursor: pointer;
+    overflow-wrap: break-word;
+    word-break: break-word;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  &__description {
+    font-size: 0.875rem;
+    color: #4d5156;
+    line-height: 1.58;
+    overflow-wrap: break-word;
+    word-break: break-word;
+  }
+}
