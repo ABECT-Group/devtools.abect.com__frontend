@@ -61,4 +61,12 @@ const sitemapXml = [
 ].join('\n')
 
 await writeFile(path.join(distDir, 'sitemap.xml'), sitemapXml)
+
+// Render 404.html — Vercel serves it with HTTP 404 for unknown routes
+const { appHtml: notFoundHtml, headTags: notFoundHead } = render('/404')
+const notFoundPage = template
+  .replace('<!--app-head-->', notFoundHead)
+  .replace('<div id="root"></div>', `<div id="root">${notFoundHtml}</div>`)
+await writeFile(path.join(distDir, '404.html'), notFoundPage)
+
 await rm(path.join(distDir, 'server'), { recursive: true, force: true })

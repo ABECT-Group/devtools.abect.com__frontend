@@ -1,7 +1,7 @@
 import { Route, Routes } from 'react-router-dom'
 import Layout from './components/Layout/Layout'
-import ComingSoon from './components/ComingSoon/ComingSoon'
 import Home from './pages/Home'
+import NotFound from './pages/NotFound'
 import CompressImage from './pages/CompressImage/CompressImage'
 import FaviconGenerator from './pages/FaviconGenerator/FaviconGenerator'
 import ImageConverter from './pages/ImageConverter/ImageConverter'
@@ -30,7 +30,7 @@ export default function App() {
         {COMPRESS_SLUGS.map(slug => (
           <Route key={slug} path={slug} element={<CompressImage />} />
         ))}
-        <Route path="*" element={<ComingSoon />} />
+        <Route path="*" element={<NotFound />} />
       </Route>
     </Routes>
   )

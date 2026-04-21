@@ -1,31 +1,7 @@
+import { TOOLS } from './config/tools.js'
+
 export const prerenderRoutes = [
   '/',
   '/privacy-policy',
-  '/webp-converter',
-  '/favicon-generator',
-  // Image Converter — 20 routes
-  '/png-to-jpg',
-  '/webp-to-jpg',
-  '/gif-to-jpg',
-  '/bmp-to-jpg',
-  '/avif-to-jpg',
-  '/tiff-to-jpg',
-  '/jpg-to-png',
-  '/jpeg-to-png',
-  '/webp-to-png',
-  '/gif-to-png',
-  '/bmp-to-png',
-  '/avif-to-png',
-  '/tiff-to-png',
-  '/png-to-webp',
-  '/jpg-to-webp',
-  '/jpeg-to-webp',
-  '/gif-to-webp',
-  '/bmp-to-webp',
-  '/avif-to-webp',
-  '/tiff-to-webp',
-  // Compress Image — 3 routes
-  '/compress-jpg',
-  '/compress-png',
-  '/compress-webp',
+  ...TOOLS.map(t => t.route),
 ]

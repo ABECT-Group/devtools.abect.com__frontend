@@ -32,16 +32,6 @@
       box-shadow: 0 0 0 1px var(--accent);
     }
 
-    &--disabled {
-      background: var(--bg-sidebar);
-      opacity: 0.35;
-      cursor: no-drop;
-    }
-
-    &--disabled:hover {
-      border-color: var(--border-blue);
-      box-shadow: none;
-    }
   }
 
   &__tile-category {
@@ -64,19 +54,6 @@
     font-size: 0.875rem;
     color: var(--text-muted);
     line-height: 1.55;
-  }
-
-  &__tile-badge {
-    display: inline-block;
-    margin-top: 14px;
-    font-size: 0.6875rem;
-    font-weight: 500;
-    padding: 3px 10px;
-    border-radius: 4px;
-    background: transparent;
-    color: var(--accent-light);
-    border: 1px solid var(--border-blue);
-    letter-spacing: 0.04em;
   }
 
   &__tools {
