@@ -273,9 +273,21 @@ export default function FaviconGenerator() {
       <nav className="FaviconGenerator__related">
         <h2 className="FaviconGenerator__section-title">Related tools</h2>
         <div className="FaviconGenerator__related-grid">
+          <Link to="/meta-tags-generator" className="FaviconGenerator__related-card">
+            <span className="FaviconGenerator__related-name">Meta Tags Generator</span>
+            <span className="FaviconGenerator__related-desc">Generate SEO meta tags with Open Graph and Twitter Card preview</span>
+          </Link>
+          <Link to="/png-to-webp" className="FaviconGenerator__related-card">
+            <span className="FaviconGenerator__related-name">PNG to WebP</span>
+            <span className="FaviconGenerator__related-desc">Convert PNG images to WebP — up to 26% smaller files</span>
+          </Link>
+          <Link to="/compress-png" className="FaviconGenerator__related-card">
+            <span className="FaviconGenerator__related-name">Compress PNG</span>
+            <span className="FaviconGenerator__related-desc">Reduce PNG file size — lossless compression, no quality loss</span>
+          </Link>
           <Link to="/webp-converter" className="FaviconGenerator__related-card">
             <span className="FaviconGenerator__related-name">WebP Converter</span>
-            <span className="FaviconGenerator__related-desc">Convert JPG, PNG, GIF and more to WebP</span>
+            <span className="FaviconGenerator__related-desc">Convert JPG, PNG, GIF and more to WebP format</span>
           </Link>
         </div>
       </nav>

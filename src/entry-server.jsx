@@ -4,7 +4,7 @@ import { renderToString } from 'react-dom/server'
 import App from './App'
 import './index.css'
 
-const HEAD_PREFIX_PATTERN = /^(?:(?:<title[\s\S]*?<\/title>|<meta[^>]*\/?>|<link[^>]*\/?>)\s*)+/
+const HEAD_PREFIX_PATTERN = /^(?:(?:<title[\s\S]*?<\/title>|<meta[^>]*\/?>|<link[^>]*\/?>|<script[^>]*application\/ld\+json[^>]*>[\s\S]*?<\/script>)\s*)+/
 
 export function render(url) {
   const markup = renderToString(

@@ -11,6 +11,7 @@ import {
   COMPRESSIONS,
   FORMAT_CONFIG,
 } from './config/compressions'
+import { CONVERSIONS, FORMAT_LABELS } from '../ImageConverter/config/conversions'
 import { buildZip } from './utils/buildZip'
 import { compressImage } from './utils/compressImage'
 import { triggerDownload } from './utils/download'
@@ -254,19 +255,32 @@ export default function CompressImage() {
       <FAQ items={config.faq} />
 
       <nav className="CompressImage__related">
-        <h2 className="CompressImage__section-title">Related compressors</h2>
+        <h2 className="CompressImage__section-title">Related tools</h2>
         <div className="CompressImage__related-grid">
           {config.relatedSlugs.map(relSlug => {
-            const rel = COMPRESSIONS[relSlug]
-            if (!rel) return null
-            return (
-              <Link key={relSlug} to={`/${relSlug}`} className="CompressImage__related-card">
-                <span className="CompressImage__related-name">{rel.h1}</span>
-                <span className="CompressImage__related-desc">
-                  Compress images to {FORMAT_CONFIG[rel.format]?.ext?.toUpperCase()} online, free
-                </span>
-              </Link>
-            )
+            const compRel = COMPRESSIONS[relSlug]
+            if (compRel) {
+              return (
+                <Link key={relSlug} to={`/${relSlug}`} className="CompressImage__related-card">
+                  <span className="CompressImage__related-name">{compRel.h1}</span>
+                  <span className="CompressImage__related-desc">
+                    Compress images to {FORMAT_CONFIG[compRel.format]?.ext?.toUpperCase()} online, free
+                  </span>
+                </Link>
+              )
+            }
+            const convRel = CONVERSIONS[relSlug]
+            if (convRel) {
+              return (
+                <Link key={relSlug} to={`/${relSlug}`} className="CompressImage__related-card">
+                  <span className="CompressImage__related-name">{convRel.h1}</span>
+                  <span className="CompressImage__related-desc">
+                    Convert {FORMAT_LABELS[convRel.from]} to {FORMAT_LABELS[convRel.to]} online, free
+                  </span>
+                </Link>
+              )
+            }
+            return null
           })}
         </div>
       </nav>

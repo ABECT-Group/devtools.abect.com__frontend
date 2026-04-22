@@ -274,6 +274,26 @@ export default function WebPConverter() {
       <nav className="WebPConverter__related">
         <h2 className="WebPConverter__section-title">Related tools</h2>
         <div className="WebPConverter__related-grid">
+          <Link to="/png-to-webp" className="WebPConverter__related-card">
+            <span className="WebPConverter__related-name">PNG to WebP</span>
+            <span className="WebPConverter__related-desc">Convert PNG images to WebP — up to 26% smaller</span>
+          </Link>
+          <Link to="/jpg-to-webp" className="WebPConverter__related-card">
+            <span className="WebPConverter__related-name">JPG to WebP</span>
+            <span className="WebPConverter__related-desc">Convert JPG images to WebP — 25–34% smaller files</span>
+          </Link>
+          <Link to="/webp-to-jpg" className="WebPConverter__related-card">
+            <span className="WebPConverter__related-name">WebP to JPG</span>
+            <span className="WebPConverter__related-desc">Convert WebP to JPG for maximum compatibility</span>
+          </Link>
+          <Link to="/webp-to-png" className="WebPConverter__related-card">
+            <span className="WebPConverter__related-name">WebP to PNG</span>
+            <span className="WebPConverter__related-desc">Convert WebP to PNG — preserves transparency</span>
+          </Link>
+          <Link to="/compress-webp" className="WebPConverter__related-card">
+            <span className="WebPConverter__related-name">Compress WebP</span>
+            <span className="WebPConverter__related-desc">Reduce WebP file size with adjustable quality</span>
+          </Link>
           <Link to="/favicon-generator" className="WebPConverter__related-card">
             <span className="WebPConverter__related-name">Favicon Generator</span>
             <span className="WebPConverter__related-desc">Generate favicons from text, emoji, or image</span>

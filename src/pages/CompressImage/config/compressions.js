@@ -76,7 +76,7 @@ export const COMPRESSIONS = {
         answer: 'Yes. After compression, a thumbnail of the result appears in the Preview column. Click it to open a fullscreen lightbox so you can inspect quality before downloading. If the result looks too compressed, adjust the quality slider and re-compress.',
       },
     ],
-    relatedSlugs: ['compress-png', 'compress-webp'],
+    relatedSlugs: ['compress-png', 'compress-webp', 'jpg-to-webp', 'jpg-to-png'],
   },
 
   'compress-png': {
@@ -140,7 +140,7 @@ export const COMPRESSIONS = {
         answer: 'Yes. After compression, a thumbnail appears in the Preview column. Click it to open the image fullscreen and inspect the result before downloading.',
       },
     ],
-    relatedSlugs: ['compress-jpg', 'compress-webp'],
+    relatedSlugs: ['compress-jpg', 'compress-webp', 'png-to-webp', 'png-to-jpg'],
   },
 
   'compress-webp': {
@@ -209,6 +209,6 @@ export const COMPRESSIONS = {
         answer: 'Yes. After compression, a thumbnail of the result appears in the Preview column. Click it to open a fullscreen view so you can compare quality before downloading. If needed, adjust the quality slider and re-compress.',
       },
     ],
-    relatedSlugs: ['compress-jpg', 'compress-png'],
+    relatedSlugs: ['compress-jpg', 'compress-png', 'webp-to-jpg', 'webp-to-png'],
   },
 }

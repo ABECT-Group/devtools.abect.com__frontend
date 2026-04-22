@@ -9,7 +9,109 @@
   &__sub {
     font-size: 0.9375rem;
     color: var(--text-muted);
+    line-height: 1.7;
+    max-width: 720px;
     margin-bottom: 32px;
+  }
+
+  // ── Bookmark tab ─────────────────────────────────────────────
+
+  &__bookmark-wrap {
+    position: relative;
+    margin-bottom: 32px;
+
+    // Desktop: pull out of flow, fix to right edge
+    @media (min-width: 769px) {
+      position: fixed;
+      right: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 50;
+      margin-bottom: 0;
+    }
+  }
+
+  &__bookmark-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 8px 14px;
+    font-size: 0.8125rem;
+    font-weight: 500;
+    cursor: pointer;
+    opacity: 0.9;
+    transition: opacity 0.2s, padding 0.2s;
+
+    &:hover {
+      opacity: 1;
+    }
+
+    // Desktop: vertical tab, text bottom-to-top, icon at bottom
+    @media (min-width: 769px) {
+      border-radius: 0 6px 6px 0;
+      padding: 14px 9px;
+      writing-mode: vertical-rl;
+      text-orientation: mixed;
+      transform: rotate(180deg);
+
+      svg {
+        transform: rotate(-90deg);
+      }
+
+      &:hover {
+        padding-right: 12px;
+      }
+    }
+  }
+
+  &__bookmark-hint {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: var(--bg-sidebar);
+    border: 1px solid var(--border-blue);
+    border-radius: var(--radius-md);
+    padding: 6px 12px;
+    font-size: 0.8125rem;
+    color: var(--text-primary);
+    white-space: nowrap;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    animation: bookmark-fade-in 0.15s ease;
+    pointer-events: none;
+
+    strong {
+      color: var(--accent);
+      font-weight: 700;
+    }
+
+    // Mobile: appears to the right of the button
+    left: calc(100% + 10px);
+
+    // Desktop: appears to the left of the fixed tab
+    @media (min-width: 769px) {
+      left: auto;
+      right: calc(100% + 10px);
+
+      &::after {
+        content: '';
+        position: absolute;
+        left: 100%;
+        top: 50%;
+        transform: translateY(-50%);
+        border: 5px solid transparent;
+        border-left-color: var(--bg-sidebar);
+      }
+    }
+  }
+
+  // ── Popular tools ────────────────────────────────────────────
+
+  &__popular {
+    margin-bottom: 56px;
   }
 
   &__grid {
@@ -31,7 +133,6 @@
       border-color: var(--accent);
       box-shadow: 0 0 0 1px var(--accent);
     }
-
   }
 
   &__tile-category {
@@ -56,9 +157,7 @@
     line-height: 1.55;
   }
 
-  &__tools {
-    margin-bottom: 56px;
-  }
+  // ── Shared text styles ───────────────────────────────────────
 
   &__section-title {
     font-size: 1.125rem;
@@ -75,8 +174,51 @@
     margin-bottom: 16px;
   }
 
+  // ── Technical section ────────────────────────────────────────
+
+  &__technical {
+    margin-bottom: 56px;
+  }
+
+  &__tech-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 16px;
+    margin-top: 4px;
+  }
+
+  &__tech-card {
+    background: var(--bg-sidebar);
+    border: 1px solid var(--border-base);
+    border-radius: var(--radius-lg);
+    padding: 20px 24px;
+  }
+
+  &__tech-name {
+    font-size: 0.9375rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 8px;
+  }
+
+  &__tech-desc {
+    font-size: 0.875rem;
+    color: var(--text-muted);
+    line-height: 1.65;
+  }
+
+  // ── Why section ──────────────────────────────────────────────
+
   &__why {
-    margin-bottom: 48px;
+    margin-bottom: 56px;
+  }
+
+  &__why-heading {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-top: 24px;
+    margin-bottom: 8px;
   }
 
   &__why-list {
@@ -85,6 +227,7 @@
     flex-direction: column;
     gap: 8px;
     max-width: 720px;
+    margin-top: 16px;
 
     li {
       font-size: 0.9375rem;
@@ -97,6 +240,94 @@
       }
     }
   }
+
+  // ── Changelog ────────────────────────────────────────────────
+
+  &__changelog {
+    margin-bottom: 56px;
+  }
+
+  &__changelog-list {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+
+  &__changelog-card {
+    background: var(--bg-sidebar);
+    border: 1px solid var(--border-base);
+    border-radius: var(--radius-lg);
+    padding: 16px 20px;
+  }
+
+  &__changelog-title {
+    font-size: 0.9375rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    line-height: 1.55;
+    margin: 0 0 8px;
+  }
+
+  &__changelog-link {
+    color: var(--accent);
+    text-decoration: underline;
+
+    &:visited {
+      color: var(--accent);
+    }
+
+    &:hover {
+      color: var(--accent-hover);
+    }
+  }
+
+  &__changelog-body {
+    font-size: 0.875rem;
+    color: var(--text-muted);
+    line-height: 1.65;
+    margin-bottom: 12px;
+  }
+
+  &__changelog-meta {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  &__changelog-author {
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: var(--accent);
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  &__changelog-date {
+    font-size: 0.8125rem;
+    color: var(--text-faint);
+  }
+
+  &__changelog-more {
+    background: none;
+    border: 1px solid var(--border-base);
+    border-radius: var(--radius-md);
+    color: var(--text-secondary);
+    font-size: 0.875rem;
+    padding: 8px 16px;
+    cursor: pointer;
+    transition: border-color 0.2s, color 0.2s;
+
+    &:hover {
+      border-color: var(--accent);
+      color: var(--text-primary);
+    }
+  }
+
+  // ── Categories ───────────────────────────────────────────────
 
   &__categories {
     margin-bottom: 48px;
@@ -113,6 +344,10 @@
     border: 1px solid var(--border-base);
     border-radius: var(--radius-lg);
     padding: 20px 24px;
+
+    &--soon {
+      opacity: 0.6;
+    }
   }
 
   &__category-title {
@@ -120,11 +355,26 @@
     font-weight: 600;
     color: var(--text-primary);
     margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
   }
 
   &__category-desc {
     font-size: 0.875rem;
     color: var(--text-muted);
     line-height: 1.65;
+  }
+
+  &__coming-soon {
+    font-size: 0.6875rem;
+    font-weight: 600;
+    color: var(--text-faint);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    background: var(--bg-main);
+    border: 1px solid var(--border-base);
+    border-radius: 4px;
+    padding: 2px 6px;
   }
 }
