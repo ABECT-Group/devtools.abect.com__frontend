@@ -1,4 +1,4 @@
-import { mkdir, readFile, rm, writeFile } from 'node:fs/promises'
+import { mkdir, readFile, rm, stat, writeFile } from 'node:fs/promises'
 import path from 'node:path'
 import { fileURLToPath, pathToFileURL } from 'node:url'
 import { prerenderRoutes } from '../src/prerender-routes.js'
@@ -10,7 +10,9 @@ const distDir = path.join(rootDir, 'dist')
 const templatePath = path.join(distDir, 'index.html')
 const serverEntryPath = path.join(distDir, 'server', 'entry-server.js')
 
-const template = await readFile(templatePath, 'utf8')
+const rawTemplate = await readFile(templatePath, 'utf8')
+// Strip crossorigin from same-origin stylesheet links (Vite adds it for module scripts; unnecessary for same-origin assets)
+const template = rawTemplate.replace(/<link rel="stylesheet" crossorigin /g, '<link rel="stylesheet" ')
 const { render } = await import(pathToFileURL(serverEntryPath).href)
 
 for (const route of prerenderRoutes) {
@@ -25,6 +27,28 @@ for (const route of prerenderRoutes) {
 
   await mkdir(path.dirname(outputPath), { recursive: true })
   await writeFile(outputPath, pageHtml)
+}
+
+// Source file map — used to derive lastmod from actual file modification time
+const ROUTE_SOURCE = {
+  '/':                    'src/pages/Home/Home.jsx',
+  '/meta-tags-generator': 'src/pages/MetaTagsGenerator/MetaTagsGenerator.jsx',
+  '/webp-converter':      'src/pages/WebPConverter/WebPConverter.jsx',
+  '/favicon-generator':   'src/pages/FaviconGenerator/FaviconGenerator.jsx',
+  '/privacy-policy':      'src/pages/PrivacyPolicy/PrivacyPolicy.jsx',
+}
+const COMPRESS_SOURCE   = 'src/pages/CompressImage/config/compressions.js'
+const CONVERTER_SOURCE  = 'src/pages/ImageConverter/config/conversions.js'
+
+async function getLastmod(route) {
+  const rel = ROUTE_SOURCE[route]
+    ?? (route.startsWith('/compress') ? COMPRESS_SOURCE : CONVERTER_SOURCE)
+  try {
+    const { mtime } = await stat(path.join(rootDir, rel))
+    return mtime.toISOString().split('T')[0]
+  } catch {
+    return new Date().toISOString().split('T')[0]
+  }
 }
 
 // Priority map — based on search volume and page importance
@@ -46,12 +70,10 @@ const ROUTE_CONFIG = {
 }
 const DEFAULT_ROUTE_CONFIG = { priority: '0.7', changefreq: 'monthly' }
 
-const lastmod = new Date().toISOString().split('T')[0] // YYYY-MM-DD
-const sitemapXml = [
-  '<?xml version="1.0" encoding="UTF-8"?>',
-  '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">',
-  ...prerenderRoutes.map(route => {
+const sitemapEntries = await Promise.all(
+  prerenderRoutes.map(async route => {
     const cfg = ROUTE_CONFIG[route] ?? DEFAULT_ROUTE_CONFIG
+    const lastmod = await getLastmod(route)
     return [
       '  <url>',
       `    <loc>${new URL(route, SITE_ORIGIN).href}</loc>`,
@@ -60,7 +82,12 @@ const sitemapXml = [
       `    <priority>${cfg.priority}</priority>`,
       '  </url>',
     ].join('\n')
-  }),
+  })
+)
+const sitemapXml = [
+  '<?xml version="1.0" encoding="UTF-8"?>',
+  '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">',
+  ...sitemapEntries,
   '</urlset>',
 ].join('\n')
 
