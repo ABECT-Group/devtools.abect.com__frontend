@@ -111,6 +111,119 @@
     }
   }
 
+  &__table-wrap {
+    max-width: 720px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    border: 1px solid var(--border-base);
+    border-radius: var(--radius-md);
+    overflow-x: auto;
+  }
+
+  &__table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.75rem;
+
+    th {
+      text-align: left;
+      padding: 8px 16px;
+      background: var(--bg-sidebar);
+      color: var(--text-primary);
+      font-weight: 600;
+      border-bottom: 2px solid var(--border-base);
+      white-space: nowrap;
+    }
+
+    td {
+      padding: 8px 16px;
+      color: var(--text-secondary);
+      border-bottom: 1px solid var(--border-base);
+      vertical-align: middle;
+
+      code {
+        font-family: 'SFMono-Regular', Consolas, monospace;
+        font-size: 0.875em;
+        color: var(--accent-code);
+        background: var(--bg-card);
+        padding: 1px 5px;
+        border-radius: 3px;
+      }
+    }
+
+    tbody tr:last-child td {
+      border-bottom: none;
+    }
+  }
+
+  &__table-highlight {
+    background: rgba(59, 130, 246, 0.06);
+
+    td {
+      color: var(--text-primary);
+      font-weight: 500;
+    }
+  }
+
+  &__code-block {
+    max-width: 720px;
+    margin-top: 12px;
+    margin-bottom: 20px;
+    border: 1px solid var(--border-base);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+  }
+
+  &__code-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 16px;
+    background: var(--bg-sidebar);
+    border-bottom: 1px solid var(--border-base);
+  }
+
+  &__code-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--text-faint);
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+  }
+
+  &__code-copy {
+    font-size: 0.8125rem;
+    font-weight: 500;
+    color: var(--accent);
+    background: transparent;
+    border: 1px solid var(--border-blue);
+    border-radius: var(--radius-sm);
+    padding: 3px 12px;
+    cursor: pointer;
+    transition: border-color 0.15s, color 0.15s;
+
+    &:hover {
+      border-color: var(--accent);
+    }
+
+    &--done {
+      color: var(--green);
+      border-color: var(--green-border);
+    }
+  }
+
+  &__code {
+    background: var(--bg-page);
+    padding: 16px 20px;
+    font-family: 'Menlo', 'Monaco', 'Consolas', monospace;
+    font-size: 0.8125rem;
+    color: var(--accent-code);
+    line-height: 1.65;
+    overflow-x: auto;
+    white-space: pre;
+    margin: 0;
+  }
+
   &__related {
     margin-bottom: 48px;
   }

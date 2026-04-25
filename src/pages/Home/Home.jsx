@@ -48,6 +48,11 @@ const TECH_STACK = [
 
 const CHANGELOG = [
   {
+    title: 'SEO overhaul — WebP Converter, Favicon Generator, Meta Tag Generator',
+    body: <>Deep SEO overhaul of three core tool pages: <Link to="/webp-converter" className="Home__changelog-link">WebP Converter</Link>, <Link to="/favicon-generator" className="Home__changelog-link">Favicon Generator</Link>, and <Link to="/meta-tags-generator" className="Home__changelog-link">Meta Tag Generator</Link>. Each page received a stronger H1 targeting the primary keyword, an expanded FAQ (8–9 questions) as a single source for both content and FAQPage JSON-LD, a new HowTo JSON-LD schema, format and size comparison tables, and implementation guides with copy-ready code blocks for React, Next.js, Vue/Nuxt, and WordPress.</>,
+    date: 'Apr 25, 2026', datetime: '2026-04-25',
+  },
+  {
     title: 'Home page — SEO restructure',
     body: 'Full SEO overhaul of the home page: added Popular tools, What\'s new, How it works, Why browser-based, and Tool categories sections. FAQ expanded to 8 questions covering formats, batch processing, watermarks, and pricing. Meta description shortened to fit SERP. JSON-LD fixed to render in <head>. Semantic HTML improved: aria-label on sections, <article> for changelog cards, <time datetime> for all dates.',
     date: 'Apr 22, 2026', datetime: '2026-04-22',
