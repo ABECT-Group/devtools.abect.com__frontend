@@ -1,0 +1,58 @@
+.CodeBox {
+  max-width: 720px;
+  margin-top: 12px;
+  margin-bottom: 20px;
+  border: 1px solid var(--border-base);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 16px;
+    background: var(--bg-sidebar);
+    border-bottom: 1px solid var(--border-base);
+  }
+
+  &__label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--text-faint);
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+  }
+
+  &__copy {
+    font-size: 0.8125rem;
+    font-weight: 500;
+    color: var(--accent);
+    background: transparent;
+    border: 1px solid var(--border-blue);
+    border-radius: var(--radius-sm);
+    padding: 3px 12px;
+    cursor: pointer;
+    transition: border-color 0.15s, color 0.15s;
+
+    &:hover {
+      border-color: var(--accent);
+    }
+
+    &--done {
+      color: var(--green);
+      border-color: var(--green-border);
+    }
+  }
+
+  &__code {
+    background: var(--bg-page);
+    padding: 16px 20px;
+    font-family: 'Menlo', 'Monaco', 'Consolas', monospace;
+    font-size: 0.8125rem;
+    color: var(--accent-code);
+    line-height: 1.65;
+    overflow-x: auto;
+    white-space: pre;
+    margin: 0;
+  }
+}

@@ -1,26 +1,26 @@
 import { useEffect, useRef, useState } from 'react'
 import { Helmet } from 'react-helmet-async'
-import { Link, Navigate, useLocation } from 'react-router-dom'
+import { Navigate, useLocation } from 'react-router-dom'
 import FAQ from '../../components/FAQ/FAQ'
+import PageHeader from '../../components/PageHeader/PageHeader'
+import RelatedTools from '../../components/RelatedTools/RelatedTools'
 import Lightbox from '../../components/Lightbox/Lightbox'
-import CompressDropZone from './components/CompressDropZone/CompressDropZone'
+import DropZone from '../../components/DropZone/DropZone'
+import ToolSection from '../../components/ToolSection/ToolSection'
+import ContentSection from '../../components/ContentSection/ContentSection'
 import CompressFileTable from './components/CompressFileTable/CompressFileTable'
 import CompressFormatSelector from './components/CompressFormatSelector/CompressFormatSelector'
-import {
-  COMPRESS_SLUGS,
-  COMPRESSIONS,
-  FORMAT_CONFIG,
-} from './config/compressions'
-import { CONVERSIONS, FORMAT_LABELS } from '../ImageConverter/config/conversions'
+import { COMPRESSIONS, COMPRESS_CARD_DESC, CONVERT_CARD_DESC } from './data/content'
+import { FORMAT_CONFIG, DEFAULT_QUALITY } from './data/formats'
+import { OG_IMAGE, buildHelmet } from './data/helmet'
+import { buildJsonLdApp, buildJsonLdFaq } from './data/jsonld'
+import { CONVERSIONS } from '../ImageConverter/data/content'
+import { FORMAT_LABELS } from '../ImageConverter/data/formats'
 import { buildZip } from './utils/buildZip'
 import { compressImage } from './utils/compressImage'
 import { triggerDownload } from './utils/download'
 import './CompressImage.scss'
 
-const BASE_URL = 'https://devtools.abect.com'
-const OG_IMAGE_URL = `${BASE_URL}/seo/image-converter-og.jpg`
-
-const DEFAULT_QUALITY = 82
 
 export default function CompressImage() {
   const { pathname } = useLocation()
@@ -57,7 +57,7 @@ export default function CompressImage() {
 
   const { mime, ext, hasQuality } = formatConfig
   const toLabel = formatKey?.toUpperCase() ?? 'JPG'
-  const pageUrl = `${BASE_URL}/${slug}`
+  const pageUrl = buildHelmet(slug)
 
   // ── File handlers ──────────────────────────────────────────────────────────
 
@@ -148,35 +148,18 @@ export default function CompressImage() {
 
   // ── Render ─────────────────────────────────────────────────────────────────
 
-  const jsonLdApp = {
-    '@context': 'https://schema.org',
-    '@type': 'WebApplication',
-    'name': config.h1,
-    'url': pageUrl,
-    'description': config.description,
-    'applicationCategory': 'UtilitiesApplication',
-    'operatingSystem': 'Any',
-    'browserRequirements': 'Requires JavaScript',
-    'offers': { '@type': 'Offer', 'price': '0', 'priceCurrency': 'USD' },
-    'featureList': [
-      `Compress images to ${toLabel}`,
-      'Per-file quality control',
-      'Live fullscreen preview of compressed result',
-      'Batch compression',
-      'No file upload — 100% private',
-      'Free, instant, browser-based',
-    ],
-  }
+  const jsonLdApp = buildJsonLdApp(config, pageUrl, toLabel)
+  const jsonLdFaq = buildJsonLdFaq(config)
 
-  const jsonLdFaq = {
-    '@context': 'https://schema.org',
-    '@type': 'FAQPage',
-    'mainEntity': config.faq.map(item => ({
-      '@type': 'Question',
-      'name': item.question,
-      'acceptedAnswer': { '@type': 'Answer', 'text': item.answer },
-    })),
-  }
+  const relatedItems = config.relatedSlugs
+    .map(relSlug => {
+      const compRel = COMPRESSIONS[relSlug]
+      if (compRel) return { to: `/${relSlug}`, name: compRel.h1, desc: COMPRESS_CARD_DESC[compRel.format] ?? `Compress ${compRel.format.toUpperCase()} images` }
+      const convRel = CONVERSIONS[relSlug]
+      if (convRel) return { to: `/${relSlug}`, name: convRel.h1, desc: CONVERT_CARD_DESC[convRel.to] ?? `${FORMAT_LABELS[convRel.from]} to ${FORMAT_LABELS[convRel.to]}` }
+      return null
+    })
+    .filter(Boolean)
 
   return (
     <>
@@ -190,24 +173,23 @@ export default function CompressImage() {
         <meta property="og:description" content={config.description} />
         <meta property="og:type" content="website" />
         <meta property="og:url" content={pageUrl} />
-        <meta property="og:image" content={OG_IMAGE_URL} />
+        <meta property="og:image" content={OG_IMAGE} />
         <meta property="og:image:type" content="image/jpeg" />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content={config.title} />
         <meta name="twitter:description" content={config.description} />
-        <meta name="twitter:image" content={OG_IMAGE_URL} />
+        <meta name="twitter:image" content={OG_IMAGE} />
         <script type="application/ld+json">{JSON.stringify(jsonLdApp)}</script>
         <script type="application/ld+json">{JSON.stringify(jsonLdFaq)}</script>
       </Helmet>
 
-      <h1 className="CompressImage__title">{config.h1}</h1>
-      <p className="CompressImage__sub">{config.sub}</p>
+      <PageHeader title={config.h1} subtitle={config.sub} />
 
-      <section className="CompressImage__tool">
+      <ToolSection>
         <CompressFormatSelector format={formatKey} />
-        <CompressDropZone onFilesAdded={addFiles} />
+        <DropZone onFilesAdded={addFiles} />
         {files.length > 0 && (
           <CompressFileTable
             files={files}
@@ -223,68 +205,36 @@ export default function CompressImage() {
             onClearAll={handleClearAll}
           />
         )}
-      </section>
+      </ToolSection>
 
-      <section className="CompressImage__section">
-        <h2 className="CompressImage__section-title">How to compress {toLabel} images</h2>
-        <ol className="CompressImage__steps">
+      <ContentSection title={`How to compress ${toLabel} images`}>
+        <ol className="ContentSection__steps">
           {config.howTo.map((step, i) => <li key={i}>{step}</li>)}
         </ol>
-      </section>
+      </ContentSection>
 
-      <section className="CompressImage__section">
-        <h2 className="CompressImage__section-title">{config.whatIs.heading}</h2>
+      <ContentSection title={config.whatIs.heading}>
         {config.whatIs.blocks.map((block, i) => {
           if (block.type === 'p') {
-            return <p key={i} className="CompressImage__text">{block.text}</p>
+            return <p key={i} className="ContentSection__text">{block.text}</p>
           }
           if (block.type === 'h3') {
-            return <h3 key={i} className="CompressImage__subsection-title">{block.text}</h3>
+            return <h3 key={i} className="ContentSection__subsection-title">{block.text}</h3>
           }
           if (block.type === 'ul') {
             return (
-              <ul key={i} className="CompressImage__list">
+              <ul key={i} className="ContentSection__list">
                 {block.items.map((item, j) => <li key={j}>{item}</li>)}
               </ul>
             )
           }
           return null
         })}
-      </section>
+      </ContentSection>
 
       <FAQ items={config.faq} />
 
-      <nav className="CompressImage__related">
-        <h2 className="CompressImage__section-title">Related tools</h2>
-        <div className="CompressImage__related-grid">
-          {config.relatedSlugs.map(relSlug => {
-            const compRel = COMPRESSIONS[relSlug]
-            if (compRel) {
-              return (
-                <Link key={relSlug} to={`/${relSlug}`} className="CompressImage__related-card">
-                  <span className="CompressImage__related-name">{compRel.h1}</span>
-                  <span className="CompressImage__related-desc">
-                    Compress images to {FORMAT_CONFIG[compRel.format]?.ext?.toUpperCase()} online, free
-                  </span>
-                </Link>
-              )
-            }
-            const convRel = CONVERSIONS[relSlug]
-            if (convRel) {
-              return (
-                <Link key={relSlug} to={`/${relSlug}`} className="CompressImage__related-card">
-                  <span className="CompressImage__related-name">{convRel.h1}</span>
-                  <span className="CompressImage__related-desc">
-                    Convert {FORMAT_LABELS[convRel.from]} to {FORMAT_LABELS[convRel.to]} online, free
-                  </span>
-                </Link>
-              )
-            }
-            return null
-          })}
-        </div>
-      </nav>
-
+      <RelatedTools items={relatedItems} />
     </main>
     </>
   )

@@ -1,5 +1,6 @@
 import { useEffect, useMemo } from 'react'
 import { formatSize } from '../../utils/formatSize'
+import { DeleteButton, DownloadButton, SecondaryButton } from '../../../../components/Buttons/Buttons'
 import './FileRow.scss'
 
 function shortenFileName(name) {
@@ -31,18 +32,7 @@ export default function FileRow({ file, onQualityChange, onConvert, onDownload, 
   return (
     <div className="FileRow">
       <div className="FileRow__delete">
-        <button
-          className="FileRow__btn-delete"
-          onClick={() => onDelete(file.id)}
-          aria-label="Remove file"
-        >
-          <svg viewBox="0 0 24 24">
-            <polyline points="3 6 5 6 21 6" />
-            <path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6" />
-            <path d="M10 11v6M14 11v6" />
-            <path d="M9 6V4a1 1 0 011-1h4a1 1 0 011 1v2" />
-          </svg>
-        </button>
+        <DeleteButton onClick={() => onDelete(file.id)} />
       </div>
 
       <div className="FileRow__info">
@@ -117,27 +107,11 @@ export default function FileRow({ file, onQualityChange, onConvert, onDownload, 
       </div>
 
       <div className="FileRow__convert">
-        <button
-          className="FileRow__btn-convert"
-          onClick={() => onConvert(file.id)}
-          disabled={isConverting}
-        >
-          Convert
-        </button>
+        <SecondaryButton onClick={() => onConvert(file.id)} disabled={isConverting}>Convert</SecondaryButton>
       </div>
 
       <div className="FileRow__download">
-        <button
-          className={`FileRow__btn-download${isDone ? ' FileRow__btn-download--visible' : ''}`}
-          onClick={() => onDownload(file.id)}
-          aria-label="Download"
-        >
-          <svg viewBox="0 0 24 24">
-            <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4" />
-            <polyline points="7 10 12 15 17 10" />
-            <line x1="12" y1="15" x2="12" y2="3" />
-          </svg>
-        </button>
+        <DownloadButton onClick={() => onDownload(file.id)} visible={isDone} />
       </div>
     </div>
   )

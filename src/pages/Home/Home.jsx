@@ -48,6 +48,11 @@ const TECH_STACK = [
 
 const CHANGELOG = [
   {
+    title: 'Codebase refactor — Phase 1: shared UI Kit and data/ structure',
+    body: 'Major internal refactor to standardize how tools are built across the codebase. Extracted duplicated per-page components into a shared UI Kit — DropZone, ImagePicker, Table, Buttons, CodeBox, ContentSection, PageHeader, ToolSection, RelatedTools, and Lightbox. Each tool page now follows a consistent data/ structure (helmet.js, jsonld.js, content.js, formats.js) that separates SEO metadata, structured data, and content from UI logic. Adds src/config/site.js as a single source for URL and OG image builders.',
+    date: 'Apr 28, 2026', datetime: '2026-04-28',
+  },
+  {
     title: 'SEO overhaul — WebP Converter, Favicon Generator, Meta Tag Generator',
     body: <>Deep SEO overhaul of three core tool pages: <Link to="/webp-converter" className="Home__changelog-link">WebP Converter</Link>, <Link to="/favicon-generator" className="Home__changelog-link">Favicon Generator</Link>, and <Link to="/meta-tags-generator" className="Home__changelog-link">Meta Tag Generator</Link>. Each page received a stronger H1 targeting the primary keyword, an expanded FAQ (8–9 questions) as a single source for both content and FAQPage JSON-LD, a new HowTo JSON-LD schema, format and size comparison tables, and implementation guides with copy-ready code blocks for React, Next.js, Vue/Nuxt, and WordPress.</>,
     date: 'Apr 25, 2026', datetime: '2026-04-25',

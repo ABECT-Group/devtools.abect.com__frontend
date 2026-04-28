@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router-dom'
-import { CONVERSIONS, FROM_OPTIONS, TO_OPTIONS } from '../../config/conversions'
+import { CONVERSIONS } from '../../data/content'
+import { FROM_OPTIONS, TO_OPTIONS } from '../../data/formats'
 import './FormatSelector.scss'
 
 export default function FormatSelector({ from, to }) {

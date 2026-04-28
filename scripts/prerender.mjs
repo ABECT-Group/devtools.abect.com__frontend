@@ -37,8 +37,8 @@ const ROUTE_SOURCE = {
   '/favicon-generator':   'src/pages/FaviconGenerator/FaviconGenerator.jsx',
   '/privacy-policy':      'src/pages/PrivacyPolicy/PrivacyPolicy.jsx',
 }
-const COMPRESS_SOURCE   = 'src/pages/CompressImage/config/compressions.js'
-const CONVERTER_SOURCE  = 'src/pages/ImageConverter/config/conversions.js'
+const COMPRESS_SOURCE   = 'src/pages/CompressImage/data/content.js'
+const CONVERTER_SOURCE  = 'src/pages/ImageConverter/data/content.js'
 
 async function getLastmod(route) {
   const rel = ROUTE_SOURCE[route]

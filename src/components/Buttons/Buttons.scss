@@ -1,0 +1,161 @@
+// ─── Icon buttons ─────────────────────────────────────────────────────────────
+
+.DeleteButton {
+  width: 30px;
+  height: 30px;
+  background: transparent;
+  border: none;
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--text-faint);
+  transition: color 0.15s, background 0.15s;
+
+  &:hover {
+    color: var(--color-error);
+    background: var(--color-error-bg);
+  }
+
+  svg {
+    width: 16px;
+    height: 16px;
+    stroke: currentColor;
+    fill: none;
+    stroke-width: 1.8;
+  }
+}
+
+.DownloadButton {
+  width: 30px;
+  height: 30px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-green);
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  opacity: 0;
+  pointer-events: none;
+  transition: background 0.1s, opacity 0.15s;
+
+  &--visible {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  &:hover { background: var(--green-bg); }
+
+  svg {
+    width: 14px;
+    height: 14px;
+    stroke: var(--green);
+    fill: none;
+    stroke-width: 2;
+  }
+}
+
+.ClearAllButton {
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  background: transparent;
+  color: var(--color-error);
+  border: 1px solid var(--color-error-border);
+  border-radius: 50%;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.15s, border-color 0.15s, background 0.15s;
+
+  &:hover {
+    border-color: var(--color-error);
+    background: var(--color-error-bg);
+  }
+
+  svg {
+    width: 16px;
+    height: 16px;
+    stroke: currentColor;
+    fill: none;
+    stroke-width: 1.8;
+  }
+}
+
+// ─── Text buttons ─────────────────────────────────────────────────────────────
+
+.PrimaryButton {
+  font-size: 0.875rem;
+  font-weight: 600;
+  padding: 8px 20px;
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  white-space: nowrap;
+  transition: background 0.15s;
+
+  &:hover:not(:disabled) { background: var(--accent-hover); }
+  &:disabled { opacity: 0.5; cursor: default; }
+
+  &--full {
+    width: 100%;
+    justify-content: center;
+    padding: 12px 20px;
+  }
+
+  &__spinner {
+    width: 14px;
+    height: 14px;
+    border: 2px solid rgba(255, 255, 255, 0.35);
+    border-top-color: #fff;
+    border-radius: 50%;
+    animation: PrimaryButton-spin 0.7s linear infinite;
+    flex-shrink: 0;
+  }
+
+  @keyframes PrimaryButton-spin {
+    to { transform: rotate(360deg); }
+  }
+}
+
+.SecondaryButton {
+  font-size: 0.8125rem;
+  padding: 6px 14px;
+  border: 1px solid var(--border-blue);
+  border-radius: var(--radius-sm);
+  color: var(--accent-light);
+  background: transparent;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: border-color 0.1s, color 0.1s;
+
+  &:hover:not(:disabled) { border-color: var(--accent); color: var(--accent); }
+  &:disabled { opacity: 0.4; cursor: default; }
+
+  &--full { width: 100%; }
+}
+
+.AccentButton {
+  font-size: 0.875rem;
+  font-weight: 600;
+  padding: 8px 20px;
+  background: transparent;
+  color: var(--green);
+  border: 1px solid var(--border-green);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: border-color 0.1s, color 0.1s;
+
+  &:disabled { opacity: 0.35; cursor: default; }
+
+  &--full { width: 100%; }
+}

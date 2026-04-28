@@ -3,6 +3,15 @@ import { Link } from 'react-router-dom'
 import './CookieConsent.scss'
 
 const CONSENT_KEY = 'toolsabect_cookie_consent'
+const GTM_ID = 'GTM-N5MK5G5Z'
+
+function injectGTM() {
+  if (document.querySelector('[data-gtm-injected]')) return
+  const script = document.createElement('script')
+  script.setAttribute('data-gtm-injected', '1')
+  script.textContent = `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','${GTM_ID}');`
+  document.head.appendChild(script)
+}
 
 function pushConsentGranted() {
   window.dataLayer = window.dataLayer || []
@@ -20,6 +29,7 @@ export default function CookieConsent() {
 
     if (storedStatus === 'accepted') {
       pushConsentGranted()
+      injectGTM()
     }
 
     function handleOpen() { setVisible(true) }
@@ -34,6 +44,7 @@ export default function CookieConsent() {
   function handleAccept() {
     window.localStorage.setItem(CONSENT_KEY, 'accepted')
     pushConsentGranted()
+    injectGTM()
     setVisible(false)
   }
 

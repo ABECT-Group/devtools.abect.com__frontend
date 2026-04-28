@@ -1,5 +1,6 @@
 import { formatSize } from '../../utils/formatSize'
 import CompressFileRow from '../CompressFileRow/CompressFileRow'
+import { ClearAllButton, PrimaryButton, AccentButton } from '../../../../components/Buttons/Buttons'
 import './CompressFileTable.scss'
 
 export default function CompressFileTable({
@@ -100,27 +101,9 @@ export default function CompressFileTable({
         </div>
 
         <div className="CompressFileTable__actions">
-          <button
-            className="CompressFileTable__btn-clear-all"
-            onClick={onClearAll}
-            aria-label="Clear all files"
-            title="Clear all"
-          >
-            <svg viewBox="0 0 24 24" aria-hidden="true">
-              <circle cx="12" cy="12" r="8.5" />
-              <line x1="8.5" y1="15.5" x2="15.5" y2="8.5" />
-            </svg>
-          </button>
-          <button className="CompressFileTable__btn-compress-all" onClick={onCompressAll}>
-            Compress all
-          </button>
-          <button
-            className="CompressFileTable__btn-download-all"
-            onClick={onDownloadAll}
-            disabled={!hasCompressed}
-          >
-            Download all
-          </button>
+          <ClearAllButton onClick={onClearAll} />
+          <PrimaryButton onClick={onCompressAll}>Compress all</PrimaryButton>
+          <AccentButton onClick={onDownloadAll} disabled={!hasCompressed}>Download all</AccentButton>
         </div>
       </div>
     </div>

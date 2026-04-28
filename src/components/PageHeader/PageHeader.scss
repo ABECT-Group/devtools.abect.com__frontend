@@ -1,0 +1,15 @@
+.PageHeader {
+  &__title {
+    font-size: 1.375rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 6px;
+  }
+
+  &__subtitle {
+    font-size: 0.875rem;
+    color: var(--text-muted);
+    max-width: 800px;
+    margin-bottom: 24px;
+  }
+}

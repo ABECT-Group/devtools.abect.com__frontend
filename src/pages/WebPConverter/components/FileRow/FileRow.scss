@@ -17,33 +17,6 @@
     justify-content: center;
   }
 
-  &__btn-delete {
-    width: 30px;
-    height: 30px;
-    background: transparent;
-    border: none;
-    border-radius: var(--radius-sm);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    color: var(--text-faint);
-    transition: color 0.15s, background 0.15s;
-
-    &:hover {
-      color: var(--color-error);
-      background: var(--color-error-bg);
-    }
-
-    svg {
-      width: 16px;
-      height: 16px;
-      stroke: currentColor;
-      fill: none;
-      stroke-width: 1.8;
-    }
-  }
-
   &__info {
     padding: 12px 6px;
     display: flex;
@@ -211,49 +184,10 @@
 
   &__convert { padding: 12px 6px; }
 
-  &__btn-convert {
-    font-size: 0.8125rem;
-    padding: 6px 14px;
-    border: 1px solid var(--border-blue);
-    border-radius: var(--radius-sm);
-    color: var(--accent-light);
-    background: transparent;
-    cursor: pointer;
-    white-space: nowrap;
-    transition: border-color 0.1s, color 0.1s;
-
-    &:hover { border-color: var(--accent); color: var(--accent); }
-    &:disabled { opacity: 0.4; cursor: default; }
-  }
-
   &__download {
     padding: 12px 6px;
     display: flex;
     align-items: center;
-  }
-
-  &__btn-download {
-    width: 30px;
-    height: 30px;
-    border-radius: var(--radius-sm);
-    border: 1px solid var(--border-green);
-    background: transparent;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    opacity: 0;
-    pointer-events: none;
-    transition: background 0.1s, opacity 0.15s;
-
-    &--visible {
-      opacity: 1;
-      pointer-events: auto;
-    }
-
-    &:hover { background: var(--green-bg); }
-
-    svg { width: 14px; height: 14px; stroke: var(--green); fill: none; stroke-width: 2; }
   }
 
   @media (max-width: 767px) {

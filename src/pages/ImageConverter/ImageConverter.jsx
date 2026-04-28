@@ -1,25 +1,22 @@
 import { useEffect, useRef, useState } from 'react'
 import { Helmet } from 'react-helmet-async'
-import { Link, Navigate, useLocation } from 'react-router-dom'
+import { Navigate, useLocation } from 'react-router-dom'
 import FAQ from '../../components/FAQ/FAQ'
-import ConvertDropZone from './components/ConvertDropZone/ConvertDropZone'
+import PageHeader from '../../components/PageHeader/PageHeader'
+import RelatedTools from '../../components/RelatedTools/RelatedTools'
+import DropZone from '../../components/DropZone/DropZone'
+import ToolSection from '../../components/ToolSection/ToolSection'
+import ContentSection from '../../components/ContentSection/ContentSection'
 import ConvertFileTable from './components/ConvertFileTable/ConvertFileTable'
 import FormatSelector from './components/FormatSelector/FormatSelector'
-import {
-  ALL_SLUGS,
-  CONVERSIONS,
-  FORMAT_LABELS,
-  OUTPUT_EXT,
-  OUTPUT_MIME,
-  OUTPUT_QUALITY,
-} from './config/conversions'
+import { CONVERSIONS, FORMAT_CARD_DESC } from './data/content'
+import { FORMAT_LABELS, OUTPUT_EXT, OUTPUT_MIME, OUTPUT_QUALITY } from './data/formats'
+import { OG_IMAGE, buildHelmet } from './data/helmet'
+import { buildJsonLdApp, buildJsonLdFaq } from './data/jsonld'
 import { buildZip } from './utils/buildZip'
 import { convertImage } from './utils/convertImage'
 import { triggerDownload } from './utils/download'
 import './ImageConverter.scss'
-
-const BASE_URL = 'https://devtools.abect.com'
-const OG_IMAGE_URL = `${BASE_URL}/seo/image-converter-og.jpg`
 
 export default function ImageConverter() {
   const { pathname } = useLocation()
@@ -59,8 +56,7 @@ export default function ImageConverter() {
   const fromLabel = FORMAT_LABELS[config.from]
   const toLabel   = FORMAT_LABELS[config.to]
 
-  const pageUrl    = `${BASE_URL}/${slug}`
-  const ogImageUrl = OG_IMAGE_URL  // generic fallback — per-slug OG images to be created later
+  const pageUrl = buildHelmet(slug)
 
   // ── File handlers ──────────────────────────────────────────────────────────
 
@@ -138,33 +134,16 @@ export default function ImageConverter() {
 
   // ── Render ─────────────────────────────────────────────────────────────────
 
-  const jsonLdApp = {
-    '@context': 'https://schema.org',
-    '@type': 'WebApplication',
-    'name': config.h1,
-    'url': pageUrl,
-    'description': config.description,
-    'applicationCategory': 'UtilitiesApplication',
-    'operatingSystem': 'Any',
-    'browserRequirements': 'Requires JavaScript',
-    'offers': { '@type': 'Offer', 'price': '0', 'priceCurrency': 'USD' },
-    'featureList': [
-      `Convert ${fromLabel} to ${toLabel}`,
-      'Batch conversion',
-      'No file upload — 100% private',
-      'Free, instant, browser-based',
-    ],
-  }
+  const jsonLdApp = buildJsonLdApp(config, pageUrl, fromLabel, toLabel)
+  const jsonLdFaq = buildJsonLdFaq(config)
 
-  const jsonLdFaq = {
-    '@context': 'https://schema.org',
-    '@type': 'FAQPage',
-    'mainEntity': config.faq.map(item => ({
-      '@type': 'Question',
-      'name': item.question,
-      'acceptedAnswer': { '@type': 'Answer', 'text': item.answer },
-    })),
-  }
+  const relatedItems = config.relatedSlugs
+    .map(relSlug => {
+      const rel = CONVERSIONS[relSlug]
+      if (!rel) return null
+      return { to: `/${relSlug}`, name: rel.h1, desc: FORMAT_CARD_DESC[rel.to] ?? `${FORMAT_LABELS[rel.from]} to ${FORMAT_LABELS[rel.to]}` }
+    })
+    .filter(Boolean)
 
   return (
     <main className="ImageConverter">
@@ -176,24 +155,26 @@ export default function ImageConverter() {
         <meta property="og:description" content={config.description} />
         <meta property="og:type" content="website" />
         <meta property="og:url" content={pageUrl} />
-        <meta property="og:image" content={ogImageUrl} />
+        <meta property="og:image" content={OG_IMAGE} />
         <meta property="og:image:type" content="image/jpeg" />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content={config.title} />
         <meta name="twitter:description" content={config.description} />
-        <meta name="twitter:image" content={ogImageUrl} />
+        <meta name="twitter:image" content={OG_IMAGE} />
         <script type="application/ld+json">{JSON.stringify(jsonLdApp)}</script>
         <script type="application/ld+json">{JSON.stringify(jsonLdFaq)}</script>
       </Helmet>
 
-      <h1 className="ImageConverter__title">{config.h1}</h1>
-      <p className="ImageConverter__sub">{config.sub}</p>
+      <PageHeader title={config.h1} subtitle={config.sub} />
 
-      <section className="ImageConverter__tool">
+      <ToolSection>
         <FormatSelector from={config.from} to={config.to} />
-        <ConvertDropZone fromLabel={fromLabel} onFilesAdded={addFiles} />
+        <DropZone
+          onFilesAdded={addFiles}
+          title={`Drop ${fromLabel} files here or click to select`}
+        />
         {files.length > 0 && (
           <ConvertFileTable
             files={files}
@@ -206,68 +187,36 @@ export default function ImageConverter() {
             onClearAll={handleClearAll}
           />
         )}
-      </section>
+      </ToolSection>
 
-      <section className="ImageConverter__section">
-        <h2 className="ImageConverter__section-title">How to convert {fromLabel} to {toLabel}</h2>
-        <ol className="ImageConverter__steps">
+      <ContentSection title={`How to convert ${fromLabel} to ${toLabel}`}>
+        <ol className="ContentSection__steps">
           {config.howTo.map((step, i) => <li key={i}>{step}</li>)}
         </ol>
-      </section>
+      </ContentSection>
 
-      <section className="ImageConverter__section">
-        <h2 className="ImageConverter__section-title">{config.whatIs.heading}</h2>
+      <ContentSection title={config.whatIs.heading}>
         {config.whatIs.blocks.map((block, i) => {
           if (block.type === 'p') {
-            return <p key={i} className="ImageConverter__text">{block.text}</p>
+            return <p key={i} className="ContentSection__text">{block.text}</p>
           }
           if (block.type === 'h3') {
-            return <h3 key={i} className="ImageConverter__subsection-title">{block.text}</h3>
+            return <h3 key={i} className="ContentSection__subsection-title">{block.text}</h3>
           }
           if (block.type === 'ul') {
             return (
-              <ul key={i} className="ImageConverter__list">
+              <ul key={i} className="ContentSection__list">
                 {block.items.map((item, j) => <li key={j}>{item}</li>)}
               </ul>
             )
           }
           return null
         })}
-      </section>
+      </ContentSection>
 
       <FAQ items={config.faq} />
 
-      <nav className="ImageConverter__related">
-        <h2 className="ImageConverter__section-title">Related tools</h2>
-        <div className="ImageConverter__related-grid">
-          {config.relatedSlugs.map(relSlug => {
-            const rel = CONVERSIONS[relSlug]
-            if (!rel) return null
-            return (
-              <Link key={relSlug} to={`/${relSlug}`} className="ImageConverter__related-card">
-                <span className="ImageConverter__related-name">{rel.h1}</span>
-                <span className="ImageConverter__related-desc">
-                  Convert {FORMAT_LABELS[rel.from]} to {FORMAT_LABELS[rel.to]} online, free
-                </span>
-              </Link>
-            )
-          })}
-        </div>
-      </nav>
-
-      <nav className="ImageConverter__all-converters">
-        <h2 className="ImageConverter__section-title">All image converters</h2>
-        <div className="ImageConverter__all-grid">
-          {ALL_SLUGS.filter(s => s !== slug).map(s => {
-            const c = CONVERSIONS[s]
-            return (
-              <Link key={s} to={`/${s}`} className="ImageConverter__all-link">
-                {FORMAT_LABELS[c.from]} → {FORMAT_LABELS[c.to]}
-              </Link>
-            )
-          })}
-        </div>
-      </nav>
+      <RelatedTools items={relatedItems} />
     </main>
   )
 }

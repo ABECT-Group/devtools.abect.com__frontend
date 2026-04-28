@@ -1,5 +1,6 @@
 import { formatSize } from '../../utils/formatSize'
 import ConvertFileRow from '../ConvertFileRow/ConvertFileRow'
+import { ClearAllButton, PrimaryButton, AccentButton } from '../../../../components/Buttons/Buttons'
 import './ConvertFileTable.scss'
 
 export default function ConvertFileTable({
@@ -77,27 +78,9 @@ export default function ConvertFileTable({
         </div>
 
         <div className="ConvertFileTable__actions">
-          <button
-            className="ConvertFileTable__btn-clear-all"
-            onClick={onClearAll}
-            aria-label="Clear all files"
-            title="Clear all"
-          >
-            <svg viewBox="0 0 24 24" aria-hidden="true">
-              <circle cx="12" cy="12" r="8.5" />
-              <line x1="8.5" y1="15.5" x2="15.5" y2="8.5" />
-            </svg>
-          </button>
-          <button className="ConvertFileTable__btn-convert-all" onClick={onConvertAll}>
-            Convert all
-          </button>
-          <button
-            className="ConvertFileTable__btn-download-all"
-            onClick={onDownloadAll}
-            disabled={!hasConverted}
-          >
-            Download all
-          </button>
+          <ClearAllButton onClick={onClearAll} />
+          <PrimaryButton onClick={onConvertAll}>Convert all</PrimaryButton>
+          <AccentButton onClick={onDownloadAll} disabled={!hasConverted}>Download all</AccentButton>
         </div>
       </div>
     </div>

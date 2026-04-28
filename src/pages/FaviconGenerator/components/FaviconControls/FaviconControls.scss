@@ -171,34 +171,6 @@
     gap: 0;
   }
 
-  // ── Download button ───────────────────────────────────────
-  &__btn-download {
-    width: 100%;
-    padding: 13px 20px;
-    background: var(--accent);
-    border: none;
-    border-radius: var(--radius-md);
-    color: #fff;
-    font-size: 0.9375rem;
-    font-weight: 600;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    transition: background 0.15s, opacity 0.15s;
-    margin-top: 2px;
-
-    &:hover:not(:disabled) {
-      background: var(--accent-hover);
-    }
-
-    &:disabled {
-      opacity: 0.5;
-      cursor: default;
-    }
-  }
-
   &__btn-icon {
     width: 18px;
     height: 18px;
@@ -208,95 +180,6 @@
     stroke-linecap: round;
     stroke-linejoin: round;
     flex-shrink: 0;
-  }
-
-  &__spinner {
-    width: 16px;
-    height: 16px;
-    border: 2px solid rgba(255, 255, 255, 0.35);
-    border-top-color: #fff;
-    border-radius: 50%;
-    animation: FaviconControls-spin 0.7s linear infinite;
-    flex-shrink: 0;
-  }
-
-  @keyframes FaviconControls-spin {
-    to { transform: rotate(360deg); }
-  }
-
-  // ── HTML snippet ──────────────────────────────────────────
-  &__snippet {
-    border: 1px solid var(--border-base);
-    border-radius: var(--radius-md);
-    overflow: hidden;
-  }
-
-  &__snippet-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 7px 12px;
-    background: var(--bg-card);
-    border-bottom: 1px solid var(--border-base);
-  }
-
-  &__snippet-label {
-    font-size: 0.75rem;
-    font-weight: 600;
-    color: var(--text-faint);
-    text-transform: uppercase;
-    letter-spacing: 0.07em;
-  }
-
-  &__copy-btn {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    font-size: 0.8125rem;
-    font-weight: 500;
-    color: var(--accent-light);
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 3px 7px;
-    border-radius: 4px;
-    transition: background 0.15s, color 0.15s;
-    line-height: 1;
-
-    svg {
-      width: 13px;
-      height: 13px;
-      stroke: currentColor;
-      fill: none;
-      stroke-width: 2;
-      stroke-linecap: round;
-      stroke-linejoin: round;
-      flex-shrink: 0;
-    }
-
-    &:hover {
-      background: var(--bg-hover);
-    }
-
-    &--copied {
-      color: var(--green);
-    }
-  }
-
-  &__snippet-code {
-    margin: 0;
-    padding: 12px 14px;
-    font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', monospace;
-    font-size: 0.7875rem;
-    color: var(--accent-code);
-    line-height: 1.7;
-    background: var(--bg-content);
-    overflow-x: auto;
-    white-space: pre;
-
-    code {
-      font-family: inherit;
-    }
   }
 
   // ── Responsive ────────────────────────────────────────────

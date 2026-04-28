@@ -1,5 +1,6 @@
-import { useState } from 'react'
-import FaviconImageDropZone from '../FaviconImageDropZone/FaviconImageDropZone'
+import CodeBox from '../../../../components/CodeBox/CodeBox'
+import ImagePicker from '../../../../components/ImagePicker/ImagePicker'
+import { PrimaryButton } from '../../../../components/Buttons/Buttons'
 import './FaviconControls.scss'
 
 const HTML_SNIPPET = `<link rel="icon" href="/favicon.ico" sizes="any">
@@ -30,27 +31,6 @@ export default function FaviconControls({
   onImageClear,
   onDownload,
 }) {
-  const [copied, setCopied] = useState(false)
-
-  function handleCopy() {
-    navigator.clipboard.writeText(HTML_SNIPPET)
-      .then(() => flashCopied())
-      .catch(() => {
-        const el = document.createElement('textarea')
-        el.value = HTML_SNIPPET
-        document.body.appendChild(el)
-        el.select()
-        document.execCommand('copy')
-        document.body.removeChild(el)
-        flashCopied()
-      })
-  }
-
-  function flashCopied() {
-    setCopied(true)
-    setTimeout(() => setCopied(false), 2000)
-  }
-
   return (
     <div className="FaviconControls">
 
@@ -139,10 +119,10 @@ export default function FaviconControls({
       ) : (
         <>
           <div className="FaviconControls__field">
-            <FaviconImageDropZone
-              imagePreviewUrl={imagePreviewUrl}
-              onImageSelect={onImageSelect}
-              onImageClear={onImageClear}
+            <ImagePicker
+              previewUrl={imagePreviewUrl}
+              onFileSelect={onImageSelect}
+              onClear={onImageClear}
             />
           </div>
 
@@ -204,59 +184,17 @@ export default function FaviconControls({
         <p className="FaviconControls__error">{errorMessage}</p>
       )}
 
-      {/* Single download button */}
-      <button
-        className="FaviconControls__btn-download"
-        onClick={onDownload}
-        disabled={isGenerating}
-        type="button"
-      >
-        {isGenerating ? (
-          <>
-            <span className="FaviconControls__spinner" aria-hidden="true" />
-            Generating…
-          </>
-        ) : (
-          <>
-            <svg className="FaviconControls__btn-icon" viewBox="0 0 24 24" aria-hidden="true">
-              <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4" />
-              <polyline points="7 10 12 15 17 10" />
-              <line x1="12" y1="15" x2="12" y2="3" />
-            </svg>
-            Download favicon package
-          </>
-        )}
-      </button>
+      <PrimaryButton onClick={onDownload} loading={isGenerating} loadingText="Generating…" fullWidth>
+        <svg className="FaviconControls__btn-icon" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4" />
+          <polyline points="7 10 12 15 17 10" />
+          <line x1="12" y1="15" x2="12" y2="3" />
+        </svg>
+        Download favicon package
+      </PrimaryButton>
 
       {/* HTML snippet */}
-      <div className="FaviconControls__snippet">
-        <div className="FaviconControls__snippet-header">
-          <span className="FaviconControls__snippet-label">Paste into &lt;head&gt;</span>
-          <button
-            className={`FaviconControls__copy-btn${copied ? ' FaviconControls__copy-btn--copied' : ''}`}
-            onClick={handleCopy}
-            type="button"
-          >
-            {copied ? (
-              <>
-                <svg viewBox="0 0 24 24" aria-hidden="true">
-                  <polyline points="20 6 9 17 4 12" />
-                </svg>
-                Copied!
-              </>
-            ) : (
-              <>
-                <svg viewBox="0 0 24 24" aria-hidden="true">
-                  <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
-                  <path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1" />
-                </svg>
-                Copy
-              </>
-            )}
-          </button>
-        </div>
-        <pre className="FaviconControls__snippet-code"><code>{HTML_SNIPPET}</code></pre>
-      </div>
+      <CodeBox label="Paste into <head>" code={HTML_SNIPPET} />
 
     </div>
   )

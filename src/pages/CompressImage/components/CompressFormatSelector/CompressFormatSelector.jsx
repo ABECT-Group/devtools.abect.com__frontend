@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom'
-import { FORMAT_OPTIONS } from '../../config/compressions'
+import { FORMAT_OPTIONS } from '../../data/formats'
 import './CompressFormatSelector.scss'
 
 export default function CompressFormatSelector({ format }) {

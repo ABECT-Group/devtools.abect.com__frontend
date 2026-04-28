@@ -8,37 +8,6 @@ const FAQ_BATCH = {
   answer: 'Yes. Drop as many files as you need in one go and click "Convert all" to process everything at once. When done, click "Download all" to get a single ZIP archive containing all converted files.',
 }
 
-// Format display labels
-export const FORMAT_LABELS = {
-  jpg: 'JPG', jpeg: 'JPEG', png: 'PNG', webp: 'WebP',
-  gif: 'GIF', bmp: 'BMP', avif: 'AVIF', tiff: 'TIFF',
-}
-
-// Available FROM and TO options for the format selector
-export const FROM_OPTIONS = [
-  { value: 'jpg',  label: 'JPG'  },
-  { value: 'jpeg', label: 'JPEG' },
-  { value: 'png',  label: 'PNG'  },
-  { value: 'webp', label: 'WebP' },
-  { value: 'gif',  label: 'GIF'  },
-  { value: 'bmp',  label: 'BMP'  },
-  { value: 'avif', label: 'AVIF' },
-  { value: 'tiff', label: 'TIFF' },
-]
-
-export const TO_OPTIONS = [
-  { value: 'jpg',  label: 'JPG'  },
-  { value: 'png',  label: 'PNG'  },
-  { value: 'webp', label: 'WebP' },
-]
-
-// Output format configuration
-export const OUTPUT_MIME    = { jpg: 'image/jpeg', png: 'image/png', webp: 'image/webp' }
-export const OUTPUT_EXT     = { jpg: 'jpg', png: 'png', webp: 'webp' }
-export const OUTPUT_QUALITY = { jpg: 0.92, png: undefined, webp: 0.92 }
-
-export const DEFAULT_SLUG = 'png-to-jpg'
-
 // All 20 conversion configs
 export const CONVERSIONS = {
 
@@ -809,3 +778,14 @@ export const CONVERSIONS = {
 
 // All 20 slugs — used in App.jsx routing and the "All image converters" section
 export const ALL_SLUGS = Object.keys(CONVERSIONS)
+
+export const FORMAT_CARD_DESC = {
+  jpg:  'Smaller files, maximum compatibility',
+  jpeg: 'Smaller files, maximum compatibility',
+  png:  'Lossless quality, full transparency support',
+  webp: '25–34% smaller than JPG — faster pages',
+  gif:  'Animated output, first frame extracted',
+  avif: 'Next-gen format, 40–50% smaller than JPG',
+  bmp:  'Uncompressed bitmap, no quality loss',
+  tiff: 'High-quality format for print and archives',
+}

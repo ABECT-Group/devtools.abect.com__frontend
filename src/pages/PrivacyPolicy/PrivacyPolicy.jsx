@@ -4,6 +4,7 @@ import './PrivacyPolicy.scss'
 const PAGE_TITLE = 'Privacy Policy | Abect'
 const PAGE_DESCRIPTION = 'Privacy Policy for devtools.abect.com, including analytics, cookies, Google Analytics, Microsoft Clarity usage, and data handling.'
 const PAGE_URL = 'https://devtools.abect.com/privacy-policy'
+const OG_IMAGE_URL = 'https://devtools.abect.com/seo/og.jpg'
 
 export default function PrivacyPolicy() {
   return (
@@ -16,9 +17,14 @@ export default function PrivacyPolicy() {
         <meta property="og:description" content={PAGE_DESCRIPTION} />
         <meta property="og:type" content="article" />
         <meta property="og:url" content={PAGE_URL} />
+        <meta property="og:image" content={OG_IMAGE_URL} />
+        <meta property="og:image:type" content="image/jpeg" />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content={PAGE_TITLE} />
         <meta name="twitter:description" content={PAGE_DESCRIPTION} />
+        <meta name="twitter:image" content={OG_IMAGE_URL} />
       </Helmet>
 
       <h1 className="PrivacyPolicy__title">Privacy Policy</h1>
