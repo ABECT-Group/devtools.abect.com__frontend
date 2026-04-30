@@ -48,6 +48,18 @@ const TECH_STACK = [
 
 const CHANGELOG = [
   {
+    title: 'SEO & Content Deep Dive — Image Converters (Phase 1)',
+    body: <>
+      Major content and SEO overhaul for four key image conversion tools:
+      <Link to="/png-to-jpg" className="Home__changelog-link"> PNG to JPG</Link>,
+      <Link to="/jpg-to-webp" className="Home__changelog-link"> JPG to WebP</Link>,
+      <Link to="/webp-to-png" className="Home__changelog-link"> WebP to PNG</Link>, and
+      <Link to="/gif-to-jpg" className="Home__changelog-link"> GIF to JPG</Link>.
+      Each page now features an expanded technical guide (6k+ characters), comprehensive FAQ (10+ questions), and detailed format comparison tables. Added deep technical explanations of the browser-based Canvas API rendering and localized privacy-first processing with copy-ready code examples.
+    </>,
+    date: 'Apr 30, 2026', datetime: '2026-04-30',
+  },
+  {
     title: 'Codebase refactor — Phase 1: shared UI Kit and data/ structure',
     body: 'Major internal refactor to standardize how tools are built across the codebase. Extracted duplicated per-page components into a shared UI Kit — DropZone, ImagePicker, Table, Buttons, CodeBox, ContentSection, PageHeader, ToolSection, RelatedTools, and Lightbox. Each tool page now follows a consistent data/ structure (helmet.js, jsonld.js, content.js, formats.js) that separates SEO metadata, structured data, and content from UI logic. Adds src/config/site.js as a single source for URL and OG image builders.',
     date: 'Apr 28, 2026', datetime: '2026-04-28',
