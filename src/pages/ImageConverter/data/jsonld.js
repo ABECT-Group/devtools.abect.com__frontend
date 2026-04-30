@@ -1,3 +1,16 @@
+export function buildJsonLdHowTo(config, fromLabel, toLabel) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'HowTo',
+    'name': `How to convert ${fromLabel} to ${toLabel}`,
+    'step': config.howTo.map((text, i) => ({
+      '@type': 'HowToStep',
+      'position': i + 1,
+      'text': text,
+    })),
+  }
+}
+
 export function buildJsonLdApp(config, pageUrl, fromLabel, toLabel) {
   return {
     '@context': 'https://schema.org',
