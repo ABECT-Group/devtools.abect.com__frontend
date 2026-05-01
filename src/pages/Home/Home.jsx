@@ -48,6 +48,11 @@ const TECH_STACK = [
 
 const CHANGELOG = [
   {
+    title: 'SEO & Content Deep Dive — Image Converters (Phase 2, complete)',
+    body: 'Full SEO and content overhaul of all remaining 16 image converter pages. Every page now uses a 5-section structure: browser-based privacy explanation with code snippet, real-world use cases, a 7-row format comparison table, a "when to use" cheat-sheet, and a Canvas API technical breakdown. Each page has 10–12 unique FAQ items and a unique title/description angle targeting a specific pain point. No server uploads — all conversion happens locally in the browser.',
+    date: 'May 1, 2026', datetime: '2026-05-01',
+  },
+  {
     title: 'SEO & Content Deep Dive — Image Converters (Phase 1)',
     body: <>
       Major content and SEO overhaul for four key image conversion tools:
