@@ -34,6 +34,30 @@
     gap: 10px;
   }
 
+  &__nav {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+  }
+
+  &__nav-link {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    text-decoration: none;
+    padding: 6px 12px;
+    border-radius: var(--radius-sm);
+    transition: color 0.1s, background 0.1s;
+
+    &:hover {
+      color: var(--text-primary);
+      background: var(--bg-hover);
+    }
+
+    &--active {
+      color: var(--text-primary);
+    }
+  }
+
   &__signin {
     font-size: 0.8125rem;
     padding: 6px 16px;
@@ -110,6 +134,7 @@
       0
       calc(16px + var(--safe-area-left));
 
+    &__nav    { display: none; }
     &__signin { display: none; }
     &__avatar { display: none; }
     &__burger { display: flex; }

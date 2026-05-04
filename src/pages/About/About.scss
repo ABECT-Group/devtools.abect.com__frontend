@@ -1,0 +1,219 @@
+.About {
+  .ContentSection__text {
+    max-width: 100%;
+  }
+
+  // ── Hero ────────────────────────────────────────────────────
+  &__hero {
+    margin-bottom: 48px;
+  }
+
+  &__banner {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: var(--radius-lg);
+    margin-bottom: 24px;
+    object-fit: cover;
+  }
+
+  &__title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 8px;
+  }
+
+  &__subtitle {
+    font-size: 0.9375rem;
+    color: var(--text-secondary);
+    line-height: 1.65;
+    max-width: 720px;
+  }
+
+  // ── Shared section heading ───────────────────────────────────
+  &__section-title {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 16px;
+  }
+
+  // ── Creator ─────────────────────────────────────────────────
+  &__creator-section {
+    margin-bottom: 48px;
+  }
+
+  &__creator {
+    display: flex;
+    gap: 24px;
+    align-items: flex-start;
+
+    @media (max-width: 560px) {
+      flex-direction: column;
+    }
+  }
+
+  &__avatar {
+    width: 128px;
+    height: 128px;
+    border-radius: 50%;
+    object-fit: cover;
+    flex-shrink: 0;
+    border: 2px solid var(--border-blue);
+
+    @media (max-width: 560px) {
+      width: 80px;
+      height: 80px;
+    }
+  }
+
+  &__creator-body {
+    flex: 1;
+    min-width: 0;
+  }
+
+  &__creator-name {
+    font-size: 1.0625rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 3px;
+  }
+
+  &__creator-role {
+    font-size: 0.875rem;
+    color: var(--accent-light);
+    margin-bottom: 12px;
+  }
+
+  &__creator-bio {
+    font-size: 0.9375rem;
+    color: var(--text-secondary);
+    line-height: 1.7;
+    margin-bottom: 16px;
+  }
+
+  &__creator-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+  }
+
+  &__tag {
+    font-size: 0.75rem;
+    color: var(--accent-light);
+    background: var(--bg-card);
+    border: 1px solid var(--border-blue);
+    border-radius: var(--radius-sm);
+    padding: 3px 8px;
+    white-space: nowrap;
+  }
+
+  // ── Principles ──────────────────────────────────────────────
+  &__principles {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin: 0 auto;
+
+    @media (max-width: 720px) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    @media (max-width: 480px) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .FAQ {
+    max-width: 100%;
+  }
+
+  &__principle {
+    padding: 14px 16px;
+    background: var(--bg-sidebar);
+    border: 1px solid var(--border-base);
+    border-left: 3px solid var(--accent);
+    border-radius: var(--radius-md);
+  }
+
+  &__principle-title {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 4px;
+  }
+
+  &__principle-desc {
+    font-size: 0.8125rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+  }
+
+  // ── Text link ───────────────────────────────────────────────
+  &__text-link {
+    font-size: 0.9375rem;
+    color: var(--accent-light);
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  // ── Contact ─────────────────────────────────────────────────
+  &__contact-section {
+    margin-bottom: 48px;
+  }
+
+  &__contact-row {
+    font-size: 0.9375rem;
+    color: var(--text-secondary);
+    margin-bottom: 16px;
+  }
+
+  &__contact-email {
+    color: var(--accent-light);
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  // ── Profiles ────────────────────────────────────────────────
+  &__profiles {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  &__profile-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 16px;
+    background: var(--bg-sidebar);
+    border: 1px solid var(--border-blue);
+    border-radius: var(--radius-md);
+    text-decoration: none;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--text-primary);
+    transition: border-color 0.2s, box-shadow 0.2s;
+
+    svg {
+      color: var(--text-muted);
+      flex-shrink: 0;
+    }
+
+    &:hover {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 1px var(--accent);
+
+      svg {
+        color: var(--accent-light);
+      }
+    }
+  }
+}

@@ -11,12 +11,6 @@ const COMPRESS_SLUGS = new Set(['compress-jpg', 'compress-png', 'compress-webp']
 
 const NAV_SECTIONS = [
   {
-    label: 'General',
-    items: [
-      { name: 'All tools', route: '/', ready: true },
-    ],
-  },
-  {
     label: 'SEO & Schema',
     items: [
       { name: 'Meta tag generator',  route: '/meta-tags-generator', ready: true },
@@ -45,6 +39,44 @@ export default function Sidebar({ isOpen, onClose }) {
     onClose()
   }
 
+  function renderNavItem(item) {
+    if (!item.ready) {
+      return (
+        <span key={item.route} className="Sidebar__nav-item Sidebar__nav-item--coming-soon">
+          {item.name}
+        </span>
+      )
+    }
+    if (item.customActive) {
+      const isActive =
+        (item.customActive === 'imageConverter' && isImageConverterActive) ||
+        (item.customActive === 'compress' && isCompressActive)
+      return (
+        <NavLink
+          key={item.route}
+          to={item.route}
+          className={`Sidebar__nav-item${isActive ? ' Sidebar__nav-item--active' : ''}`}
+          onClick={onClose}
+        >
+          {item.name}
+        </NavLink>
+      )
+    }
+    return (
+      <NavLink
+        key={item.route}
+        to={item.route}
+        end
+        className={({ isActive }) =>
+          `Sidebar__nav-item${isActive ? ' Sidebar__nav-item--active' : ''}`
+        }
+        onClick={onClose}
+      >
+        {item.name}
+      </NavLink>
+    )
+  }
+
   return (
     <>
       {isOpen && <div className="Sidebar__backdrop" onClick={onClose} />}
@@ -52,47 +84,59 @@ export default function Sidebar({ isOpen, onClose }) {
         id="sidebar-navigation"
         className={`Sidebar${isOpen ? ' Sidebar--open' : ''}`}
       >
+
+        {/* ── Mobile top nav ──────────────────────────────── */}
+        <div className="Sidebar__mobile-top">
+          <NavLink
+            to="/"
+            end
+            className={({ isActive }) =>
+              `Sidebar__nav-item${isActive ? ' Sidebar__nav-item--active' : ''}`
+            }
+            onClick={onClose}
+          >
+            Home
+          </NavLink>
+
+          <details className="Sidebar__accordion" open>
+            <summary className="Sidebar__accordion-summary">
+              Tools
+              <svg className="Sidebar__accordion-chevron" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                <path d="M4 6l4 4 4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            </summary>
+            <div className="Sidebar__accordion-body">
+              {NAV_SECTIONS.map(section => (
+                <div key={section.label}>
+                  <div className="Sidebar__section-label">{section.label}</div>
+                  {section.items.map(renderNavItem)}
+                </div>
+              ))}
+            </div>
+          </details>
+
+          <NavLink
+            to="/about"
+            className={({ isActive }) =>
+              `Sidebar__nav-item${isActive ? ' Sidebar__nav-item--active' : ''}`
+            }
+            onClick={onClose}
+          >
+            About
+          </NavLink>
+        </div>
+
+        {/* ── Desktop tool sections ───────────────────────── */}
         <nav className="Sidebar__nav">
           {NAV_SECTIONS.map(section => (
             <div key={section.label}>
               <div className="Sidebar__section-label">{section.label}</div>
-              {section.items.map(item =>
-                item.ready ? (
-                  item.customActive ? (
-                    <NavLink
-                      key={item.route}
-                      to={item.route}
-                      className={`Sidebar__nav-item${
-                        item.customActive === 'imageConverter' && isImageConverterActive ? ' Sidebar__nav-item--active' :
-                        item.customActive === 'compress' && isCompressActive ? ' Sidebar__nav-item--active' :
-                        ''
-                      }`}
-                      onClick={onClose}
-                    >
-                      {item.name}
-                    </NavLink>
-                  ) : (
-                    <NavLink
-                      key={item.route}
-                      to={item.route}
-                      end
-                      className={({ isActive }) =>
-                        `Sidebar__nav-item${isActive ? ' Sidebar__nav-item--active' : ''}`
-                      }
-                      onClick={onClose}
-                    >
-                      {item.name}
-                    </NavLink>
-                  )
-                ) : (
-                  <span key={item.route} className="Sidebar__nav-item Sidebar__nav-item--coming-soon">
-                    {item.name}
-                  </span>
-                )
-              )}
+              {section.items.map(renderNavItem)}
             </div>
           ))}
         </nav>
+
+        {/* ── Footer ─────────────────────────────────────── */}
         <footer className="Sidebar__footer">
           <NavLink
             to="/privacy-policy"
@@ -111,6 +155,7 @@ export default function Sidebar({ isOpen, onClose }) {
             Cookie Settings
           </button>
         </footer>
+
       </aside>
     </>
   )

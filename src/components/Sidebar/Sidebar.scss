@@ -13,6 +13,14 @@
 
   &__backdrop { display: none; }
 
+  // ── Mobile-only top nav (Home / Tools / About) ─────────────
+  &__mobile-top {
+    display: none;
+    flex: 1 0 auto;
+    padding: 8px 0;
+  }
+
+  // ── Desktop tool sections ───────────────────────────────────
   &__nav {
     flex: 1 0 auto;
     padding: 12px 0;
@@ -48,7 +56,6 @@
 
     &--active {
       color: #e2e8f0;
-      font-size: 1rem;
       background: var(--bg-active);
       border-right-color: var(--accent);
       font-weight: 500;
@@ -61,6 +68,51 @@
     }
   }
 
+  // ── Tools accordion (mobile) ────────────────────────────────
+  &__accordion {
+    &-summary {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 1rem;
+      color: #94a3b8;
+      padding: 10px 24px;
+      cursor: pointer;
+      list-style: none;
+      border-right: 2px solid transparent;
+      user-select: none;
+      transition: background 0.1s, color 0.1s;
+
+      &::-webkit-details-marker { display: none; }
+      &::marker { display: none; }
+
+      &:hover {
+        color: var(--text-secondary);
+        background: var(--bg-hover);
+      }
+    }
+
+    &-chevron {
+      flex-shrink: 0;
+      color: var(--text-muted);
+      transition: transform 0.2s ease;
+    }
+
+    &[open] &-chevron {
+      transform: rotate(180deg);
+    }
+
+    &-body {
+      @media (max-width: 767px) {
+        .Sidebar__nav-item,
+        .Sidebar__section-label {
+          padding-left: 40px;
+        }
+      }
+    }
+  }
+
+  // ── Footer ──────────────────────────────────────────────────
   &__footer {
     margin-top: auto;
     display: flex;
@@ -77,13 +129,8 @@
     text-decoration: none;
     transition: color 0.1s;
 
-    &:hover {
-      color: var(--text-primary);
-    }
-
-    &--active {
-      color: var(--accent-light);
-    }
+    &:hover { color: var(--text-primary); }
+    &--active { color: var(--accent-light); }
   }
 
   &__footer-btn {
@@ -95,11 +142,10 @@
     cursor: pointer;
     transition: color 0.1s;
 
-    &:hover {
-      color: var(--text-primary);
-    }
+    &:hover { color: var(--text-primary); }
   }
 
+  // ── Mobile ──────────────────────────────────────────────────
   @media (max-width: 767px) {
     top: calc(var(--header-height-mobile) + var(--safe-area-top));
     height: calc(100dvh - var(--header-height-mobile) - var(--safe-area-top));
@@ -111,9 +157,8 @@
 
     &--open { transform: translateX(0); }
 
-    &__nav {
-      padding-top: 0;
-    }
+    &__mobile-top { display: block; }
+    &__nav        { display: none; }
 
     &__backdrop {
       display: block;

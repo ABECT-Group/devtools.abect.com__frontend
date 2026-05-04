@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom'
+import { Link, NavLink } from 'react-router-dom'
 import './Header.scss'
 
 export default function Header({ isSidebarOpen, onMenuToggle }) {
@@ -8,7 +8,26 @@ export default function Header({ isSidebarOpen, onMenuToggle }) {
         tools.<span>abect</span>.com
       </Link>
       <div className="Header__right">
-        {/* <button className="Header__signin">Sign in</button> */}
+        <nav className="Header__nav">
+          <NavLink
+            to="/"
+            end
+            className={({ isActive }) =>
+              `Header__nav-link${isActive ? ' Header__nav-link--active' : ''}`
+            }
+          >
+            Home
+          </NavLink>
+          <NavLink
+            to="/about"
+            className={({ isActive }) =>
+              `Header__nav-link${isActive ? ' Header__nav-link--active' : ''}`
+            }
+          >
+            About
+          </NavLink>
+          {/* <button className="Header__signin">Sign in</button> */}
+        </nav>
         <div className="Header__avatar">
           <div className="Header__avatar-dot" />
         </div>

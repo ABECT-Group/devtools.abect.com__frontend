@@ -48,6 +48,11 @@ const TECH_STACK = [
 
 const CHANGELOG = [
   {
+    title: 'About page — author profile, EEAT signals, and navigation update',
+    body: <>New <Link to="/about" className="Home__changelog-link">About page</Link> with full author profile, product principles, and contact section. Includes Person + WebSite JSON-LD structured data linking the creator's LinkedIn and GitHub profiles for EEAT signals. Desktop header now has Home and About navigation links; sidebar is now tool-focused only with a mobile accordion for the Tools section. Sitemap <code>lastmod</code> dates are now hardcoded per page so Vercel rebuilds don't reset all dates to the same value.</>,
+    date: 'May 4, 2026', datetime: '2026-05-04',
+  },
+  {
     title: 'OG Image Generator — full SEO content launch',
     body: <>New tool: <Link to="/og-image-generator" className="Home__changelog-link">OG Image Generator</Link> — upload any image, crop it to 1200×630 px or 1:1, adjust JPEG quality with a live file-size preview, and get copy-ready Open Graph + Twitter/X meta tags in one place. Includes a live social card preview, drag/zoom/pinch canvas editor, and full SEO content: platform size comparison table, framework code examples for HTML, React, Next.js, Nuxt, and WordPress, 10 FAQ items, and HowTo + FAQPage JSON-LD schemas.</>,
     date: 'May 3, 2026', datetime: '2026-05-03',
