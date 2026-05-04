@@ -5,7 +5,7 @@ export default function Header({ isSidebarOpen, onMenuToggle }) {
   return (
     <header className="Header">
       <Link to="/" className="Header__logo">
-        tools.<span>abect</span>.com
+        <span>Dev</span> Tools
       </Link>
       <div className="Header__right">
         <nav className="Header__nav">
