@@ -1,6 +1,7 @@
 import CodeBox from '../../../../components/CodeBox/CodeBox'
 import ImagePicker from '../../../../components/ImagePicker/ImagePicker'
 import { PrimaryButton } from '../../../../components/Buttons/Buttons'
+import SegmentedControl from '../../../../components/SegmentedControl/SegmentedControl'
 import './FaviconControls.scss'
 
 const HTML_SNIPPET = `<link rel="icon" href="/favicon.ico" sizes="any">
@@ -34,23 +35,14 @@ export default function FaviconControls({
   return (
     <div className="FaviconControls">
 
-      {/* Mode toggle */}
-      <div className="FaviconControls__mode-tabs">
-        <button
-          className={`FaviconControls__mode-tab${mode === 'text' ? ' FaviconControls__mode-tab--active' : ''}`}
-          onClick={() => onModeChange('text')}
-          type="button"
-        >
-          Text / Emoji
-        </button>
-        <button
-          className={`FaviconControls__mode-tab${mode === 'image' ? ' FaviconControls__mode-tab--active' : ''}`}
-          onClick={() => onModeChange('image')}
-          type="button"
-        >
-          Image
-        </button>
-      </div>
+      <SegmentedControl
+        options={[
+          { value: 'text',  label: 'Text / Emoji' },
+          { value: 'image', label: 'Image' },
+        ]}
+        value={mode}
+        onChange={onModeChange}
+      />
 
       {/* Text mode inputs */}
       {mode === 'text' ? (

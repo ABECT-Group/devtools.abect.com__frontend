@@ -1,0 +1,96 @@
+.OGCardPreview {
+  &__label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--text-faint);
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    margin-bottom: 10px;
+  }
+
+  &__card {
+    border: 1px solid var(--border-base);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    transition: opacity 0.2s;
+    background: var(--bg-content);
+
+    &--empty {
+      opacity: 0.5;
+    }
+  }
+
+  // ── Image ──────────────────────────────────────────────────
+  &__image-wrap {
+    width: 100%;
+    overflow: hidden;
+    background: var(--bg-card);
+    position: relative;
+  }
+
+  &__image {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  &__image-placeholder {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    color: var(--text-faint);
+
+    svg {
+      opacity: 0.5;
+    }
+
+    span {
+      font-size: 0.8125rem;
+      color: var(--text-faint);
+    }
+  }
+
+  // ── Meta text ──────────────────────────────────────────────
+  &__meta {
+    padding: 12px 14px 14px;
+  }
+
+  &__url {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    margin-bottom: 4px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-transform: lowercase;
+  }
+
+  &__title {
+    font-size: 0.9375rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    line-height: 1.35;
+    margin-bottom: 4px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  &__desc {
+    font-size: 0.8125rem;
+    color: var(--text-secondary);
+    line-height: 1.5;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+}

@@ -1,0 +1,31 @@
+.OGImageGenerator {
+  &__cols {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+    align-items: start;
+
+    @media (max-width: 900px) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  &__left {
+    min-width: 0;
+  }
+
+  &__right {
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    position: sticky;
+    top: 80px;
+  }
+
+  &__error {
+    font-size: 0.875rem;
+    color: var(--color-error);
+    text-align: center;
+  }
+}

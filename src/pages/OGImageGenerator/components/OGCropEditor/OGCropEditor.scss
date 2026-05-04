@@ -1,0 +1,277 @@
+.OGCropEditor {
+  display: flex;
+  flex-direction: column;
+
+  // ── Fixed 4:3 canvas container ────────────────────────────
+  &__outer {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    background: var(--bg-card);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border-base);
+    overflow: hidden;
+    cursor: grab;
+
+    &:active { cursor: grabbing; }
+  }
+
+  &__canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+    transition: filter 0.25s ease;
+
+    &--loading {
+      filter: blur(8px);
+      transform: scale(1.04);
+    }
+  }
+
+  // ── Dim overlays ──────────────────────────────────────────
+  &__dim {
+    position: absolute;
+    background: rgba(0, 0, 0, 0.68);
+    pointer-events: none;
+
+    &--top    { top: 0; left: 0; right: 0; }
+    &--bottom { bottom: 0; left: 0; right: 0; }
+    &--left   { left: 0; }
+    &--right  { right: 0; }
+  }
+
+  // ── Crop frame border ─────────────────────────────────────
+  &__frame {
+    position: absolute;
+    border: 1.5px solid rgba(255, 255, 255, 0.7);
+    box-sizing: border-box;
+    pointer-events: none;
+  }
+
+  // ── Hover overlay groups ──────────────────────────────────
+  &__aspect-overlay,
+  &__action-overlay,
+  &__bottom-overlay {
+    position: absolute;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.18s;
+  }
+
+  &__outer:hover &__aspect-overlay,
+  &__outer:hover &__action-overlay,
+  &__outer:hover &__bottom-overlay {
+    opacity: 1;
+  }
+
+  // ── TOP-LEFT: aspect ratio buttons ────────────────────────
+  &__aspect-overlay {
+    top: 10px;
+    left: 10px;
+    display: flex;
+    gap: 5px;
+    align-items: center;
+  }
+
+  &__ratio-btn {
+    padding: 0 9px;
+    height: 26px;
+    box-sizing: border-box;
+    background: rgba(0, 0, 0, 0.55);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 20px;
+    font-size: 0.6rem;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.75);
+    cursor: pointer;
+    pointer-events: auto;
+    transition: border-color 0.15s, color 0.15s, background 0.15s;
+    white-space: nowrap;
+    position: relative;
+
+    &:hover:not(&--active) {
+      border-color: rgba(255, 255, 255, 0.7);
+      color: #fff;
+      background: rgba(0, 0, 0, 0.75);
+    }
+
+    &--active {
+      border-color: var(--accent);
+      color: var(--accent-light);
+      background: rgba(0, 0, 0, 0.65);
+    }
+
+    // tooltip
+    &[data-tooltip]::after {
+      content: attr(data-tooltip);
+      position: absolute;
+      top: calc(100% + 5px);
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0, 0, 0, 0.85);
+      color: #fff;
+      font-size: 0.6875rem;
+      font-weight: 400;
+      padding: 3px 8px;
+      border-radius: 4px;
+      white-space: nowrap;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.12s;
+      z-index: 20;
+    }
+
+    &[data-tooltip]:hover::after { opacity: 1; }
+  }
+
+  // ── TOP-RIGHT: action buttons ─────────────────────────────
+  &__action-overlay {
+    top: 10px;
+    right: 10px;
+    display: flex;
+    gap: 5px;
+    align-items: center;
+  }
+
+  &__icon-btn {
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.55);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    pointer-events: auto;
+    transition: border-color 0.15s, background 0.15s;
+    position: relative;
+
+    svg {
+      width: 14px;
+      height: 14px;
+      stroke: rgba(255, 255, 255, 0.75);
+      fill: none;
+      stroke-width: 1.8;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    &:hover {
+      border-color: rgba(255, 255, 255, 0.7);
+      background: rgba(0, 0, 0, 0.75);
+
+      svg { stroke: #fff; }
+    }
+
+    // tooltip (below button, since it's at top)
+    &[data-tooltip]::after {
+      content: attr(data-tooltip);
+      position: absolute;
+      top: calc(100% + 5px);
+      right: 0;
+      background: rgba(0, 0, 0, 0.85);
+      color: #fff;
+      font-size: 0.6875rem;
+      padding: 3px 8px;
+      border-radius: 4px;
+      white-space: nowrap;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.12s;
+      z-index: 20;
+    }
+
+    &[data-tooltip]:hover::after { opacity: 1; }
+  }
+
+  // ── BOTTOM: quality (left) + zoom (right) ────────────────
+  &__bottom-overlay {
+    bottom: 12px;
+    left: 12px;
+    right: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+  }
+
+  &__ctrl-pill {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 20px;
+    padding: 0 10px;
+    height: 26px;
+    flex: 1;
+    pointer-events: auto;
+    min-width: 0;
+    box-sizing: border-box;
+  }
+
+  &__ctrl-slider {
+    flex: 1;
+    min-width: 0;
+    appearance: none;
+    height: 3px;
+    border-radius: 2px;
+    background: rgba(255, 255, 255, 0.25);
+    outline: none;
+    cursor: pointer;
+
+    &::-webkit-slider-thumb {
+      appearance: none;
+      width: 13px;
+      height: 13px;
+      border-radius: 50%;
+      background: #fff;
+      cursor: pointer;
+      border: none;
+    }
+
+    &::-moz-range-thumb {
+      width: 13px;
+      height: 13px;
+      border-radius: 50%;
+      background: #fff;
+      cursor: pointer;
+      border: none;
+    }
+  }
+
+  &__ctrl-label {
+    font-size: 0.6875rem;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.8);
+    white-space: nowrap;
+    font-family: 'SFMono-Regular', Consolas, monospace;
+    flex-shrink: 0;
+  }
+
+  &__zoom-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    flex-shrink: 0;
+    padding: 0;
+    line-height: 0;
+
+    svg {
+      width: 14px;
+      height: 14px;
+      stroke: rgba(255, 255, 255, 0.65);
+      fill: none;
+      stroke-width: 1.8;
+      stroke-linecap: round;
+    }
+
+    &:hover svg { stroke: #fff; }
+  }
+}

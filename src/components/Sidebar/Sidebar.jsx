@@ -19,7 +19,8 @@ const NAV_SECTIONS = [
   {
     label: 'SEO & Schema',
     items: [
-      { name: 'Meta tag generator', route: '/meta-tags-generator', ready: true },
+      { name: 'Meta tag generator',  route: '/meta-tags-generator', ready: true },
+      { name: 'OG Image Generator', route: '/og-image-generator',  ready: true },
     ],
   },
   {

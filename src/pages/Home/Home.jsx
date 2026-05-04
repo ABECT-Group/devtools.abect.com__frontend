@@ -11,12 +11,12 @@ const PAGE_URL = 'https://devtools.abect.com/'
 const OG_IMAGE_URL = 'https://devtools.abect.com/seo/og.jpg'
 
 const POPULAR_ROUTES = [
+  '/og-image-generator',
+  '/meta-tags-generator',
   '/png-to-jpg',
   '/jpg-to-webp',
   '/compress-jpg',
-  '/webp-converter',
   '/favicon-generator',
-  '/meta-tags-generator',
 ]
 
 const TECH_STACK = [
@@ -47,6 +47,11 @@ const TECH_STACK = [
 ]
 
 const CHANGELOG = [
+  {
+    title: 'OG Image Generator — full SEO content launch',
+    body: <>New tool: <Link to="/og-image-generator" className="Home__changelog-link">OG Image Generator</Link> — upload any image, crop it to 1200×630 px or 1:1, adjust JPEG quality with a live file-size preview, and get copy-ready Open Graph + Twitter/X meta tags in one place. Includes a live social card preview, drag/zoom/pinch canvas editor, and full SEO content: platform size comparison table, framework code examples for HTML, React, Next.js, Nuxt, and WordPress, 10 FAQ items, and HowTo + FAQPage JSON-LD schemas.</>,
+    date: 'May 3, 2026', datetime: '2026-05-03',
+  },
   {
     title: 'SEO & Content Deep Dive — Image Converters (Phase 2, complete)',
     body: 'Full SEO and content overhaul of all remaining 16 image converter pages. Every page now uses a 5-section structure: browser-based privacy explanation with code snippet, real-world use cases, a 7-row format comparison table, a "when to use" cheat-sheet, and a Canvas API technical breakdown. Each page has 10–12 unique FAQ items and a unique title/description angle targeting a specific pain point. No server uploads — all conversion happens locally in the browser.',

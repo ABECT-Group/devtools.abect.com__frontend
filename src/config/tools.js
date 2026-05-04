@@ -1,5 +1,6 @@
 export const TOOLS = [
-  { category: 'SEO',    name: 'Meta tag generator', description: 'Generate SEO meta tags with live preview',            route: '/meta-tags-generator' },
+  { category: 'SEO',    name: 'Meta tag generator',  description: 'Generate SEO meta tags with live preview',            route: '/meta-tags-generator'  },
+  { category: 'SEO',    name: 'OG Image Generator', description: 'Crop and export Open Graph images at 1200×630',         route: '/og-image-generator'   },
   { category: 'Images', name: 'WebP converter',   description: 'Convert any image to WebP format',              route: '/webp-converter'  },
   { category: 'Images', name: 'Favicon generator', description: 'Generate favicons from text, emoji, or image', route: '/favicon-generator' },
   { category: 'Images', name: 'Compress JPG',      description: 'Reduce JPEG file size with quality control',    route: '/compress-jpg'    },

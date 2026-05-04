@@ -105,7 +105,8 @@ useHead({
 })`
 
 export const RELATED_TOOLS = [
-  { to: '/favicon-generator', name: 'Favicon Generator', desc: 'Generate favicon files from text, emoji, or image' },
-  { to: '/webp-converter',    name: 'WebP Converter',    desc: 'Convert images to WebP — 25–34% smaller files for faster pages' },
-  { to: '/compress-png',      name: 'Compress PNG',      desc: 'Reduce PNG file size — lossless compression' },
+  { to: '/og-image-generator', name: 'OG Image Generator', desc: 'Crop images to 1200×630 px and get copy-ready og:image meta tags' },
+  { to: '/favicon-generator',  name: 'Favicon Generator',  desc: 'Generate favicon files from text, emoji, or image' },
+  { to: '/webp-converter',     name: 'WebP Converter',     desc: 'Convert images to WebP — 25–34% smaller files for faster pages' },
+  { to: '/compress-png',       name: 'Compress PNG',       desc: 'Reduce PNG file size — lossless compression' },
 ]

@@ -33,6 +33,7 @@ for (const route of prerenderRoutes) {
 const ROUTE_SOURCE = {
   '/':                    'src/pages/Home/Home.jsx',
   '/meta-tags-generator': 'src/pages/MetaTagsGenerator/MetaTagsGenerator.jsx',
+  '/og-image-generator':  'src/pages/OGImageGenerator/OGImageGenerator.jsx',
   '/webp-converter':      'src/pages/WebPConverter/WebPConverter.jsx',
   '/favicon-generator':   'src/pages/FaviconGenerator/FaviconGenerator.jsx',
   '/privacy-policy':      'src/pages/PrivacyPolicy/PrivacyPolicy.jsx',
@@ -62,7 +63,8 @@ const ROUTE_CONFIG = {
   '/webp-to-png':       { priority: '0.8', changefreq: 'monthly' },
   '/png-to-webp':       { priority: '0.8', changefreq: 'monthly' },
   '/jpg-to-webp':       { priority: '0.8', changefreq: 'monthly' },
-  '/meta-tags-generator': { priority: '0.8', changefreq: 'monthly' },
+  '/meta-tags-generator':  { priority: '0.8', changefreq: 'monthly' },
+  '/og-image-generator':   { priority: '0.8', changefreq: 'monthly' },
   '/compress-jpg':        { priority: '0.8', changefreq: 'monthly' },
   '/compress-png':        { priority: '0.8', changefreq: 'monthly' },
   '/compress-webp':       { priority: '0.8', changefreq: 'monthly' },

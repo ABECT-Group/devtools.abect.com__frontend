@@ -8,6 +8,7 @@ import FaviconGenerator from './pages/FaviconGenerator/FaviconGenerator'
 import ImageConverter from './pages/ImageConverter/ImageConverter'
 import PrivacyPolicy from './pages/PrivacyPolicy/PrivacyPolicy'
 import WebPConverter from './pages/WebPConverter/WebPConverter'
+import OGImageGenerator from './pages/OGImageGenerator/OGImageGenerator'
 
 const IMAGE_CONVERTER_SLUGS = [
   'png-to-jpg', 'webp-to-jpg', 'gif-to-jpg', 'bmp-to-jpg', 'avif-to-jpg', 'tiff-to-jpg',
@@ -24,6 +25,7 @@ export default function App() {
         <Route index element={<Home />} />
         <Route path="privacy-policy" element={<PrivacyPolicy />} />
         <Route path="meta-tags-generator" element={<MetaTagsGenerator />} />
+        <Route path="og-image-generator" element={<OGImageGenerator />} />
         <Route path="favicon-generator" element={<FaviconGenerator />} />
         <Route path="webp-converter" element={<WebPConverter />} />
         {IMAGE_CONVERTER_SLUGS.map(slug => (
