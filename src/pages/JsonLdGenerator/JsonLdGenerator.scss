@@ -1,0 +1,22 @@
+.JsonLdGenerator {
+  &__cols {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+    align-items: start;
+
+    @media (max-width: 900px) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  &__form-col {
+    min-width: 0;
+  }
+
+  &__output-col {
+    min-width: 0;
+    position: sticky;
+    top: 80px;
+  }
+}

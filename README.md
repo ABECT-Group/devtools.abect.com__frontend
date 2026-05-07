@@ -14,14 +14,14 @@
 
 [devtools.abect.com](https://devtools.abect.com) is an open-source collection of **browser-based developer tools** — no backend, no uploads, no account required. Every tool runs entirely in the browser using native APIs (Canvas API, File API, Blob URL API). Files never leave your device.
 
-**26 tools available today:**
+**27 tools available today:**
 
 | Category | Tools |
 |----------|-------|
 | **Image Conversion** | PNG→JPG, JPG→PNG, JPG→WebP, PNG→WebP, WebP→JPG, WebP→PNG, GIF→JPG/PNG/WebP, BMP→JPG/PNG/WebP, AVIF→JPG/PNG/WebP, TIFF→JPG/PNG/WebP |
 | **Image Compression** | Compress JPG, Compress PNG, Compress WebP |
 | **Image Tools** | WebP Converter (with quality slider), Favicon Generator (from text, emoji, or image) |
-| **SEO Tools** | Meta Tag Generator (title, description, OG, hreflang, canonical) |
+| **SEO Tools** | Meta Tag Generator (title, description, OG, hreflang, canonical), OG Image Generator (crop to 1200×630, live preview) |
 
 ---
 
@@ -119,14 +119,21 @@ npm run preview
 │   │   └── tools.js            # Master list of all tools (name, route, category)
 │   ├── pages/
 │   │   ├── CompressImage/      # Handles compress-jpg, compress-png, compress-webp
-│   │   │   └── config/
-│   │   │       └── compressions.js   # Per-format SEO content, FAQ, howTo steps
+│   │   │   └── data/
+│   │   │       ├── helmet.js         # SEO constants
+│   │   │       ├── jsonld.js         # JSON-LD builders
+│   │   │       ├── content.js        # Per-slug text: sections, FAQ, howTo
+│   │   │       └── formats.js        # Mime types, quality values
 │   │   ├── FaviconGenerator/
 │   │   ├── Home/
 │   │   ├── ImageConverter/     # Handles all 20 format conversion routes
-│   │   │   └── config/
-│   │   │       └── conversions.js    # Per-route SEO content, FAQ, howTo steps
+│   │   │   └── data/
+│   │   │       ├── helmet.js
+│   │   │       ├── jsonld.js
+│   │   │       ├── content.js        # CONVERSIONS dict — one entry per slug
+│   │   │       └── formats.js
 │   │   ├── MetaTagsGenerator/
+│   │   ├── OGImageGenerator/
 │   │   ├── NotFound/
 │   │   ├── PrivacyPolicy/
 │   │   └── WebPConverter/
@@ -154,7 +161,7 @@ Each page includes:
 - `WebApplication` + `FAQPage` JSON-LD structured data on tool pages
 - `WebSite` + `FAQPage` JSON-LD on the homepage
 
-The sitemap is generated automatically during build with per-page `lastmod` derived from source file modification time.
+The sitemap is generated automatically during build. `lastmod` dates are **hardcoded per page** in `src/config/tools.js` — not derived from file modification time — so Vercel rebuilds don't reset all dates to the same value.
 
 Full SEO audit: [`docs/SEO.md`](docs/SEO.md) — current score **77/100**.
 
@@ -166,68 +173,38 @@ This project is **open for contributions**. If you want to add a new tool, fix a
 
 ### Adding a new tool
 
-Each tool is a self-contained page with its own route, SEO config, and content. Here is the general pattern:
+Each tool is a self-contained page. Full instructions are in [`docs/contribution.md`](docs/contribution.md). Short version:
 
-**1. Create the page component**
+**1. Create the page directory**
 
 ```
 src/pages/YourTool/
-├── YourTool.jsx       # Main component with <Helmet> SEO block
-├── YourTool.scss
-└── utils/             # Pure JS utility functions (no DOM, no uploads)
+├── data/
+│   ├── helmet.js    # SLUG, PAGE_URL, OG_IMAGE, PAGE_TITLE, PAGE_DESC
+│   ├── jsonld.js    # JSON-LD objects — never build these inside the component
+│   └── content.js  # All user-visible text: howTo steps, sections, FAQ, related slugs
+├── YourTool.jsx
+└── YourTool.scss
 ```
 
-**2. Add the route in `App.jsx`**
+**2. Register in four places**
 
-```jsx
-import YourTool from './pages/YourTool/YourTool'
+| File | What to add |
+|------|-------------|
+| `src/config/tools.js` | `{ category, name, description, route, lastmod }` — auto-adds to prerender + sitemap |
+| `src/App.jsx` | `<Route path="your-tool" element={<YourTool />} />` |
+| `src/components/Sidebar/Sidebar.jsx` | Item in `NAV_SECTIONS` with `ready: true` |
+| `src/pages/Home/Home.jsx` | Add to `POPULAR_ROUTES` if priority; add to `CHANGELOG` for big launches |
 
-// Inside <Routes>:
-<Route path="your-tool" element={<YourTool />} />
-```
+**3. Content requirements**
 
-**3. Register in `src/config/tools.js`**
-
-```js
-{ category: 'Category', name: 'Your Tool', description: 'One-line description', route: '/your-tool' }
-```
-
-The route is automatically added to the prerender list, sitemap, and sidebar navigation.
-
-**4. SEO — required `<Helmet>` block**
-
-```jsx
-<Helmet>
-  <title>Descriptive Tool Title | Abect</title>
-  <meta name="description" content="Action-oriented description under 160 chars." />
-  <link rel="canonical" href="https://devtools.abect.com/your-tool" />
-  <meta property="og:title" content="Descriptive Tool Title | Abect" />
-  <meta property="og:description" content="Action-oriented description under 160 chars." />
-  <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://devtools.abect.com/your-tool" />
-  <meta property="og:image" content="https://devtools.abect.com/seo/your-tool-og.jpg" />
-  <meta property="og:image:type" content="image/jpeg" />
-  <meta property="og:image:width" content="1200" />
-  <meta property="og:image:height" content="630" />
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Descriptive Tool Title | Abect" />
-  <meta name="twitter:description" content="Action-oriented description under 160 chars." />
-  <meta name="twitter:image" content="https://devtools.abect.com/seo/your-tool-og.jpg" />
-  <script type="application/ld+json">{JSON.stringify(jsonLdApp)}</script>
-  <script type="application/ld+json">{JSON.stringify(jsonLdFaq)}</script>
-</Helmet>
-```
-
-Also add a 1200×630 OG image to `public/seo/your-tool-og.jpg`.
-
-**5. Content requirements**
-
-A good tool page includes:
-- `<h1>` with the primary keyword (include "Free", "Online" where natural)
-- "How to use" section with numbered steps (used for HowTo structured data)
-- Explanatory content: what the tool does, when to use it, format comparisons with concrete numbers
-- FAQ section — minimum 5 questions, use the `<FAQ items={faqArray} />` component
-- Related tools section
+- `<title>` 50–60 chars, keyword first, ends with `| Abect`
+- `<meta name="description">` 120–155 chars with a CTA
+- `<link rel="canonical">` — exact URL, no trailing slash
+- Full OG + Twitter Card tags + `WebApplication` + `FAQPage` JSON-LD
+- At least **10 FAQ items**
+- At least **~5 000 characters** of visible text across `<ContentSection>` blocks (use tables, lists, code examples — not padding)
+- OG image: `public/seo/your-tool-og.jpg` — 1200×630 px JPEG
 
 ### Code style
 
@@ -240,12 +217,16 @@ A good tool page includes:
 ### Pull request checklist
 
 - [ ] Tool runs 100% in the browser (no uploads, no server calls)
+- [ ] `data/helmet.js`, `data/jsonld.js`, `data/content.js` created
 - [ ] Page has a complete `<Helmet>` block (title, description, canonical, OG, JSON-LD)
 - [ ] OG image added to `public/seo/` — `your-tool-og.jpg`, 1200×630 px
-- [ ] Tool registered in `src/config/tools.js`
-- [ ] Route added in `App.jsx`
+- [ ] Tool registered in `src/config/tools.js` with hardcoded `lastmod`
+- [ ] Route added in `src/App.jsx`
+- [ ] Tool added to `Sidebar.jsx` nav
+- [ ] Changelog entry added in `Home.jsx` (new tools only)
+- [ ] Visible text content is ~5 000+ characters
+- [ ] FAQ has at least 10 items
 - [ ] `npm run build` completes without errors
-- [ ] Tested in Chrome and Firefox
 
 ---
 

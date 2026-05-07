@@ -68,6 +68,54 @@
     }
   }
 
+  // ── Tool group accordion (desktop + mobile) ─────────────────
+  &__group {
+    &-summary {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 1rem;
+      color: #94a3b8;
+      padding: 10px 24px;
+      cursor: pointer;
+      list-style: none;
+      border-right: 2px solid transparent;
+      user-select: none;
+      transition: background 0.1s, color 0.1s;
+
+      &::-webkit-details-marker { display: none; }
+      &::marker { display: none; }
+
+      &:hover {
+        color: var(--text-secondary);
+        background: var(--bg-hover);
+      }
+    }
+
+    &--active > &-summary {
+      color: #e2e8f0;
+    }
+
+    &-chevron {
+      flex-shrink: 0;
+      color: var(--text-muted);
+      transition: transform 0.2s ease;
+    }
+
+    &[open] &-chevron {
+      transform: rotate(180deg);
+    }
+
+    &-children {
+      // children use Sidebar__nav-item--child
+    }
+  }
+
+  &__nav-item--child {
+    padding-left: 36px;
+    font-size: 0.9375rem;
+  }
+
   // ── Tools accordion (mobile) ────────────────────────────────
   &__accordion {
     &-summary {
@@ -105,8 +153,13 @@
     &-body {
       @media (max-width: 767px) {
         .Sidebar__nav-item,
-        .Sidebar__section-label {
+        .Sidebar__section-label,
+        .Sidebar__group-summary {
           padding-left: 40px;
+        }
+
+        .Sidebar__nav-item--child {
+          padding-left: 56px;
         }
       }
     }

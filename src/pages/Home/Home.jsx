@@ -11,12 +11,12 @@ const PAGE_URL = 'https://devtools.abect.com/'
 const OG_IMAGE_URL = 'https://devtools.abect.com/seo/og.jpg'
 
 const POPULAR_ROUTES = [
+  '/product-schema-generator',
   '/og-image-generator',
   '/meta-tags-generator',
   '/png-to-jpg',
   '/jpg-to-webp',
   '/compress-jpg',
-  '/favicon-generator',
 ]
 
 const TECH_STACK = [
@@ -47,6 +47,11 @@ const TECH_STACK = [
 ]
 
 const CHANGELOG = [
+  {
+    title: 'Schema Markup Generator — Product, Article, FAQ, Organization, Local Business, Breadcrumb',
+    body: <>New tools: <Link to="/product-schema-generator" className="Home__changelog-link">Product</Link>, <Link to="/article-schema-generator" className="Home__changelog-link">Article</Link>, <Link to="/faq-schema-generator" className="Home__changelog-link">FAQ</Link>, <Link to="/organization-schema-generator" className="Home__changelog-link">Organization</Link>, <Link to="/local-business-schema-generator" className="Home__changelog-link">Local Business</Link>, and <Link to="/breadcrumb-schema-generator" className="Home__changelog-link">Breadcrumb</Link> schema generators — each with live JSON-LD preview, Google Rich Results eligibility validation, missing field warnings, and a direct "Test in Google" link. Fields based on official Google documentation. No signup required.</>,
+    date: 'May 7, 2026', datetime: '2026-05-06',
+  },
   {
     title: 'About page — author profile, EEAT signals, and navigation update',
     body: <>New <Link to="/about" className="Home__changelog-link">About page</Link> with full author profile, product principles, and contact section. Includes Person + WebSite JSON-LD structured data linking the creator's LinkedIn and GitHub profiles for EEAT signals. Desktop header now has Home and About navigation links; sidebar is now tool-focused only with a mobile accordion for the Tools section. Sitemap <code>lastmod</code> dates are now hardcoded per page so Vercel rebuilds don't reset all dates to the same value.</>,

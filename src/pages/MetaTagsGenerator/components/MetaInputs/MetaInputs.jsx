@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import HreflangSection from '../HreflangSection/HreflangSection'
+import Tooltip from '../../../../components/Tooltip/Tooltip'
 import './MetaInputs.scss'
 
 export default function MetaInputs({
@@ -91,16 +92,7 @@ export default function MetaInputs({
         <div className="MetaInputs__field">
           <label className="MetaInputs__label">
             Keywords
-            <span className="MetaInputs__tooltip-wrap" aria-label="About keywords">
-              <svg className="MetaInputs__tooltip-icon" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-                <circle cx="8" cy="8" r="7" stroke="currentColor" strokeWidth="1.4"/>
-                <path d="M8 7v5" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round"/>
-                <circle cx="8" cy="4.5" r="0.75" fill="currentColor"/>
-              </svg>
-              <span className="MetaInputs__tooltip" role="tooltip">
-                Ignored by Google since 2009 and by all major search engines. Including keywords exposes your SEO strategy to competitors with no ranking benefit. Add only if your CMS or client explicitly requires it.
-              </span>
-            </span>
+            <Tooltip>Ignored by Google since 2009 and by all major search engines. Including keywords exposes your SEO strategy to competitors with no ranking benefit. Add only if your CMS or client explicitly requires it.</Tooltip>
           </label>
           <input
             type="text"
@@ -114,16 +106,7 @@ export default function MetaInputs({
         <div className="MetaInputs__field">
           <label className="MetaInputs__label">
             Author
-            <span className="MetaInputs__tooltip-wrap" aria-label="About author">
-              <svg className="MetaInputs__tooltip-icon" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-                <circle cx="8" cy="8" r="7" stroke="currentColor" strokeWidth="1.4"/>
-                <path d="M8 7v5" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round"/>
-                <circle cx="8" cy="4.5" r="0.75" fill="currentColor"/>
-              </svg>
-              <span className="MetaInputs__tooltip" role="tooltip">
-                Not used as a ranking factor by Google or any major search engine. Useful for content attribution in CMS platforms and news aggregators.
-              </span>
-            </span>
+            <Tooltip>Not used as a ranking factor by Google or any major search engine. Useful for content attribution in CMS platforms and news aggregators.</Tooltip>
           </label>
           <input
             type="text"

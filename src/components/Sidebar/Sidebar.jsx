@@ -9,30 +9,103 @@ const IMAGE_CONVERTER_SLUGS = new Set([
 
 const COMPRESS_SLUGS = new Set(['compress-jpg', 'compress-png', 'compress-webp'])
 
+const SCHEMA_GENERATOR_SLUGS = new Set([
+  'product-schema-generator',
+  'article-schema-generator',
+  'faq-schema-generator',
+  'organization-schema-generator',
+  'local-business-schema-generator',
+  'breadcrumb-schema-generator',
+])
+
 const NAV_SECTIONS = [
   {
     label: 'SEO & Schema',
     items: [
-      { name: 'Meta tag generator',  route: '/meta-tags-generator', ready: true },
+      { name: 'Meta Tag Generator', route: '/meta-tags-generator', ready: true },
       { name: 'OG Image Generator', route: '/og-image-generator',  ready: true },
+      {
+        name: 'Schema Markup Generator',
+        group: true,
+        customActive: 'schemaGenerator',
+        children: [
+          { name: 'Product Schema Generator',       route: '/product-schema-generator'       },
+          { name: 'Article Schema Generator',       route: '/article-schema-generator'       },
+          { name: 'FAQ Schema Generator',           route: '/faq-schema-generator'           },
+          { name: 'Organization Schema Generator',  route: '/organization-schema-generator'  },
+          { name: 'Local Business Schema Generator',route: '/local-business-schema-generator'},
+          { name: 'Breadcrumb Schema Generator',    route: '/breadcrumb-schema-generator'    },
+        ],
+      },
     ],
   },
   {
     label: 'Images',
     items: [
-      { name: 'Favicon generator', route: '/favicon-generator', ready: true },
-      { name: 'WebP converter',    route: '/webp-converter',    ready: true },
-      { name: 'Image converter',   route: '/png-to-jpg',        ready: true, customActive: 'imageConverter' },
-      { name: 'Compress image',    route: '/compress-jpg',      ready: true, customActive: 'compress' },
+      { name: 'Favicon Generator', route: '/favicon-generator', ready: true },
+      { name: 'WebP Converter',    route: '/webp-converter',    ready: true },
+      {
+        name: 'Image Converter',
+        group: true,
+        customActive: 'imageConverter',
+        children: [
+          { name: 'PNG to JPG',  route: '/png-to-jpg'  },
+          { name: 'JPG to PNG',  route: '/jpg-to-png'  },
+          { name: 'PNG to WebP', route: '/png-to-webp' },
+          { name: 'JPG to WebP', route: '/jpg-to-webp' },
+          { name: 'WebP to JPG', route: '/webp-to-jpg' },
+          { name: 'WebP to PNG', route: '/webp-to-png' },
+          { name: 'GIF to JPG',  route: '/gif-to-jpg'  },
+          { name: 'GIF to PNG',  route: '/gif-to-png'  },
+          { name: 'GIF to WebP', route: '/gif-to-webp' },
+          { name: 'BMP to JPG',  route: '/bmp-to-jpg'  },
+          { name: 'BMP to PNG',  route: '/bmp-to-png'  },
+          { name: 'BMP to WebP', route: '/bmp-to-webp' },
+          { name: 'AVIF to JPG', route: '/avif-to-jpg' },
+          { name: 'AVIF to PNG', route: '/avif-to-png' },
+          { name: 'AVIF to WebP',route: '/avif-to-webp'},
+          { name: 'TIFF to JPG', route: '/tiff-to-jpg' },
+          { name: 'TIFF to PNG', route: '/tiff-to-png' },
+          { name: 'TIFF to WebP',route: '/tiff-to-webp'},
+          { name: 'JPEG to PNG', route: '/jpeg-to-png' },
+          { name: 'JPEG to WebP',route: '/jpeg-to-webp'},
+        ],
+      },
+      {
+        name: 'Compress Image',
+        group: true,
+        customActive: 'compress',
+        children: [
+          { name: 'Compress JPG',  route: '/compress-jpg'  },
+          { name: 'Compress PNG',  route: '/compress-png'  },
+          { name: 'Compress WebP', route: '/compress-webp' },
+        ],
+      },
     ],
   },
 ]
 
+const Chevron = () => (
+  <svg className="Sidebar__group-chevron" width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+    <path d="M3 5l4 4 4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+  </svg>
+)
+
 export default function Sidebar({ isOpen, onClose }) {
   const { pathname } = useLocation()
   const slug = pathname.slice(1)
-  const isImageConverterActive = IMAGE_CONVERTER_SLUGS.has(slug)
-  const isCompressActive = COMPRESS_SLUGS.has(slug)
+
+  const isImageConverterActive  = IMAGE_CONVERTER_SLUGS.has(slug)
+  const isCompressActive        = COMPRESS_SLUGS.has(slug)
+  const isSchemaGeneratorActive = SCHEMA_GENERATOR_SLUGS.has(slug)
+
+  function isGroupActive(item) {
+    return (
+      (item.customActive === 'schemaGenerator' && isSchemaGeneratorActive) ||
+      (item.customActive === 'imageConverter'  && isImageConverterActive)  ||
+      (item.customActive === 'compress'        && isCompressActive)
+    )
+  }
 
   function handleCookieSettingsClick() {
     window.dispatchEvent(new Event('open-cookie-consent'))
@@ -40,6 +113,37 @@ export default function Sidebar({ isOpen, onClose }) {
   }
 
   function renderNavItem(item) {
+    if (item.group) {
+      const active = isGroupActive(item)
+      return (
+        <details
+          key={item.name}
+          className={`Sidebar__group${active ? ' Sidebar__group--active' : ''}`}
+          open={active || undefined}
+        >
+          <summary className="Sidebar__group-summary">
+            {item.name}
+            <Chevron />
+          </summary>
+          <div className="Sidebar__group-children">
+            {item.children.map(child => (
+              <NavLink
+                key={child.route}
+                to={child.route}
+                end
+                className={({ isActive }) =>
+                  `Sidebar__nav-item Sidebar__nav-item--child${isActive ? ' Sidebar__nav-item--active' : ''}`
+                }
+                onClick={onClose}
+              >
+                {child.name}
+              </NavLink>
+            ))}
+          </div>
+        </details>
+      )
+    }
+
     if (!item.ready) {
       return (
         <span key={item.route} className="Sidebar__nav-item Sidebar__nav-item--coming-soon">
@@ -47,21 +151,7 @@ export default function Sidebar({ isOpen, onClose }) {
         </span>
       )
     }
-    if (item.customActive) {
-      const isActive =
-        (item.customActive === 'imageConverter' && isImageConverterActive) ||
-        (item.customActive === 'compress' && isCompressActive)
-      return (
-        <NavLink
-          key={item.route}
-          to={item.route}
-          className={`Sidebar__nav-item${isActive ? ' Sidebar__nav-item--active' : ''}`}
-          onClick={onClose}
-        >
-          {item.name}
-        </NavLink>
-      )
-    }
+
     return (
       <NavLink
         key={item.route}
@@ -109,7 +199,7 @@ export default function Sidebar({ isOpen, onClose }) {
               {NAV_SECTIONS.map(section => (
                 <div key={section.label}>
                   <div className="Sidebar__section-label">{section.label}</div>
-                  {section.items.map(renderNavItem)}
+                  {section.items.map(item => renderNavItem(item))}
                 </div>
               ))}
             </div>
@@ -131,7 +221,7 @@ export default function Sidebar({ isOpen, onClose }) {
           {NAV_SECTIONS.map(section => (
             <div key={section.label}>
               <div className="Sidebar__section-label">{section.label}</div>
-              {section.items.map(renderNavItem)}
+              {section.items.map(item => renderNavItem(item))}
             </div>
           ))}
         </nav>

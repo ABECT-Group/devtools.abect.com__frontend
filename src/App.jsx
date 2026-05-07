@@ -9,6 +9,7 @@ import ImageConverter from './pages/ImageConverter/ImageConverter'
 import PrivacyPolicy from './pages/PrivacyPolicy/PrivacyPolicy'
 import WebPConverter from './pages/WebPConverter/WebPConverter'
 import OGImageGenerator from './pages/OGImageGenerator/OGImageGenerator'
+import JsonLdGenerator from './pages/JsonLdGenerator/JsonLdGenerator'
 import About from './pages/About/About'
 
 const IMAGE_CONVERTER_SLUGS = [
@@ -19,6 +20,15 @@ const IMAGE_CONVERTER_SLUGS = [
 
 const COMPRESS_SLUGS = ['compress-jpg', 'compress-png', 'compress-webp']
 
+const SCHEMA_GENERATOR_SLUGS = [
+  'product-schema-generator',
+  'article-schema-generator',
+  'faq-schema-generator',
+  'organization-schema-generator',
+  'local-business-schema-generator',
+  'breadcrumb-schema-generator',
+]
+
 export default function App() {
   return (
     <Routes>
@@ -28,6 +38,9 @@ export default function App() {
         <Route path="about" element={<About />} />
         <Route path="meta-tags-generator" element={<MetaTagsGenerator />} />
         <Route path="og-image-generator" element={<OGImageGenerator />} />
+        {SCHEMA_GENERATOR_SLUGS.map(slug => (
+          <Route key={slug} path={slug} element={<JsonLdGenerator />} />
+        ))}
         <Route path="favicon-generator" element={<FaviconGenerator />} />
         <Route path="webp-converter" element={<WebPConverter />} />
         {IMAGE_CONVERTER_SLUGS.map(slug => (

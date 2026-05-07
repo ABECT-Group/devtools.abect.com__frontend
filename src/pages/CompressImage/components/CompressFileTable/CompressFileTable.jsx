@@ -1,6 +1,7 @@
 import { formatSize } from '../../utils/formatSize'
 import CompressFileRow from '../CompressFileRow/CompressFileRow'
 import { ClearAllButton, PrimaryButton, AccentButton } from '../../../../components/Buttons/Buttons'
+import Tooltip from '../../../../components/Tooltip/Tooltip'
 import './CompressFileTable.scss'
 
 export default function CompressFileTable({
@@ -25,19 +26,11 @@ export default function CompressFileTable({
         {hasQuality && (
           <div className="CompressFileTable__th">
             Quality
-
-            <span className="CompressFileTable__tooltip-wrap" aria-label="Quality guide">
-              <svg className="CompressFileTable__tooltip-icon" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-                <circle cx="8" cy="8" r="7" stroke="currentColor" strokeWidth="1.4"/>
-                <path d="M8 7v5" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round"/>
-                <circle cx="8" cy="4.5" r="0.75" fill="currentColor"/>
-              </svg>
-              <span className="CompressFileTable__tooltip" role="tooltip">
-                <span className="CompressFileTable__tooltip-row"><b>100%</b> — max quality, file barely shrinks</span>
-                <span className="CompressFileTable__tooltip-row"><b>82%</b> — recommended: −50–70% size, quality looks the same</span>
-                <span className="CompressFileTable__tooltip-row"><b>10%</b> — max compression, visible artifacts</span>
-              </span>
-            </span>
+            <Tooltip>
+              <span className="Tooltip__row"><b>100%</b> — max quality, file barely shrinks</span>
+              <span className="Tooltip__row"><b>82%</b> — recommended: −50–70% size, quality looks the same</span>
+              <span className="Tooltip__row"><b>10%</b> — max compression, visible artifacts</span>
+            </Tooltip>
           </div>
         )}
         <div className="CompressFileTable__th">Preview</div>
