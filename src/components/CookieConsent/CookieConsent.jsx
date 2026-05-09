@@ -57,14 +57,6 @@ export default function CookieConsent() {
 
   return (
     <aside className="CookieConsent" aria-label="Cookie consent">
-      <button
-        className="CookieConsent__close"
-        type="button"
-        onClick={handleReject}
-        aria-label="Reject analytics cookies"
-      >
-        x
-      </button>
       <div className="CookieConsent__title">Cookies</div>
       <p className="CookieConsent__text">
         We use Google Analytics and Microsoft Clarity to collect anonymous usage data and improve this website.
