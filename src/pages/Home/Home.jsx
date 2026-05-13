@@ -48,6 +48,11 @@ const TECH_STACK = [
 
 const CHANGELOG = [
   {
+    title: 'Text & Code Converters — HTML, Markdown, JSX, JSON, CSV, XML, YAML, Base64',
+    body: <>12 new browser-based text converters: <Link to="/html-to-markdown" className="Home__changelog-link">HTML ↔ Markdown</Link>, <Link to="/html-to-jsx" className="Home__changelog-link">HTML ↔ JSX</Link>, <Link to="/json-to-csv" className="Home__changelog-link">JSON ↔ CSV</Link>, <Link to="/xml-to-json" className="Home__changelog-link">XML ↔ JSON</Link>, <Link to="/yaml-to-json" className="Home__changelog-link">YAML ↔ JSON</Link>, and <Link to="/base64-encode" className="Home__changelog-link">Base64 Encode/Decode</Link>. All tools run entirely in the browser — no uploads, no server calls. Each page includes full SEO content: HowTo steps, format comparison tables, 12 FAQ items, and three JSON-LD schemas (WebApplication, HowTo, FAQPage).</>,
+    date: 'May 13, 2026', datetime: '2026-05-13',
+  },
+  {
     title: 'Schema Markup Generator — Product, Article, FAQ, Organization, Local Business, Breadcrumb',
     body: <>New tools: <Link to="/product-schema-generator" className="Home__changelog-link">Product</Link>, <Link to="/article-schema-generator" className="Home__changelog-link">Article</Link>, <Link to="/faq-schema-generator" className="Home__changelog-link">FAQ</Link>, <Link to="/organization-schema-generator" className="Home__changelog-link">Organization</Link>, <Link to="/local-business-schema-generator" className="Home__changelog-link">Local Business</Link>, and <Link to="/breadcrumb-schema-generator" className="Home__changelog-link">Breadcrumb</Link> schema generators — each with live JSON-LD preview, Google Rich Results eligibility validation, missing field warnings, and a direct "Test in Google" link. Fields based on official Google documentation. No signup required.</>,
     date: 'May 7, 2026', datetime: '2026-05-06',

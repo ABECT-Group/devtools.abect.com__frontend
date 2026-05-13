@@ -11,6 +11,16 @@ import WebPConverter from './pages/WebPConverter/WebPConverter'
 import OGImageGenerator from './pages/OGImageGenerator/OGImageGenerator'
 import JsonLdGenerator from './pages/JsonLdGenerator/JsonLdGenerator'
 import About from './pages/About/About'
+import TextConverter from './pages/TextConverter/TextConverter'
+
+const TEXT_CONVERTER_SLUGS = [
+  'html-to-markdown', 'markdown-to-html',
+  'html-to-jsx',      'jsx-to-html',
+  'json-to-csv',      'csv-to-json',
+  'xml-to-json',      'json-to-xml',
+  'yaml-to-json',     'json-to-yaml',
+  'base64-encode',    'base64-decode',
+]
 
 const IMAGE_CONVERTER_SLUGS = [
   'png-to-jpg', 'webp-to-jpg', 'gif-to-jpg', 'bmp-to-jpg', 'avif-to-jpg', 'tiff-to-jpg',
@@ -36,6 +46,9 @@ export default function App() {
         <Route index element={<Home />} />
         <Route path="privacy-policy" element={<PrivacyPolicy />} />
         <Route path="about" element={<About />} />
+        {TEXT_CONVERTER_SLUGS.map(slug => (
+          <Route key={slug} path={slug} element={<TextConverter />} />
+        ))}
         <Route path="meta-tags-generator" element={<MetaTagsGenerator />} />
         <Route path="og-image-generator" element={<OGImageGenerator />} />
         {SCHEMA_GENERATOR_SLUGS.map(slug => (

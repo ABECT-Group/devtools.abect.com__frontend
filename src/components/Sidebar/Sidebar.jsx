@@ -1,6 +1,9 @@
 import { NavLink, useLocation } from 'react-router-dom'
 import './Sidebar.scss'
 
+
+// ─── Other family slug sets ───────────────────────────────────────────────────
+
 const IMAGE_CONVERTER_SLUGS = new Set([
   'png-to-jpg', 'webp-to-jpg', 'gif-to-jpg', 'bmp-to-jpg', 'avif-to-jpg', 'tiff-to-jpg',
   'jpg-to-png', 'jpeg-to-png', 'webp-to-png', 'gif-to-png', 'bmp-to-png', 'avif-to-png', 'tiff-to-png',
@@ -18,6 +21,8 @@ const SCHEMA_GENERATOR_SLUGS = new Set([
   'breadcrumb-schema-generator',
 ])
 
+// ─── Nav tree ────────────────────────────────────────────────────────────────
+
 const NAV_SECTIONS = [
   {
     label: 'SEO & Schema',
@@ -29,12 +34,12 @@ const NAV_SECTIONS = [
         group: true,
         customActive: 'schemaGenerator',
         children: [
-          { name: 'Product Schema Generator',       route: '/product-schema-generator'       },
-          { name: 'Article Schema Generator',       route: '/article-schema-generator'       },
-          { name: 'FAQ Schema Generator',           route: '/faq-schema-generator'           },
-          { name: 'Organization Schema Generator',  route: '/organization-schema-generator'  },
-          { name: 'Local Business Schema Generator',route: '/local-business-schema-generator'},
-          { name: 'Breadcrumb Schema Generator',    route: '/breadcrumb-schema-generator'    },
+          { name: 'Product Schema Generator',        route: '/product-schema-generator'        },
+          { name: 'Article Schema Generator',        route: '/article-schema-generator'        },
+          { name: 'FAQ Schema Generator',            route: '/faq-schema-generator'            },
+          { name: 'Organization Schema Generator',   route: '/organization-schema-generator'   },
+          { name: 'Local Business Schema Generator', route: '/local-business-schema-generator' },
+          { name: 'Breadcrumb Schema Generator',     route: '/breadcrumb-schema-generator'     },
         ],
       },
     ],
@@ -83,7 +88,20 @@ const NAV_SECTIONS = [
       },
     ],
   },
+  {
+    label: 'Text & Code',
+    items: [
+      { name: 'HTML ↔ Markdown', route: '/html-to-markdown', ready: true, slugSet: new Set(['html-to-markdown', 'markdown-to-html']) },
+      { name: 'HTML ↔ JSX',      route: '/html-to-jsx',      ready: true, slugSet: new Set(['html-to-jsx', 'jsx-to-html']) },
+      { name: 'JSON ↔ CSV',      route: '/json-to-csv',      ready: true, slugSet: new Set(['json-to-csv', 'csv-to-json']) },
+      { name: 'XML ↔ JSON',      route: '/xml-to-json',      ready: true, slugSet: new Set(['xml-to-json', 'json-to-xml']) },
+      { name: 'YAML ↔ JSON',     route: '/yaml-to-json',     ready: true, slugSet: new Set(['yaml-to-json', 'json-to-yaml']) },
+      { name: 'Base64',          route: '/base64-encode',    ready: true, slugSet: new Set(['base64-encode', 'base64-decode']) },
+    ],
+  },
 ]
+
+// ─── Component ────────────────────────────────────────────────────────────────
 
 const Chevron = () => (
   <svg className="Sidebar__group-chevron" width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
@@ -152,13 +170,15 @@ export default function Sidebar({ isOpen, onClose }) {
       )
     }
 
+    const isCustomActive = item.slugSet?.has(slug)
+
     return (
       <NavLink
         key={item.route}
         to={item.route}
         end
         className={({ isActive }) =>
-          `Sidebar__nav-item${isActive ? ' Sidebar__nav-item--active' : ''}`
+          `Sidebar__nav-item${(isActive || isCustomActive) ? ' Sidebar__nav-item--active' : ''}`
         }
         onClick={onClose}
       >

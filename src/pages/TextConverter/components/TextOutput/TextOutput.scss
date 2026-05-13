@@ -1,0 +1,83 @@
+.TextOutput {
+  border: 1px solid var(--border-base);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 16px;
+    background: var(--bg-sidebar);
+    border-bottom: 1px solid var(--border-base);
+  }
+
+  &__label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--text-faint);
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+  }
+
+  &__actions {
+    display: flex;
+    gap: 6px;
+  }
+
+  &__btn {
+    font-size: 0.8125rem;
+    font-weight: 500;
+    color: var(--accent);
+    background: transparent;
+    border: 1px solid var(--border-blue);
+    border-radius: var(--radius-sm);
+    padding: 3px 12px;
+    cursor: pointer;
+    transition: border-color 0.15s, color 0.15s;
+
+    &:hover:not(:disabled) {
+      border-color: var(--accent);
+    }
+
+    &:disabled {
+      opacity: 0.4;
+      cursor: default;
+    }
+
+    &--copied {
+      color: var(--green);
+      border-color: var(--green-border);
+    }
+
+    &--download {
+      color: var(--green);
+      border-color: var(--green-border);
+
+      &:hover:not(:disabled) {
+        border-color: var(--green);
+      }
+    }
+  }
+
+  &__area {
+    display: block;
+    width: 100%;
+    height: 220px;
+    padding: 16px 20px;
+    background: var(--bg-page);
+    border: none;
+    outline: none;
+    resize: vertical;
+    font-family: 'Menlo', 'Monaco', 'Consolas', monospace;
+    font-size: 0.8125rem;
+    color: var(--accent-code);
+    line-height: 1.65;
+    box-sizing: border-box;
+    cursor: default;
+
+    &::placeholder {
+      color: var(--text-faint);
+    }
+  }
+}
