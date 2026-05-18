@@ -48,6 +48,11 @@ const TECH_STACK = [
 
 const CHANGELOG = [
   {
+    title: 'HEIC Converter — iPhone photos to JPG and WebP',
+    body: <>New tools: <Link to="/heic-to-jpg" className="Home__changelog-link">HEIC to JPG</Link> and <Link to="/heic-to-webp" className="Home__changelog-link">HEIC to WebP</Link> — convert iPhone photos directly in the browser with no upload. Safari uses the native OS HEIC decoder (zero library cost); Chrome and Firefox lazy-load a WebAssembly build of libheif only when a HEIC file is detected, leaving all other pages unaffected. Batch conversion and ZIP download supported.</>,
+    date: 'May 18, 2026', datetime: '2026-05-18',
+  },
+  {
     title: 'Text & Code Converters — HTML, Markdown, JSX, JSON, CSV, XML, YAML, Base64',
     body: <>12 new browser-based text converters: <Link to="/html-to-markdown" className="Home__changelog-link">HTML ↔ Markdown</Link>, <Link to="/html-to-jsx" className="Home__changelog-link">HTML ↔ JSX</Link>, <Link to="/json-to-csv" className="Home__changelog-link">JSON ↔ CSV</Link>, <Link to="/xml-to-json" className="Home__changelog-link">XML ↔ JSON</Link>, <Link to="/yaml-to-json" className="Home__changelog-link">YAML ↔ JSON</Link>, and <Link to="/base64-encode" className="Home__changelog-link">Base64 Encode/Decode</Link>. All tools run entirely in the browser — no uploads, no server calls. Each page includes full SEO content: HowTo steps, format comparison tables, 12 FAQ items, and three JSON-LD schemas (WebApplication, HowTo, FAQPage).</>,
     date: 'May 13, 2026', datetime: '2026-05-13',

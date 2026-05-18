@@ -16,6 +16,7 @@ import { FORMAT_LABELS, OUTPUT_EXT, OUTPUT_MIME, OUTPUT_QUALITY } from './data/f
 import { OG_IMAGE, buildHelmet } from './data/helmet'
 import { buildJsonLdApp, buildJsonLdFaq, buildJsonLdHowTo } from './data/jsonld'
 import { buildZip } from './utils/buildZip'
+import { convertHeicImage } from './utils/convertHeicImage'
 import { convertImage } from './utils/convertImage'
 import { triggerDownload } from './utils/download'
 import './ImageConverter.scss'
@@ -72,17 +73,21 @@ export default function ImageConverter() {
   // ── File handlers ──────────────────────────────────────────────────────────
 
   function addFiles(newFiles) {
-    const entries = Array.from(newFiles).map(file => ({
-      id: crypto.randomUUID(),
-      file,
-      name: file.name,
-      type: file.type.split('/')[1]?.toUpperCase() || 'UNKNOWN',
-      originalSize: file.size,
-      status: 'ready',
-      resultBlob: null,
-      resultSize: null,
-      previewUrl: URL.createObjectURL(file),
-    }))
+    const entries = Array.from(newFiles).map(file => {
+      const isHeic = file.type === 'image/heic' || file.type === 'image/heif'
+        || file.name.toLowerCase().endsWith('.heic') || file.name.toLowerCase().endsWith('.heif')
+      return {
+        id: crypto.randomUUID(),
+        file,
+        name: file.name,
+        type: file.type.split('/')[1]?.toUpperCase() || 'UNKNOWN',
+        originalSize: file.size,
+        status: 'ready',
+        resultBlob: null,
+        resultSize: null,
+        previewUrl: isHeic ? null : URL.createObjectURL(file),
+      }
+    })
     setFiles(prev => [...prev, ...entries])
   }
 
@@ -108,7 +113,9 @@ export default function ImageConverter() {
     setFiles(prev => prev.map(f => f.id === id ? { ...f, status: 'converting' } : f))
 
     try {
-      const blob = await convertImage(entry.file, mimeType, quality)
+      const blob = config.from === 'heic'
+        ? await convertHeicImage(entry.file, mimeType)
+        : await convertImage(entry.file, mimeType, quality)
       setFiles(prev => prev.map(f =>
         f.id === id ? { ...f, status: 'done', resultBlob: blob, resultSize: blob.size } : f
       ))
@@ -187,6 +194,10 @@ export default function ImageConverter() {
         <DropZone
           onFilesAdded={addFiles}
           title={`Drop ${fromLabel} files here or click to select`}
+          {...(config.from === 'heic' && {
+            accept: 'image/heic,image/heif,.heic,.heif',
+            subtitle: 'HEIC and HEIF files — drag & drop or click to select',
+          })}
         />
         {files.length > 0 && (
           <ConvertFileTable

@@ -1949,9 +1949,261 @@ function convertJPGtoWebP(file, quality = 0.82) {
     ],
     relatedSlugs: ['tiff-to-jpg', 'tiff-to-png', 'png-to-webp'],
   },
+
+  // ─── HEIC (iPhone) ────────────────────────────────────────────────────────
+
+  'heic-to-jpg': {
+    from: 'heic', to: 'jpg',
+    title: 'Free HEIC to JPG Converter Online — No Upload | Abect',
+    description: 'Convert iPhone HEIC photos to JPG free — no upload, no app. Works on Windows and Mac. Batch convert, instant download. Browser-based. Try now.',
+    h1: 'Free HEIC to JPG Converter — iPhone Photos in Seconds',
+    sub: 'Convert HEIC photos from iPhone to JPG in your browser — no upload, no signup. Works on Windows, Mac, and Linux.',
+    howTo: [
+      'Drop your HEIC files from iPhone onto the converter above — or click to browse and select multiple files at once.',
+      'Click Convert on a single file, or Convert all to process the entire batch in one go.',
+      'Download each JPG individually, or click Download all to save everything as a single ZIP archive.',
+      'Note: on Chrome and Firefox the first conversion takes a few extra seconds while the HEIC decoder loads. Subsequent conversions in the same session are instant.',
+    ],
+    sections: [
+      {
+        heading: 'Your iPhone photos never leave your device',
+        blocks: [
+          { type: 'p', text: 'HEIC files are converted entirely in your browser — no file is transmitted to any server. The conversion uses the browser\'s Canvas API (Safari) or a WebAssembly decoder (Chrome, Firefox) that runs locally. Once the page is loaded, the tool works even without an internet connection.' },
+          { type: 'p', text: 'This matters when converting personal photos, ID documents, medical images, or confidential screenshots that arrive as HEIC from an iPhone. There is no account, no temporary cloud storage, and no retention of your files at any step.' },
+          { type: 'code', label: 'How HEIC → JPG conversion works in your browser', code: `// Safari uses the native OS HEIC decoder via createImageBitmap
+// Chrome/Firefox lazy-load a WebAssembly build of libheif
+
+async function convertHeicToJpg(file) {
+  try {
+    // Safari: OS-native HEIC decode, zero library cost
+    const bitmap = await createImageBitmap(file)
+    const canvas = document.createElement('canvas')
+    canvas.width = bitmap.width
+    canvas.height = bitmap.height
+    const ctx = canvas.getContext('2d')
+    ctx.fillStyle = '#ffffff'   // HEIC may have transparency; fill white for JPG
+    ctx.fillRect(0, 0, canvas.width, canvas.height)
+    ctx.drawImage(bitmap, 0, 0)
+    bitmap.close()
+    return canvas.toBlob(/* resolve */, 'image/jpeg', 0.8)
+  } catch {
+    // Chrome/Firefox: WebAssembly decoder, lazy-loaded on first use
+    const { heicTo } = await import('heic-to')
+    return heicTo({ blob: file, type: 'image/jpeg', quality: 0.8 })
+  }
+}` },
+        ],
+      },
+      {
+        heading: 'Why iPhone photos are HEIC — and why you need JPG',
+        blocks: [
+          { type: 'p', text: 'Apple switched iPhones to HEIC (High Efficiency Image Container) by default with iOS 11 in 2017. HEIC uses the HEVC codec and stores the same photo at roughly half the file size of JPG — a full-resolution iPhone photo is typically 2–4 MB as HEIC versus 5–8 MB as JPG.' },
+          { type: 'p', text: 'The problem is compatibility. Windows 10 and 11 require a paid codec from the Microsoft Store to open HEIC natively. Most web platforms, email clients, CMS tools, and image editors still default to JPG. Stock photo platforms like Shutterstock and Adobe Stock do not accept HEIC. Instagram, Facebook, and Twitter convert HEIC automatically on upload but at unpredictable quality settings.' },
+          { type: 'p', text: 'Converting to JPG gives you universal compatibility — every device, every platform, every app that was built in the last 30 years opens JPG without any special software or codec.' },
+        ],
+      },
+      {
+        heading: 'HEIC vs JPG — format comparison',
+        blocks: [
+          { type: 'table', headers: ['Feature', 'HEIC', 'JPG'], rows: [
+            ['Compression', 'HEVC — 50% smaller than JPG', 'Lossy, industry standard'],
+            ['File size (12MP photo)', '2–4 MB', '4–8 MB'],
+            ['Transparency', 'Supported', 'None — fills white on convert'],
+            ['Windows support', 'Requires paid codec', 'Native everywhere'],
+            ['Browser support', 'Safari only (natively)', 'All browsers'],
+            ['Web upload support', 'Limited — platform-dependent', 'Universal'],
+            ['Editing in Photoshop', 'CS 2023+ only', 'All versions'],
+            ['Best for', 'iPhone camera storage', 'Sharing, web, print, email'],
+          ]},
+        ],
+      },
+      {
+        heading: 'When to convert HEIC to JPG',
+        blocks: [
+          { type: 'h3', text: 'Convert to JPG when:' },
+          { type: 'ul', items: [
+            '**Sharing on Windows** — recipients without the Microsoft HEIC codec cannot open the file',
+            '**Uploading to websites** — stock platforms, CMS, e-commerce, and social media all prefer JPG',
+            '**Sending by email** — many email clients show HEIC as an attachment instead of an inline image',
+            '**Printing at a photo lab** — most printing services accept JPG, not HEIC',
+            '**Editing in older software** — Photoshop before 2023, Lightroom Classic, and GIMP need JPG',
+            '**Embedding in Word or PowerPoint** — Office on Windows does not render HEIC inline',
+          ]},
+          { type: 'h3', text: 'Keep HEIC when:' },
+          { type: 'ul', items: [
+            '**Staying in the Apple ecosystem** — Mac, iPhone, iPad, and iCloud all handle HEIC natively',
+            '**Saving storage** — HEIC photos are 40–50% smaller; keep originals to save space on disk or cloud',
+            '**You only need it for yourself** — if you will only view the photo on your own Apple devices, HEIC is fine',
+          ]},
+        ],
+      },
+      {
+        heading: 'How the HEIC format works — technical overview',
+        blocks: [
+          { type: 'p', text: 'HEIC is a container format defined by the ISO Base Media File Format (ISOBMFF, ISO/IEC 14496-12). Image data is stored as HEVC (H.265) tiles inside the container — the same codec used for 4K video streaming. HEVC\'s advanced entropy coding (CABAC) and inter-prediction achieve roughly 2× the compression efficiency of JPEG\'s DCT at the same visual quality.' },
+          { type: 'p', text: 'Because HEVC requires patent licensing from multiple patent pools (MPEG LA, HEVC Advance, Velos Media), browser vendors have been slow to implement native HEIC decoding. Safari can decode HEIC by delegating to the macOS and iOS system codecs, which already handle HEVC for video. Chrome and Firefox do not have a licensed HEVC decoder, so they rely on WebAssembly builds of libheif — an open-source library that includes a software HEVC decoder (libde265). This converter lazy-loads that library only when a HEIC file is detected, so non-HEIC pages are unaffected.' },
+          { type: 'code', label: 'HEIC container structure (simplified)', code: `// HEIC is an ISOBMFF container — same as MP4 video
+// Box types relevant to a still HEIC image:
+
+ftyp  — file type box: identifies this as HEIC ('heic' brand)
+mdat  — media data box: raw HEVC-encoded image data (tiles)
+meta  — metadata box
+  ├─ hdlr  — handler: 'pict' (picture handler)
+  ├─ pitm  — primary item: index of the main image
+  ├─ iinf  — item info: list of all image items (main + thumbnails)
+  ├─ iloc  — item location: byte offsets into mdat for each item
+  └─ iprp  — item properties (width, height, colour info, rotation)
+
+// A 12MP iPhone photo stores the main image as HEVC tiles
+// plus a JPEG thumbnail, depth map, and gain map in the same file` },
+        ],
+      },
+    ],
+    faq: [
+      { question: 'How do I convert HEIC to JPG on Windows for free?', answer: 'Drop your HEIC files onto this converter, click "Convert all", then download the JPGs. Everything runs in your browser — no app installation, no Microsoft Store codec purchase, no upload. Works on Windows 10 and Windows 11 in Chrome or Edge.' },
+      { question: 'How do I convert HEIC to JPG on a Mac?', answer: 'Open this page in any browser on your Mac, drop your HEIC files, and download the JPGs. On Safari, conversion is native and instant. On Chrome or Firefox, a small WebAssembly decoder loads on first use and the conversion takes a few seconds.' },
+      { question: 'Why does my iPhone save photos as HEIC instead of JPG?', answer: 'Apple switched to HEIC by default with iOS 11 (2017) because HEIC photos are roughly 50% smaller than JPG at the same quality — preserving iPhone storage. You can disable this in Settings → Camera → Formats → Most Compatible to shoot in JPG directly, but storage usage will increase significantly.' },
+      { question: 'Will converting HEIC to JPG reduce image quality?', answer: 'The converter uses quality 0.80 (80%), which gives a good balance between file size and visual quality for standard photography. There will be a small amount of re-compression loss since JPG is a lossy format — but at quality 0.80, the difference is not visible on a phone or monitor at normal viewing sizes.' },
+      { question: 'Why does the HEIC file take a few seconds to convert on Chrome?', answer: 'Chrome and Firefox do not support HEIC natively, so the converter lazy-loads a WebAssembly build of the libheif decoder (~1.2 MB) on first use. After the initial load, subsequent HEIC conversions in the same session are instant. On Safari, there is no delay because HEIC is decoded natively by macOS or iOS.' },
+      { question: 'Can I convert multiple HEIC files at once?', answer: 'Yes. Drop as many HEIC files as you need in one go, then click "Convert all" to process the batch, and "Download all" to get a single ZIP archive with all JPG files. There is no file count limit per session.' },
+      { question: 'Does HEIC support transparency? What happens when converting to JPG?', answer: 'HEIC supports an alpha channel for transparency. JPG does not support transparency. When a transparent HEIC is converted to JPG, transparent areas are filled with white. If you need to preserve transparency, convert to PNG instead.' },
+      { question: 'Can I open the converted JPG on any device?', answer: 'Yes. JPG is the most universally supported image format — it opens on Windows, Mac, Linux, Android, iPhone, printers, cameras, and every web browser without any special software or codec.' },
+      { question: 'How do I send iPhone photos as JPG instead of HEIC?', answer: 'On iPhone: go to Settings → Photos → scroll to "Transfer to Mac or PC" → select "Automatic". iOS then converts HEIC to JPG automatically when you AirDrop or cable-transfer photos to a non-Apple device. Alternatively, convert the HEIC files here after the transfer.' },
+      { question: 'What if my HEIC file contains a depth map or portrait mode data?', answer: 'The converter extracts the main visible image layer (the standard photo). Depth maps, portrait mode bokeh data, and HDR gain maps stored in the HEIC container are not transferred to the JPG — JPG cannot store this auxiliary data. The result is a standard, fully viewable photograph.' },
+      FAQ_BATCH,
+      FAQ_UPLOAD,
+    ],
+    relatedSlugs: ['heic-to-webp', 'png-to-jpg'],
+  },
+
+  'heic-to-webp': {
+    from: 'heic', to: 'webp',
+    title: 'Free HEIC to WebP Converter — iPhone Photos for Web | Abect',
+    description: 'Convert iPhone HEIC photos to WebP free — smaller files than JPG, no upload. Boost PageSpeed. Batch convert, instant download. Browser-based. Try now.',
+    h1: 'Free HEIC to WebP Converter — Smallest Web-Ready Files',
+    sub: 'Convert HEIC photos from iPhone to WebP in your browser — smaller than JPG, no upload, no signup.',
+    howTo: [
+      'Drop your HEIC files from iPhone onto the converter above — or click to browse and select multiple files at once.',
+      'Click Convert on a single file, or Convert all to process the entire batch in one go.',
+      'Download each WebP individually, or click Download all to save everything as a single ZIP archive.',
+      'Tip: WebP at quality 0.92 produces files 25–34% smaller than JPG from the same source. For web use, WebP is the most efficient format available today.',
+    ],
+    sections: [
+      {
+        heading: 'Private conversion — HEIC files stay on your device',
+        blocks: [
+          { type: 'p', text: 'HEIC photos are converted to WebP entirely in your browser — no file leaves your device. On Safari, the system\'s native HEIC codec handles decoding. On Chrome and Firefox, a WebAssembly build of libheif loads on first use and runs locally thereafter. The resulting WebP blob is created by the Canvas API and downloaded directly to your device.' },
+          { type: 'p', text: 'Converting product photos, location shots, or client work from iPhone HEIC to WebP for web use — without those files passing through any cloud service — is a genuine privacy benefit. Disconnect from the internet after the page loads and the converter continues to work.' },
+          { type: 'code', label: 'HEIC → WebP — two-stage browser pipeline', code: `// Stage 1: decode HEIC to raw pixels (Safari native or WASM)
+// Stage 2: encode raw pixels to WebP via Canvas API
+
+async function heicToWebp(file) {
+  let bitmap
+  try {
+    bitmap = await createImageBitmap(file)  // Safari: native HEIC decode
+  } catch {
+    const { heicTo } = await import('heic-to')  // Chrome/Firefox: WASM
+    // heicTo returns a WebP Blob directly — skip Canvas on this path
+    return heicTo({ blob: file, type: 'image/webp', quality: 0.8 })
+  }
+  // Safari path: draw to canvas and encode as WebP
+  const canvas = document.createElement('canvas')
+  canvas.width = bitmap.width
+  canvas.height = bitmap.height
+  canvas.getContext('2d').drawImage(bitmap, 0, 0)
+  bitmap.close()
+  return new Promise(resolve =>
+    canvas.toBlob(resolve, 'image/webp', 0.8)
+  )
+}` },
+        ],
+      },
+      {
+        heading: 'Why convert iPhone photos to WebP for the web',
+        blocks: [
+          { type: 'p', text: 'WebP is the most efficient widely-supported image format for web delivery. At quality 0.92, WebP produces files 25–34% smaller than JPG at equivalent perceptual quality — and WebP is now supported by 97%+ of browsers including Safari 14+. Google PageSpeed Insights and Lighthouse flag JPG and PNG images as optimization opportunities and recommend WebP explicitly.' },
+          { type: 'p', text: 'iPhone photos arrive as HEIC, which is browser-incompatible. Converting directly to WebP (rather than through JPG as an intermediate) avoids a double lossy compression step: HEIC → JPG → WebP would apply lossy encoding twice. HEIC → WebP applies lossy encoding only once in the final step, resulting in better output quality at the same file size.' },
+          { type: 'p', text: 'E-commerce developers, content publishers, and WordPress theme builders who receive product or lifestyle photos from photographers using iPhones can use this converter to go directly from HEIC to web-optimized WebP in a single step — no Photoshop, no command line, no cloud upload.' },
+        ],
+      },
+      {
+        heading: 'HEIC vs WebP — format comparison',
+        blocks: [
+          { type: 'table', headers: ['Feature', 'HEIC', 'WebP'], rows: [
+            ['Compression', 'HEVC — best-in-class', 'VP8/VP8L — 25–34% better than JPG'],
+            ['File size (12MP photo)', '2–4 MB', '1–2 MB at quality 0.80'],
+            ['Transparency', 'Supported', 'Full alpha channel'],
+            ['Animation', 'Supported (Live Photos)', 'Supported'],
+            ['Browser support', 'Safari only (natively)', '97%+ — Chrome, Firefox, Edge, Safari 14+'],
+            ['Web server delivery', 'Not supported', 'Native — no conversion on server'],
+            ['Google PageSpeed', 'Flagged as incompatible', 'Recommended by Lighthouse'],
+            ['Best for', 'iPhone camera storage', 'Web delivery — fastest load time'],
+          ]},
+        ],
+      },
+      {
+        heading: 'When to convert HEIC to WebP vs JPG vs PNG',
+        blocks: [
+          { type: 'h3', text: 'Choose WebP when:' },
+          { type: 'ul', items: [
+            '**Publishing to a website** — WebP loads 25–34% faster than JPG at the same quality; Lighthouse recommends it',
+            '**WordPress or Shopify** — both platforms support WebP natively (WP 5.8+, Shopify all plans)',
+            '**Next.js / Nuxt / Astro** — framework image components serve WebP automatically; supply WebP for best results',
+            '**CDN delivery** — smaller WebP files mean lower bandwidth costs and faster global delivery',
+            '**Product or portfolio photography** — high-quality iPhone shots compressed to WebP are indistinguishable from HEIC at 30–40% smaller size',
+          ]},
+          { type: 'h3', text: 'Choose JPG instead when:' },
+          { type: 'ul', items: [
+            '**Sending to Windows users** — older Windows apps may not open WebP; JPG is universally understood',
+            '**Photo labs and printing** — printing services accept JPG, rarely WebP',
+            '**Email clients** — some email clients do not render WebP inline; JPG is safer',
+          ]},
+          { type: 'h3', text: 'Choose PNG instead when:' },
+          { type: 'ul', items: [
+            '**Editing in Photoshop or Affinity** — use PNG as a lossless intermediate, then export for web',
+            '**Transparency is required** — both WebP and PNG support alpha, but if target app does not support WebP, use PNG',
+          ]},
+        ],
+      },
+      {
+        heading: 'HEIC to WebP — avoiding double compression',
+        blocks: [
+          { type: 'p', text: 'A common workflow mistake is converting HEIC → JPG first, then JPG → WebP. This applies lossy compression twice: once when creating the JPG (introducing DCT artifacts), and again when encoding WebP (compressing the already-degraded data). The result is visibly worse at the same file size.' },
+          { type: 'p', text: 'Converting HEIC → WebP directly passes the HEIC pixel data (after lossless HEVC decoding) straight to the WebP encoder. Only one lossy step occurs — in the WebP encoder — which operates on the full-quality decoded pixels from the HEIC source. This produces cleaner output with less ringing and blocking at any given quality setting.' },
+          { type: 'code', label: 'Direct vs indirect conversion — why one step is better', code: `// ❌ Two-step conversion: double lossy compression
+// HEIC → JPG → WebP
+// Quality loss compounds at each lossy step
+
+// ✓ One-step conversion: single lossy step
+// HEIC (decoded losslessly to pixels) → WebP (encoded once)
+
+// This converter uses the one-step approach:
+// 1. Decode HEIC to raw RGBA pixel buffer (lossless decode)
+// 2. Encode pixel buffer directly to WebP at quality 0.80
+
+// Result: cleaner WebP at the same file size vs going through JPG` },
+        ],
+      },
+    ],
+    faq: [
+      { question: 'How do I convert iPhone HEIC photos to WebP for my website?', answer: 'Drop your HEIC files onto the converter, click "Convert all", and download the WebP files. They are ready to upload directly to WordPress, Shopify, or any web server. No intermediate JPG step needed — the converter goes directly from HEIC to WebP.' },
+      { question: 'Is WebP smaller than JPG for the same iPhone photo?', answer: 'Yes. WebP at quality 0.92 is typically 25–34% smaller than JPG at the same perceptual quality. A 4 MB HEIC photo converted to JPG would be ~4.5 MB; the same photo converted directly to WebP would be ~3–3.5 MB — with no visible quality difference.' },
+      { question: 'Will WebP work on all browsers?', answer: 'WebP is supported in Chrome, Firefox, Edge, and Safari 14+ — covering 97%+ of global browser traffic. For the rare older browser, use the HTML <picture> element: <picture><source type="image/webp" srcset="photo.webp"><img src="photo.jpg"></picture>. Modern browsers load the WebP; older ones fall back to JPG.' },
+      { question: 'Why convert HEIC directly to WebP instead of going through JPG first?', answer: 'Converting HEIC → JPG → WebP applies lossy compression twice, which accumulates quality loss. Converting HEIC → WebP directly decodes the HEIC to raw pixels (no quality loss at this step) and then encodes to WebP once. Single-step conversion produces better output at the same file size.' },
+      { question: 'Does the WebP converter preserve HEIC transparency?', answer: 'Yes. WebP supports full alpha-channel transparency. If the HEIC source contains transparent or semi-transparent areas, they are preserved in the WebP output. However, most iPhone camera photos do not contain transparency — transparency is more common in HEIC files from screen recordings or app exports.' },
+      { question: 'Can I use the WebP files in WordPress?', answer: 'Yes. WordPress 5.8 and later supports WebP natively — you can upload WebP directly through the Media Library without any plugin. For older WordPress installations, the WebP Express or ShortPixel plugins add WebP support.' },
+      { question: 'How do I use WebP in a Next.js project?', answer: 'Use the built-in Next.js <Image> component — it automatically serves WebP to browsers that support it, with a fallback for browsers that do not. If you supply a WebP file as the src, Next.js serves it directly with no additional processing. No configuration required.' },
+      { question: 'Can I batch convert hundreds of HEIC photos to WebP?', answer: 'Yes. Drop all HEIC files onto the converter at once, click "Convert all" to process the batch, then "Download all" to get a ZIP archive with all WebP files. The batch size is limited only by available browser memory — most modern devices handle 50–100 files per session comfortably.' },
+      { question: 'Why does the first HEIC conversion take extra time on Chrome?', answer: 'Chrome does not have native HEIC support, so the converter lazy-loads a ~1.2 MB WebAssembly decoder (libheif) on first use. This download takes 1–3 seconds depending on connection speed. After the initial load, all conversions in the same browser session are fast. On Safari, there is no delay because HEIC is decoded natively.' },
+      { question: 'Is WebP good for high-resolution iPhone photos?', answer: 'Yes. WebP handles high-resolution photos well — a 12MP or 48MP iPhone photo converts cleanly at quality 0.80 with no visible artifacts at normal viewing sizes. For very large files (48MP+), conversion may take a few seconds on mobile devices due to the pixel count, but the output quality is excellent.' },
+      FAQ_BATCH,
+      FAQ_UPLOAD,
+    ],
+    relatedSlugs: ['heic-to-jpg', 'jpg-to-webp'],
+  },
 }
 
-// All 20 slugs — used in App.jsx routing and the "All image converters" section
+// All 22 slugs — used in App.jsx routing and the "All image converters" section
 export const ALL_SLUGS = Object.keys(CONVERSIONS)
 
 export const FORMAT_CARD_DESC = {
@@ -1963,4 +2215,5 @@ export const FORMAT_CARD_DESC = {
   avif: 'Next-gen format, 40–50% smaller than JPG',
   bmp:  'Uncompressed bitmap, no quality loss',
   tiff: 'High-quality format for print and archives',
+  heic: 'iPhone format — convert to JPG or WebP',
 }

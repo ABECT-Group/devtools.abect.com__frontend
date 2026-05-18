@@ -8,6 +8,7 @@ const IMAGE_CONVERTER_SLUGS = new Set([
   'png-to-jpg', 'webp-to-jpg', 'gif-to-jpg', 'bmp-to-jpg', 'avif-to-jpg', 'tiff-to-jpg',
   'jpg-to-png', 'jpeg-to-png', 'webp-to-png', 'gif-to-png', 'bmp-to-png', 'avif-to-png', 'tiff-to-png',
   'png-to-webp', 'jpg-to-webp', 'jpeg-to-webp', 'gif-to-webp', 'bmp-to-webp', 'avif-to-webp', 'tiff-to-webp',
+  'heic-to-jpg', 'heic-to-webp',
 ])
 
 const COMPRESS_SLUGS = new Set(['compress-jpg', 'compress-png', 'compress-webp'])
@@ -72,8 +73,10 @@ const NAV_SECTIONS = [
           { name: 'TIFF to JPG', route: '/tiff-to-jpg' },
           { name: 'TIFF to PNG', route: '/tiff-to-png' },
           { name: 'TIFF to WebP',route: '/tiff-to-webp'},
-          { name: 'JPEG to PNG', route: '/jpeg-to-png' },
-          { name: 'JPEG to WebP',route: '/jpeg-to-webp'},
+          { name: 'JPEG to PNG', route: '/jpeg-to-png'  },
+          { name: 'JPEG to WebP',route: '/jpeg-to-webp' },
+          { name: 'HEIC to JPG', route: '/heic-to-jpg'  },
+          { name: 'HEIC to WebP',route: '/heic-to-webp' },
         ],
       },
       {

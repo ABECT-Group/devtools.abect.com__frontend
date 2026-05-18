@@ -33,8 +33,10 @@ export default function FormatSelector({ from, to }) {
     if (CONVERSIONS[newSlug]) navigate(`/${newSlug}`)
   }
 
-  // TO options filtered: hide same format as FROM (e.g. png→png)
-  const availableTo = TO_OPTIONS.filter(opt => opt.value !== from)
+  // TO options filtered: hide same format as FROM, and combinations that don't exist
+  const availableTo = TO_OPTIONS.filter(
+    opt => opt.value !== from && CONVERSIONS[`${from}-to-${opt.value}`]
+  )
 
   return (
     <div className="FormatSelector">

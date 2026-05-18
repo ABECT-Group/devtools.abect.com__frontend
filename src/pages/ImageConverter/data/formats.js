@@ -1,6 +1,6 @@
 export const FORMAT_LABELS = {
   jpg: 'JPG', jpeg: 'JPEG', png: 'PNG', webp: 'WebP',
-  gif: 'GIF', bmp: 'BMP', avif: 'AVIF', tiff: 'TIFF',
+  gif: 'GIF', bmp: 'BMP', avif: 'AVIF', tiff: 'TIFF', heic: 'HEIC',
 }
 
 export const FROM_OPTIONS = [
@@ -12,6 +12,7 @@ export const FROM_OPTIONS = [
   { value: 'bmp',  label: 'BMP'  },
   { value: 'avif', label: 'AVIF' },
   { value: 'tiff', label: 'TIFF' },
+  { value: 'heic', label: 'HEIC' },
 ]
 
 export const TO_OPTIONS = [
