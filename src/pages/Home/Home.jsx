@@ -60,7 +60,7 @@ const CHANGELOG = [
   {
     title: 'Schema Markup Generator — Product, Article, FAQ, Organization, Local Business, Breadcrumb',
     body: <>New tools: <Link to="/product-schema-generator" className="Home__changelog-link">Product</Link>, <Link to="/article-schema-generator" className="Home__changelog-link">Article</Link>, <Link to="/faq-schema-generator" className="Home__changelog-link">FAQ</Link>, <Link to="/organization-schema-generator" className="Home__changelog-link">Organization</Link>, <Link to="/local-business-schema-generator" className="Home__changelog-link">Local Business</Link>, and <Link to="/breadcrumb-schema-generator" className="Home__changelog-link">Breadcrumb</Link> schema generators — each with live JSON-LD preview, Google Rich Results eligibility validation, missing field warnings, and a direct "Test in Google" link. Fields based on official Google documentation. No signup required.</>,
-    date: 'May 7, 2026', datetime: '2026-05-06',
+    date: 'May 7, 2026', datetime: '2026-05-07',
   },
   {
     title: 'About page — author profile, EEAT signals, and navigation update',
@@ -178,7 +178,7 @@ const HOME_FAQ = [
   },
   {
     question: 'What image formats are supported?',
-    answer: 'The tools support JPG, PNG, WebP, AVIF, GIF, BMP and TIFF. You can convert between 20 format pairs — for example JPG to WebP, PNG to JPG, WebP to PNG, AVIF to JPG, and more. Compression is available for JPG, PNG and WebP. All formats are processed entirely in the browser using the Canvas API.',
+    answer: 'The tools support JPG, PNG, WebP, AVIF, GIF, BMP, TIFF and HEIC. You can convert between 22 format pairs — for example JPG to WebP, PNG to JPG, HEIC to JPG, AVIF to WebP, and more. Compression is available for JPG, PNG and WebP. All formats are processed entirely in the browser using the Canvas API.',
   },
   {
     question: 'Can I convert or compress multiple images at once?',
@@ -277,7 +277,7 @@ export default function Home() {
       </Helmet>
 
       <h1 className="Home__heading">Free Online Image Converter & Developer Tools</h1>
-      <p className="Home__sub">{TOOLS.length} free tools — image converters, compressors, favicon generator, SEO meta tags. All run in your browser. No uploads, no account, no watermark.</p>
+      <p className="Home__sub">{TOOLS.length} free tools — image converters, compressors, text converters, favicon generator, SEO meta tags. All run in your browser. No uploads, no account, no watermark.</p>
 
       <div className="Home__bookmark-wrap">
         <button className="Home__bookmark-btn" onClick={handleBookmark} aria-label="Bookmark this page">
@@ -384,15 +384,15 @@ export default function Home() {
         <div className="Home__categories-grid">
           <div className="Home__category-card">
             <h3 className="Home__category-title">Image tools</h3>
-            <p className="Home__category-desc">Convert between 20+ image format pairs — JPG, PNG, WebP, AVIF, GIF, BMP, TIFF. Compress JPG, PNG and WebP files with a per-file quality slider. Generate favicons from text, emoji, or image. All processing happens locally — no uploads.</p>
+            <p className="Home__category-desc">Convert between image format pairs — JPG, PNG, WebP, AVIF, GIF, BMP, TIFF, HEIC. Compress JPG, PNG and WebP files with a per-file quality slider. Generate favicons from text, emoji, or image. All processing happens locally — no uploads.</p>
           </div>
           <div className="Home__category-card">
             <h3 className="Home__category-title">SEO &amp; Schema</h3>
             <p className="Home__category-desc">Generate complete SEO meta tags — title, description, canonical URL, robots directives, Open Graph, Twitter Card, and hreflang. Live Google search preview shows exactly how your page will appear in search results.</p>
           </div>
-          <div className="Home__category-card Home__category-card--soon">
-            <h3 className="Home__category-title">More tools <span className="Home__coming-soon">Coming soon</span></h3>
-            <p className="Home__category-desc">New developer utilities are released approximately once a week — converters, formatters, validators, and other browser-based tools for everyday dev workflows.</p>
+          <div className="Home__category-card">
+            <h3 className="Home__category-title">Text &amp; Code</h3>
+            <p className="Home__category-desc">Convert between text and code formats — HTML to Markdown, HTML to JSX, JSON to CSV, XML to JSON, YAML to JSON, and Base64 encode/decode. All conversion runs entirely in the browser — no server calls, no uploads.</p>
           </div>
         </div>
       </section>
