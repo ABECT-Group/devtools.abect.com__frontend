@@ -60,7 +60,6 @@ export async function cropToBlob({ imageObj, offsetXFrac, offsetYFrac, relScale,
   ctx.drawImage(imageObj, -imageObj.naturalWidth / 2, -imageObj.naturalHeight / 2)
   ctx.restore()
 
-  // imageObj is already quality-adjusted — encode at max quality to avoid double compression
   return new Promise((resolve, reject) => {
     canvas.toBlob(
       blob => blob ? resolve(blob) : reject(new Error('Export failed')),

@@ -13,7 +13,7 @@ export const FAQ = [
     answer: 'An Open Graph image (og:image) is the thumbnail shown when you share a link on Facebook, LinkedIn, Twitter/X, Slack, Discord, iMessage, or WhatsApp. It is defined by the og:image meta tag in your page\'s <head>. Without it, platforms either show no image or grab a random one from the page — often poorly cropped. A well-designed OG image significantly increases click-through rates on shared links. Studies show that links with large, relevant preview images receive 3× more clicks than links without images.',
   },
   {
-    question: 'What are the correct OG image dimensions in 2025?',
+    question: 'What are the correct OG image dimensions?',
     answer: 'The standard OG image size is 1200×630 px at a 1.91:1 aspect ratio — this is what Facebook, LinkedIn, Twitter/X large card, Slack, and Discord all use. For square previews (Instagram link stickers, some Twitter summary cards), use 1080×1080 px. Never go below 600×315 px: Facebook will fall back to a small thumbnail instead of the large preview card. Always add og:image:width and og:image:height so scrapers do not need to download the full image to read its dimensions.',
   },
   {
