@@ -1,3 +1,5 @@
+const VOID_HTML = /^(area|base|br|col|embed|hr|img|input|link|meta|param|source|track|wbr)$/i
+
 const ATTR_REVERSE = {
   className: 'class',
   htmlFor: 'for',
@@ -23,24 +25,32 @@ const ATTR_REVERSE = {
 }
 
 function convertJsxStyle(jsxStyleStr) {
-  const props = jsxStyleStr.split(',').map(s => s.trim()).filter(Boolean)
-  const cssProps = props.map(prop => {
-    const colon = prop.indexOf(':')
-    if (colon === -1) return null
-    const key = prop.slice(0, colon).trim()
-    const val = prop.slice(colon + 1).trim().replace(/^['"`]|['"`]$/g, '')
+  const result = []
+  const re = /(\w+)\s*:\s*(?:'([^']*)'|"([^"]*)"|([^,}]*))/g
+  let match
+  while ((match = re.exec(jsxStyleStr)) !== null) {
+    const key = match[1]
+    const val = (match[2] ?? match[3] ?? match[4] ?? '').trim()
+    if (!key || val === '') continue
     const kebabKey = key.replace(/([A-Z])/g, c => `-${c.toLowerCase()}`)
-    return `${kebabKey}: ${val}`
-  }).filter(Boolean)
-  return `"${cssProps.join('; ')}"`
+    result.push(`${kebabKey}: ${val}`)
+  }
+  return `"${result.join('; ')}"`
 }
 
 export function jsxToHtml(jsx) {
   let result = jsx
 
-  // Reverse attribute names
+  // JSX comments → HTML comments
+  result = result.replace(/\{\/\*([\s\S]*?)\*\/\}/g, (_, text) => `<!--${text}-->`)
+
+  // Unwrap fragments
+  result = result.replace(/<React\.Fragment[^>]*>([\s\S]*?)<\/React\.Fragment>/g, '$1')
+  result = result.replace(/<>([\s\S]*?)<\/>/g, '$1')
+
+  // Reverse attribute names — handles both `name="val"` and bare boolean `name`
   for (const [from, to] of Object.entries(ATTR_REVERSE)) {
-    result = result.replace(new RegExp(`\\b${from}=`, 'g'), `${to}=`)
+    result = result.replace(new RegExp(`\\b${from}(?=[=\\s>/]|$)`, 'g'), to)
   }
 
   // Reverse event handlers: onClick → onclick
@@ -49,9 +59,16 @@ export function jsxToHtml(jsx) {
   // Convert JSX style objects: style={{ color: 'red' }} → style="color: red"
   result = result.replace(/style=\{\{([^}]*)\}\}/g, (_, s) => `style=${convertJsxStyle(s)}`)
 
-  // Remove self-closing slash from void elements where it was added: <br /> → <br>
-  result = result.replace(/<(area|base|br|col|embed|hr|img|input|link|meta|param|source|track|wbr)(\s[^>]*)?\s\/>/gi,
-    (_, tag, attrs = '') => `<${tag}${attrs}>`)
+  // Convert self-closing lowercase HTML tags.
+  // Attr pattern handles > inside JSX {expressions} (e.g. arrow functions: e => x).
+  // void (<input />) → <input>; non-void (<textarea />) → <textarea></textarea>
+  result = result.replace(
+    /<([a-z][a-z0-9-]*)((?:[^{}>]|\{(?:[^{}]|\{[^{}]*\})*\})*)\s?\/>/g,
+    (_, tag, attrs) => {
+      const a = attrs.trimEnd()
+      return VOID_HTML.test(tag) ? `<${tag}${a}>` : `<${tag}${a}></${tag}>`
+    }
+  )
 
   return result
 }

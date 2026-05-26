@@ -27,6 +27,27 @@ const VOID_TAGS = new Set([
   'link','meta','param','source','track','wbr',
 ])
 
+const EVENT_REACT = {
+  mouseenter: 'MouseEnter', mouseleave: 'MouseLeave', mouseover: 'MouseOver',
+  mouseout: 'MouseOut', mousedown: 'MouseDown', mouseup: 'MouseUp', mousemove: 'MouseMove',
+  keydown: 'KeyDown', keyup: 'KeyUp', keypress: 'KeyPress',
+  dblclick: 'DblClick', contextmenu: 'ContextMenu',
+  touchstart: 'TouchStart', touchend: 'TouchEnd', touchmove: 'TouchMove', touchcancel: 'TouchCancel',
+  pointerdown: 'PointerDown', pointerup: 'PointerUp', pointermove: 'PointerMove',
+  pointerenter: 'PointerEnter', pointerleave: 'PointerLeave',
+  pointerover: 'PointerOver', pointerout: 'PointerOut', pointercancel: 'PointerCancel',
+  gotpointercapture: 'GotPointerCapture', lostpointercapture: 'LostPointerCapture',
+  dragstart: 'DragStart', dragend: 'DragEnd', dragover: 'DragOver',
+  dragenter: 'DragEnter', dragleave: 'DragLeave',
+  animationstart: 'AnimationStart', animationend: 'AnimationEnd', animationiteration: 'AnimationIteration',
+  transitionend: 'TransitionEnd', transitionstart: 'TransitionStart',
+  beforeinput: 'BeforeInput', beforeunload: 'BeforeUnload',
+  compositionstart: 'CompositionStart', compositionend: 'CompositionEnd', compositionupdate: 'CompositionUpdate',
+  canplay: 'CanPlay', canplaythrough: 'CanPlayThrough',
+  timeupdate: 'TimeUpdate', volumechange: 'VolumeChange',
+  ratechange: 'RateChange', loadeddata: 'LoadedData', loadedmetadata: 'LoadedMetadata', loadstart: 'LoadStart',
+}
+
 function convertInlineStyle(styleStr) {
   const props = styleStr.split(';').map(s => s.trim()).filter(Boolean)
   const jsxProps = props.map(prop => {
@@ -43,13 +64,20 @@ function convertInlineStyle(styleStr) {
 export function htmlToJsx(html) {
   let result = html
 
-  // Rename known attributes (case-insensitive match)
+  // HTML comments → JSX comments
+  result = result.replace(/<!--([\s\S]*?)-->/g, (_, text) => `{/*${text}*/}`)
+
+  // Rename known attributes — handles both `name="val"` and bare boolean `name`
   for (const [from, to] of Object.entries(ATTR_RENAME)) {
-    result = result.replace(new RegExp(`\\b${from}=`, 'gi'), `${to}=`)
+    result = result.replace(new RegExp(`\\b${from}(?=[=\\s>/]|$)`, 'gi'), to)
   }
 
-  // Camelcase event handlers: onclick → onClick, onchange → onChange
-  result = result.replace(/\bon([a-z]+)=/gi, (_, ev) => `on${ev[0].toUpperCase()}${ev.slice(1)}=`)
+  // Camelcase event handlers: onclick → onClick, onmouseenter → onMouseEnter
+  result = result.replace(/\bon([a-z]+)=/gi, (_, ev) => {
+    const lower = ev.toLowerCase()
+    const react = EVENT_REACT[lower] ?? (lower[0].toUpperCase() + lower.slice(1))
+    return `on${react}=`
+  })
 
   // Convert inline styles: style="color: red" → style={{ color: 'red' }}
   result = result.replace(/style="([^"]*)"/gi, (_, s) => `style=${convertInlineStyle(s)}`)

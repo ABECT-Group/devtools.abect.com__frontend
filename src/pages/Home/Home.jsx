@@ -11,12 +11,12 @@ const PAGE_URL = 'https://devtools.abect.com/'
 const OG_IMAGE_URL = 'https://devtools.abect.com/seo/og.jpg'
 
 const POPULAR_ROUTES = [
-  '/product-schema-generator',
-  '/og-image-generator',
-  '/meta-tags-generator',
-  '/png-to-jpg',
+  '/jsx-to-html',
+  '/webp-converter',
   '/jpg-to-webp',
   '/compress-jpg',
+  '/favicon-generator',
+  '/article-schema-generator',
 ]
 
 const TECH_STACK = [
@@ -47,6 +47,11 @@ const TECH_STACK = [
 ]
 
 const CHANGELOG = [
+  {
+    title: 'JSX ↔ HTML Converter — accuracy improvements',
+    body: <>Improved conversion accuracy in <Link to="/jsx-to-html" className="Home__changelog-link">JSX to HTML</Link> and <Link to="/html-to-jsx" className="Home__changelog-link">HTML to JSX</Link>. JSX→HTML now correctly unwraps <code>{'<>'}</code> and <code>{'<React.Fragment>'}</code> shorthand, converts <code>{'{/* */}'}</code> JSX comments to HTML comments, and handles CSS values with commas (e.g. <code>rgba()</code>, <code>linear-gradient()</code>) in inline style objects without breaking. HTML→JSX now produces correct camelCase for all multi-word React event names — <code>onMouseEnter</code>, <code>onKeyDown</code>, <code>onTouchStart</code>, and 30+ others that were previously only capitalizing the first letter.</>,
+    date: 'May 26, 2026', datetime: '2026-05-26',
+  },
   {
     title: 'HEIC Converter — iPhone photos to JPG and WebP',
     body: <>New tools: <Link to="/heic-to-jpg" className="Home__changelog-link">HEIC to JPG</Link> and <Link to="/heic-to-webp" className="Home__changelog-link">HEIC to WebP</Link> — convert iPhone photos directly in the browser with no upload. Safari uses the native OS HEIC decoder (zero library cost); Chrome and Firefox lazy-load a WebAssembly build of libheif only when a HEIC file is detected, leaving all other pages unaffected. Batch conversion and ZIP download supported.</>,
