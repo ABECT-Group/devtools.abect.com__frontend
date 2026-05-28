@@ -18,6 +18,14 @@ function pushConsentGranted() {
   window.dataLayer.push({ event: 'consent_accepted' })
 }
 
+function sendClarityConsent(granted) {
+  window.clarity = window.clarity || function () {
+    (window.clarity.q = window.clarity.q || []).push(arguments)
+  }
+  const status = granted ? 'granted' : 'denied'
+  window.clarity('consentv2', { ad_Storage: status, analytics_Storage: status })
+}
+
 export default function CookieConsent() {
   const [visible, setVisible] = useState(false)
 
@@ -30,6 +38,7 @@ export default function CookieConsent() {
     if (storedStatus === 'accepted') {
       pushConsentGranted()
       injectGTM()
+      sendClarityConsent(true)
     }
 
     function handleOpen() { setVisible(true) }
@@ -45,11 +54,13 @@ export default function CookieConsent() {
     window.localStorage.setItem(CONSENT_KEY, 'accepted')
     pushConsentGranted()
     injectGTM()
+    sendClarityConsent(true)
     setVisible(false)
   }
 
   function handleReject() {
     window.localStorage.setItem(CONSENT_KEY, 'rejected')
+    sendClarityConsent(false)
     setVisible(false)
   }
 
