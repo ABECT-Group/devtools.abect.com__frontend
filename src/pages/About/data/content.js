@@ -1,3 +1,40 @@
+export const CREATORS = [
+  {
+    name: 'Roman Popovych',
+    role: 'Full-Stack Software Engineer · Ukraine',
+    avatar: '/image/about-avatar.webp',
+    bio: [
+      '3+ years building production-grade fintech systems where correctness and security are non-negotiable. I have shipped P2P lending platforms, KYC pipelines with biometric verification, banking API integrations (OAuth 2.0, PKCE), and hardened multi-instance infrastructure. Abect Dev Tools started in April 2026 as a practical fix to a frustrating afternoon — and turned into a project I keep building.',
+    ],
+    tags: [
+      'Fintech Systems', 'P2P Lending', 'KYC & Biometrics', 'Node.js', 'MongoDB', 'Redis',
+      'Banking APIs', 'OAuth 2.0 / PKCE', 'VPS Hardening', 'mTLS', 'Zero Trust',
+      'Browser APIs', 'Canvas API',
+    ],
+    profiles: [
+      { label: 'LinkedIn', href: 'https://www.linkedin.com/in/forze-dev/', icon: 'linkedin' },
+      { label: 'GitHub', href: 'https://github.com/forze-dev', icon: 'github' },
+    ],
+  },
+  {
+    name: 'Belskyi Vadym',
+    role: 'Full-Stack Developer · Founder & CEO of Gray Lynx Team · Ukraine',
+    avatar: '/image/about-tester.webp',
+    bio: [
+      '4+ years building full-stack web applications and high-performance iGaming creatives, specializing in React, Node.js, Pixi.js, and WebGL. I ran the complete QA audit of Abect Dev Tools — testing all 50 pages for SEO compliance, Lighthouse scores, and functional accuracy across every converter. The frontend test report I wrote surfaced every functional bug and SEO issue addressed in this release.',
+    ],
+    tags: [
+      'Full-Stack Development', 'Playable Ads', 'iGaming Creatives', 'React', 'Next.js',
+      'Node.js', 'MongoDB', 'Express', 'JS/TS', 'Pixi.js', 'Matter.js',
+      'GSAP', 'Three.js', 'WebGL', 'Telegram Bots', 'Discord Bots', 'Twitch Bots', 'Gray Lynx Team',
+    ],
+    profiles: [
+      { label: 'LinkedIn', href: 'https://www.linkedin.com/in/vadym-belskyi-69b7202a7/', icon: 'linkedin' },
+      { label: 'GitHub', href: 'https://github.com/Ks1neee', icon: 'github' },
+    ],
+  },
+]
+
 export const PRINCIPLES = [
   {
     title: 'Privacy-first',
@@ -25,33 +62,7 @@ export const PRINCIPLES = [
   },
 ]
 
-export const CREATOR_TAGS = [
-  'Fintech Systems',
-  'P2P Lending',
-  'KYC & Biometrics',
-  'Node.js',
-  'MongoDB',
-  'Redis',
-  'Banking APIs',
-  'OAuth 2.0 / PKCE',
-  'VPS Hardening',
-  'mTLS',
-  'Zero Trust',
-  'Browser APIs',
-  'Canvas API',
-]
-
 export const PROFILES = [
-  {
-    label: 'Roman Popovych on LinkedIn',
-    href: 'https://www.linkedin.com/in/forze-dev/',
-    icon: 'linkedin',
-  },
-  {
-    label: 'forze-dev on GitHub',
-    href: 'https://github.com/forze-dev',
-    icon: 'github',
-  },
   {
     label: 'Project source on GitHub',
     href: 'https://github.com/ABECT-Group/devtools.abect.com__frontend',
@@ -70,7 +81,7 @@ export const FAQ = [
   },
   {
     question: 'Who built this and why?',
-    answer: 'Abect Dev Tools was built by Roman Popovych, a full-stack software engineer from Ukraine. The project started in April 2026 after a frustrating afternoon converting client photos: the first tool was buried in ads and renamed every downloaded file to its own domain, the next had a 5-file free tier limit. The goal was a unified toolkit that works instantly, locally, and without any of those friction points.',
+    answer: 'Abect Dev Tools was built by Roman Popovych and Belskyi Vadym — full-stack engineers from Ukraine. The project started in April 2026 after a frustrating afternoon converting client photos: the first tool was buried in ads and renamed every downloaded file to its own domain, the next had a 5-file free tier limit. The goal was a unified toolkit that works instantly, locally, and without any of those friction points.',
   },
   {
     question: 'How can I contribute a new tool?',

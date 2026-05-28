@@ -3,7 +3,7 @@ import ContentSection from '../../components/ContentSection/ContentSection'
 import FAQ            from '../../components/FAQ/FAQ'
 import { PAGE_TITLE, PAGE_DESC, PAGE_URL, OG_IMAGE } from './data/helmet'
 import { jsonLdPerson, jsonLdWebSite, jsonLdBreadcrumb } from './data/jsonld'
-import { PRINCIPLES, CREATOR_TAGS, PROFILES, FAQ as FAQ_ITEMS } from './data/content'
+import { PRINCIPLES, CREATORS, PROFILES, FAQ as FAQ_ITEMS } from './data/content'
 import './About.scss'
 
 function IconLinkedIn() {
@@ -105,34 +105,53 @@ export default function About() {
         </p>
       </ContentSection>
 
-      {/* ── Creator ─────────────────────────────────────────── */}
+      {/* ── Creators ────────────────────────────────────────── */}
       <section className="About__creator-section">
-        <h2 className="About__section-title">About the Creator</h2>
-        <div className="About__creator">
-          <img
-            className="About__avatar"
-            src="/image/about-avatar.webp"
-            alt="Roman Popovych"
-            width="96"
-            height="96"
-          />
-          <div className="About__creator-body">
-            <div className="About__creator-name">Roman Popovych</div>
-            <div className="About__creator-role">Full-Stack Software Engineer · Ukraine</div>
-            <p className="About__creator-bio">
-              3+ years building production-grade fintech systems where correctness and security are
-              non-negotiable. I have shipped P2P lending platforms, KYC pipelines with biometric
-              verification, banking API integrations (OAuth&nbsp;2.0, PKCE), and hardened multi-instance
-              infrastructure. Abect Dev Tools started in April 2026 as a practical fix to a frustrating
-              afternoon — and turned into a project I keep building.
-            </p>
-            <div className="About__creator-tags">
-              {CREATOR_TAGS.map(tag => (
-                <span key={tag} className="About__tag">{tag}</span>
+        <h2 className="About__section-title">About the Creators</h2>
+        {CREATORS.map(({ name, role, avatar, bio, tags, profiles }) => (
+          <div key={name} className="About__creator">
+            <div className="About__creator-left">
+              {avatar && (
+                <img
+                  className="About__avatar"
+                  src={avatar}
+                  alt={name}
+                  width="96"
+                  height="96"
+                />
+              )}
+              <div className="About__profiles About__profiles--vertical">
+                {profiles.map(({ label, href, icon }) => (
+                  <a key={href} className="About__profile-link" href={href} target="_blank" rel="noopener noreferrer">
+                    {icon === 'linkedin' ? <IconLinkedIn /> : <IconGitHub />}
+                    {label}
+                  </a>
+                ))}
+              </div>
+            </div>
+            <div className="About__creator-header">
+              <div className="About__creator-name">{name}</div>
+              <div className="About__creator-role">{role}</div>
+              <div className="About__profiles About__profiles--mobile">
+                {profiles.map(({ label, href, icon }) => (
+                  <a key={href} className="About__profile-link About__profile-link--icon" href={href} target="_blank" rel="noopener noreferrer" aria-label={label}>
+                    {icon === 'linkedin' ? <IconLinkedIn /> : <IconGitHub />}
+                  </a>
+                ))}
+              </div>
+            </div>
+            <div className="About__creator-content">
+              {bio.map((para, i) => (
+                <p key={i} className="About__creator-bio">{para}</p>
               ))}
+              <div className="About__creator-tags">
+                {tags.map(tag => (
+                  <span key={tag} className="About__tag">{tag}</span>
+                ))}
+              </div>
             </div>
           </div>
-        </div>
+        ))}
       </section>
 
       {/* ── Principles ──────────────────────────────────────── */}
@@ -167,9 +186,9 @@ export default function About() {
         </p>
       </ContentSection>
 
-      {/* ── Contact & Profiles ──────────────────────────────── */}
+      {/* ── Contact ─────────────────────────────────────────── */}
       <section className="About__contact-section">
-        <h2 className="About__section-title">Contact & Profiles</h2>
+        <h2 className="About__section-title">Contact</h2>
         <p className="About__contact-row">
           Email:{' '}
           <a className="About__contact-email" href="mailto:support@abect.com">

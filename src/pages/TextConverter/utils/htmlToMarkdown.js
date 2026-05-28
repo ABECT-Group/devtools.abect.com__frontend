@@ -6,6 +6,11 @@ const td = new TurndownService({
   bulletListMarker: '-',
 })
 
+td.addRule('strikethrough', {
+  filter: ['del', 's', 'strike'],
+  replacement: (content) => `~~${content}~~`,
+})
+
 export function htmlToMarkdown(html) {
   if (!html.trim()) return ''
   return td.turndown(html)

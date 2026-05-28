@@ -17,12 +17,18 @@ function buildXml(data, tag, indent = 0) {
     return `${pad}<${tag}>${escapeXml(data)}</${tag}>`
   }
 
-  const attrs = data['@attributes']
-    ? ' ' + Object.entries(data['@attributes']).map(([k, v]) => `${k}="${escapeXml(v)}"`).join(' ')
-    : ''
+  // Support both @attributes wrapper and direct @key convention
+  const attrPairs = []
+  if (data['@attributes']) {
+    Object.entries(data['@attributes']).forEach(([k, v]) => attrPairs.push(`${k}="${escapeXml(v)}"`))
+  }
+  Object.entries(data).forEach(([k, v]) => {
+    if (k.startsWith('@') && k !== '@attributes') attrPairs.push(`${k.slice(1)}="${escapeXml(v)}"`)
+  })
+  const attrs = attrPairs.length ? ' ' + attrPairs.join(' ') : ''
 
   const children = Object.entries(data)
-    .filter(([k]) => k !== '@attributes' && k !== '#text')
+    .filter(([k]) => k !== '@attributes' && k !== '#text' && !k.startsWith('@'))
     .map(([k, v]) => buildXml(v, k, indent + 1))
     .join('\n')
 
@@ -30,8 +36,8 @@ function buildXml(data, tag, indent = 0) {
 
   if (!children && !text) return `${pad}<${tag}${attrs} />`
   if (!children) return `${pad}<${tag}${attrs}>${text}</${tag}>`
-
-  return `${pad}<${tag}${attrs}>\n${children}\n${pad}</${tag}>`
+  if (!text) return `${pad}<${tag}${attrs}>\n${children}\n${pad}</${tag}>`
+  return `${pad}<${tag}${attrs}>${text}\n${children}\n${pad}</${tag}>`
 }
 
 export function jsonToXml(input) {

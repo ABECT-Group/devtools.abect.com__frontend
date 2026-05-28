@@ -6,6 +6,7 @@ const ATTR_REVERSE = {
   tabIndex: 'tabindex',
   readOnly: 'readonly',
   maxLength: 'maxlength',
+  minLength: 'minlength',
   cellPadding: 'cellpadding',
   cellSpacing: 'cellspacing',
   rowSpan: 'rowspan',
@@ -58,6 +59,15 @@ export function jsxToHtml(jsx) {
 
   // Convert JSX style objects: style={{ color: 'red' }} → style="color: red"
   result = result.replace(/style=\{\{([^}]*)\}\}/g, (_, s) => `style=${convertJsxStyle(s)}`)
+
+  // Resolve JSX expression attribute values: {true} → bare, {false/null/undefined} → removed, {x} → "x"
+  result = result.replace(/\b([\w-]+)=\{(?!\{)true\}/g, '$1')
+  result = result.replace(/\n[ \t]*([\w-]+)=\{(?!\{)(?:false|null|undefined)\}/g, '')
+  result = result.replace(/[ \t]*([\w-]+)=\{(?!\{)(?:false|null|undefined)\}[ \t]*/g, '')
+  result = result.replace(/\b([\w-]+)=\{(?!\{)([^}]+)\}/g, (_, attr, val) => {
+    const v = val.trim().replace(/^['"]|['"]$/g, '')
+    return `${attr}="${v}"`
+  })
 
   // Convert self-closing lowercase HTML tags.
   // Attr pattern handles > inside JSX {expressions} (e.g. arrow functions: e => x).

@@ -4,6 +4,7 @@ const ATTR_RENAME = {
   tabindex: 'tabIndex',
   readonly: 'readOnly',
   maxlength: 'maxLength',
+  minlength: 'minLength',
   cellpadding: 'cellPadding',
   cellspacing: 'cellSpacing',
   rowspan: 'rowSpan',
@@ -31,7 +32,7 @@ const EVENT_REACT = {
   mouseenter: 'MouseEnter', mouseleave: 'MouseLeave', mouseover: 'MouseOver',
   mouseout: 'MouseOut', mousedown: 'MouseDown', mouseup: 'MouseUp', mousemove: 'MouseMove',
   keydown: 'KeyDown', keyup: 'KeyUp', keypress: 'KeyPress',
-  dblclick: 'DblClick', contextmenu: 'ContextMenu',
+  dblclick: 'DoubleClick', contextmenu: 'ContextMenu',
   touchstart: 'TouchStart', touchend: 'TouchEnd', touchmove: 'TouchMove', touchcancel: 'TouchCancel',
   pointerdown: 'PointerDown', pointerup: 'PointerUp', pointermove: 'PointerMove',
   pointerenter: 'PointerEnter', pointerleave: 'PointerLeave',
@@ -86,7 +87,7 @@ export function htmlToJsx(html) {
   for (const tag of VOID_TAGS) {
     result = result.replace(
       new RegExp(`<(${tag})(\\s[^>]*)?>(?!\\s*<\\/${tag}>)`, 'gi'),
-      (_, t, attrs = '') => `<${t}${attrs} />`
+      (_, t, attrs = '') => `<${t}${attrs.replace(/\s*\/\s*$/, '')} />`
     )
   }
 

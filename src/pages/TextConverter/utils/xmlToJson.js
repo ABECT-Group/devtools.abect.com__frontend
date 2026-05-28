@@ -9,8 +9,8 @@ function parseNode(node) {
   }
 
   for (const child of node.childNodes) {
-    if (child.nodeType === 3) { // TEXT_NODE
-      const text = child.textContent.trim()
+    if (child.nodeType === 3 || child.nodeType === 4) { // TEXT_NODE or CDATA_SECTION_NODE
+      const text = child.nodeType === 4 ? child.textContent : child.textContent.trim()
       if (text) obj['#text'] = text
     } else if (child.nodeType === 1) { // ELEMENT_NODE
       const childData = parseNode(child)

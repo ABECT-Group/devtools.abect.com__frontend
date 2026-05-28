@@ -5,7 +5,7 @@ export const OG_IMAGE = buildOgImageUrl('jsonld-schema-generator')
 const SEO = {
   'product-schema-generator': {
     title: 'Product Schema Markup Generator — Free JSON-LD | Abect',
-    description: 'Generate Product JSON-LD schema markup with price, ratings and availability. Enables Rich Results in Google Search. Live preview, copy-ready output. Free, no signup.',
+    description: 'Generate Product JSON-LD schema markup with price, ratings and availability. Enables Rich Results in Google Search. Copy-ready output. Free, no signup.',
     subtitle: 'Add price, star ratings, availability and shipping to Google Search — generate valid Product schema markup in seconds.',
     url: buildPageUrl('product-schema-generator'),
   },

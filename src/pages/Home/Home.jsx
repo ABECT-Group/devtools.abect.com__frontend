@@ -48,6 +48,11 @@ const TECH_STACK = [
 
 const CHANGELOG = [
   {
+    title: 'Text Converters — bug fixes across 7 tools',
+    body: <>Fixed conversion bugs across seven text tools. <Link to="/html-to-jsx" className="Home__changelog-link">HTML→JSX</Link>: <code>minlength</code>→<code>minLength</code>, <code>ondblclick</code>→<code>onDoubleClick</code>, self-closing void tags no longer get a doubled slash. <Link to="/jsx-to-html" className="Home__changelog-link">JSX→HTML</Link>: JSX expression values now resolve (<code>{'{0}'}</code>→<code>"0"</code>, <code>{'{false}'}</code>→removed, <code>{'{true}'}</code>→bare attribute), <code>minLength</code>→<code>minlength</code>. <Link to="/html-to-markdown" className="Home__changelog-link">HTML→Markdown</Link>: <code>{'<s>'}</code> and <code>{'<del>'}</code> now convert to <code>~~strikethrough~~</code>. <Link to="/markdown-to-html" className="Home__changelog-link">Markdown→HTML</Link>: single <code>~tilde~</code> no longer produces <code>{'<del>'}</code>. <Link to="/xml-to-json" className="Home__changelog-link">XML→JSON</Link>: CDATA sections parsed as text instead of empty objects. <Link to="/csv-to-json" className="Home__changelog-link">CSV→JSON</Link>: RFC-4180 multi-line quoted fields now handled correctly. <Link to="/json-to-xml" className="Home__changelog-link">JSON→XML</Link>: supports both <code>@key</code> and <code>@attributes</code> conventions for XML attributes.</>,
+    date: 'May 28, 2026', datetime: '2026-05-28',
+  },
+  {
     title: 'WebP Converter — HEIC support added',
     body: <><Link to="/webp-converter" className="Home__changelog-link">WebP Converter</Link> now accepts HEIC and HEIF files (iPhone photos). Safari decodes HEIC natively with zero library overhead; Chrome and Firefox lazy-load a WebAssembly build of libheif only when a HEIC file is detected. The quality slider applies to HEIC conversion, and batch processing with ZIP download works the same as for all other formats.</>,
     date: 'May 28, 2026', datetime: '2026-05-28',
