@@ -11,6 +11,7 @@ import ContentSection from '../../components/ContentSection/ContentSection'
 import Lightbox from '../../components/Lightbox/Lightbox'
 import FileTable from './components/FileTable/FileTable'
 import { convertToWebP } from './utils/convertWebp'
+import { convertHeicToWebP } from './utils/convertHeicToWebP'
 import { triggerDownload } from './utils/download'
 import { buildZip } from './utils/buildZip'
 import { PAGE_TITLE, PAGE_DESC, PAGE_URL, OG_IMAGE } from './data/helmet'
@@ -35,18 +36,22 @@ export default function WebPConverter() {
   }, [])
 
   function addFiles(newFiles) {
-    const entries = Array.from(newFiles).map(file => ({
-      id: crypto.randomUUID(),
-      file,
-      name: file.name,
-      type: file.type.split('/')[1]?.toUpperCase() || 'UNKNOWN',
-      originalSize: file.size,
-      quality: DEFAULT_QUALITY,
-      status: 'ready',
-      resultBlob: null,
-      resultSize: null,
-      previewUrl: URL.createObjectURL(file),
-    }))
+    const entries = Array.from(newFiles).map(file => {
+      const isHeic = file.type === 'image/heic' || file.type === 'image/heif'
+        || file.name.toLowerCase().endsWith('.heic') || file.name.toLowerCase().endsWith('.heif')
+      return {
+        id: crypto.randomUUID(),
+        file,
+        name: file.name,
+        type: isHeic ? 'HEIC' : (file.type.split('/')[1]?.toUpperCase() || 'UNKNOWN'),
+        originalSize: file.size,
+        quality: DEFAULT_QUALITY,
+        status: 'ready',
+        resultBlob: null,
+        resultSize: null,
+        previewUrl: isHeic ? null : URL.createObjectURL(file),
+      }
+    })
     setFiles(prev => [...prev, ...entries])
   }
 
@@ -74,7 +79,9 @@ export default function WebPConverter() {
     ))
 
     try {
-      const blob = await convertToWebP(fileEntry.file, fileEntry.quality)
+      const blob = fileEntry.type === 'HEIC'
+        ? await convertHeicToWebP(fileEntry.file, fileEntry.quality)
+        : await convertToWebP(fileEntry.file, fileEntry.quality)
       setFiles(prev => prev.map(file =>
         file.id === id ? { ...file, status: 'done', resultBlob: blob, resultSize: blob.size } : file
       ))
@@ -137,14 +144,14 @@ export default function WebPConverter() {
 
         <PageHeader
           title="Free WebP Converter Online"
-          subtitle="Convert JPG, PNG, GIF, AVIF and BMP to WebP — processed locally in your browser, files never leave your device."
+          subtitle="Convert JPG, PNG, GIF, AVIF, BMP and HEIC to WebP — processed locally in your browser, files never leave your device."
         />
 
         <ToolSection>
           <DropZone
             onFilesAdded={addFiles}
-            accept="image/jpeg,image/png,image/gif,image/avif,image/bmp,image/webp"
-            subtitle="JPG, PNG, GIF, AVIF, BMP — multiple files supported"
+            accept="image/jpeg,image/png,image/gif,image/avif,image/bmp,image/webp,image/heic,image/heif,.heic,.heif"
+            subtitle="JPG, PNG, GIF, AVIF, BMP, HEIC — multiple files supported"
           />
           {files.length > 0 && (
             <FileTable

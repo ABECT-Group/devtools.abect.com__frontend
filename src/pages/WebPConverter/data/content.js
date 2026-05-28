@@ -38,6 +38,14 @@ export const FAQ = [
     question: 'Are my files uploaded to a server?',
     answer: 'No. All conversion happens directly in your browser using the Canvas API. Your files never leave your device. You can verify this by opening browser DevTools → Network tab while converting — you will see zero file transfers.',
   },
+  {
+    question: 'Can I convert HEIC photos from iPhone to WebP?',
+    answer: 'Yes. Drop a .heic or .heif file and the converter handles it automatically. Safari decodes HEIC natively at zero extra cost. Chrome and Firefox lazy-load a small WebAssembly library only when a HEIC file is detected — other files are unaffected. The quality slider works for HEIC just like any other format.',
+  },
+  {
+    question: 'Does converting a GIF to WebP keep the animation?',
+    answer: 'No — this converter processes files via the Canvas API, which captures only the first frame of an animated GIF. The output is a static WebP image. If you need to preserve animation, use a dedicated GIF-to-animated-WebP tool that processes each frame separately.',
+  },
 ]
 
 export const PICTURE_CODE = `<picture>

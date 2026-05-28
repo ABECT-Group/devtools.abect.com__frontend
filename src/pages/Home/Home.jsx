@@ -48,6 +48,11 @@ const TECH_STACK = [
 
 const CHANGELOG = [
   {
+    title: 'WebP Converter — HEIC support added',
+    body: <><Link to="/webp-converter" className="Home__changelog-link">WebP Converter</Link> now accepts HEIC and HEIF files (iPhone photos). Safari decodes HEIC natively with zero library overhead; Chrome and Firefox lazy-load a WebAssembly build of libheif only when a HEIC file is detected. The quality slider applies to HEIC conversion, and batch processing with ZIP download works the same as for all other formats.</>,
+    date: 'May 28, 2026', datetime: '2026-05-28',
+  },
+  {
     title: 'JSX ↔ HTML Converter — accuracy improvements',
     body: <>Improved conversion accuracy in <Link to="/jsx-to-html" className="Home__changelog-link">JSX to HTML</Link> and <Link to="/html-to-jsx" className="Home__changelog-link">HTML to JSX</Link>. JSX→HTML now correctly unwraps <code>{'<>'}</code> and <code>{'<React.Fragment>'}</code> shorthand, converts <code>{'{/* */}'}</code> JSX comments to HTML comments, and handles CSS values with commas (e.g. <code>rgba()</code>, <code>linear-gradient()</code>) in inline style objects without breaking. HTML→JSX now produces correct camelCase for all multi-word React event names — <code>onMouseEnter</code>, <code>onKeyDown</code>, <code>onTouchStart</code>, and 30+ others that were previously only capitalizing the first letter.</>,
     date: 'May 26, 2026', datetime: '2026-05-26',
