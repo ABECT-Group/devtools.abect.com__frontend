@@ -23,6 +23,60 @@ const ATTR_REVERSE = {
   spellCheck: 'spellcheck',
   srcSet: 'srcset',
   srcDoc: 'srcdoc',
+  xmlSpace: 'xml:space',
+  xmlLang: 'xml:lang',
+  xlinkTitle: 'xlink:title',
+}
+
+// SVG presentation attributes (hyphenated in SVG, camelCase in JSX).
+// Uses (?==) lookahead so only attributes are matched — not SVG element names
+// like <clipPath> which would otherwise incorrectly become <clip-path>.
+const SVG_ATTR_REVERSE = {
+  enableBackground: 'enable-background',
+  fillRule: 'fill-rule',
+  fillOpacity: 'fill-opacity',
+  strokeWidth: 'stroke-width',
+  strokeLinecap: 'stroke-linecap',
+  strokeLinejoin: 'stroke-linejoin',
+  strokeMiterlimit: 'stroke-miterlimit',
+  strokeDasharray: 'stroke-dasharray',
+  strokeDashoffset: 'stroke-dashoffset',
+  strokeOpacity: 'stroke-opacity',
+  clipPath: 'clip-path',
+  clipRule: 'clip-rule',
+  colorInterpolation: 'color-interpolation',
+  colorInterpolationFilters: 'color-interpolation-filters',
+  colorRendering: 'color-rendering',
+  dominantBaseline: 'dominant-baseline',
+  floodColor: 'flood-color',
+  floodOpacity: 'flood-opacity',
+  fontFamily: 'font-family',
+  fontSize: 'font-size',
+  fontSizeAdjust: 'font-size-adjust',
+  fontStretch: 'font-stretch',
+  fontStyle: 'font-style',
+  fontVariant: 'font-variant',
+  fontWeight: 'font-weight',
+  imageRendering: 'image-rendering',
+  letterSpacing: 'letter-spacing',
+  lightingColor: 'lighting-color',
+  markerEnd: 'marker-end',
+  markerMid: 'marker-mid',
+  markerStart: 'marker-start',
+  paintOrder: 'paint-order',
+  shapeRendering: 'shape-rendering',
+  stopColor: 'stop-color',
+  stopOpacity: 'stop-opacity',
+  textAnchor: 'text-anchor',
+  textDecoration: 'text-decoration',
+  textRendering: 'text-rendering',
+  unicodeBidi: 'unicode-bidi',
+  vectorEffect: 'vector-effect',
+  wordSpacing: 'word-spacing',
+  writingMode: 'writing-mode',
+  colorProfile: 'color-profile',
+  glyphOrientationHorizontal: 'glyph-orientation-horizontal',
+  glyphOrientationVertical: 'glyph-orientation-vertical',
 }
 
 function convertJsxStyle(jsxStyleStr) {
@@ -56,6 +110,11 @@ export function jsxToHtml(jsx) {
 
   // Reverse event handlers: onClick → onclick
   result = result.replace(/\bon([A-Z][a-zA-Z]*)=/g, (_, ev) => `on${ev.toLowerCase()}=`)
+
+  // Reverse SVG presentation attribute names: fillRule → fill-rule, strokeWidth → stroke-width, etc.
+  for (const [from, to] of Object.entries(SVG_ATTR_REVERSE)) {
+    result = result.replace(new RegExp(`\\b${from}(?==)`, 'g'), to)
+  }
 
   // Convert JSX style objects: style={{ color: 'red' }} → style="color: red"
   result = result.replace(/style=\{\{([^}]*)\}\}/g, (_, s) => `style=${convertJsxStyle(s)}`)

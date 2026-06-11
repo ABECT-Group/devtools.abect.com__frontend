@@ -46,6 +46,12 @@ export function jsonToXml(input) {
     throw new Error('Input must be a JSON object (not an array or primitive).')
   }
 
+  const keys = Object.keys(data)
+  if (keys.length !== 1) {
+    const detail = keys.length === 0 ? 'no keys found' : `${keys.length} keys: ${keys.join(', ')}`
+    throw new Error(`XML requires exactly one root element (got ${detail}). Wrap your content in a single root key, e.g. { "root": { ... } }.`)
+  }
+
   const lines = ['<?xml version="1.0" encoding="UTF-8"?>']
   for (const [key, value] of Object.entries(data)) {
     lines.push(buildXml(value, key, 0))

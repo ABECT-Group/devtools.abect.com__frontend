@@ -65,13 +65,33 @@ function convertInlineStyle(styleStr) {
 export function htmlToJsx(html) {
   let result = html
 
+  // Strip XML processing instructions (<?xml...?> etc.) — invalid in JSX
+  result = result.replace(/<\?[\s\S]*?\?>\s*/g, '')
+
   // HTML comments → JSX comments
   result = result.replace(/<!--([\s\S]*?)-->/g, (_, text) => `{/*${text}*/}`)
 
-  // Rename known attributes — handles both `name="val"` and bare boolean `name`
+  // Remove xmlns:xlink — deprecated namespace declaration, not valid as JSX prop
+  result = result.replace(/\s+xmlns:xlink="[^"]*"/gi, '')
+
+  // xml: namespace attributes → JSX equivalents
+  result = result.replace(/\bxml:space=/gi, 'xmlSpace=')
+  result = result.replace(/\bxml:lang=/gi, 'xmlLang=')
+
+  // xlink: attributes → modern React equivalents (xlink:href → href for React 19)
+  result = result.replace(/\bxlink:href=/gi, 'href=')
+  result = result.replace(/\bxlink:title=/gi, 'xlinkTitle=')
+
+  // Rename known HTML attributes — handles both `name="val"` and bare boolean `name`
   for (const [from, to] of Object.entries(ATTR_RENAME)) {
     result = result.replace(new RegExp(`\\b${from}(?=[=\\s>/]|$)`, 'gi'), to)
   }
+
+  // Convert SVG/HTML hyphenated attribute names to camelCase (skip data-* and aria-*)
+  result = result.replace(
+    /\b(?!data-|aria-)([a-z][a-z0-9]*(?:-[a-z0-9]+)+)(?==)/g,
+    attr => attr.replace(/-([a-z0-9])/g, (_, c) => c.toUpperCase())
+  )
 
   // Camelcase event handlers: onclick → onClick, onmouseenter → onMouseEnter
   result = result.replace(/\bon([a-z]+)=/gi, (_, ev) => {
