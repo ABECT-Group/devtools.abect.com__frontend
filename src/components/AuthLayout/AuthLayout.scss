@@ -1,0 +1,49 @@
+.AuthLayout {
+  min-height: 100dvh;
+  background: var(--bg-page);
+
+  &__header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 400;
+    height: calc(var(--header-height) + var(--safe-area-top));
+    padding: var(--safe-area-top) 24px 0;
+    display: flex;
+    align-items: center;
+  }
+
+  &__logo {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    text-decoration: none;
+    letter-spacing: 0.01em;
+
+    span { color: var(--accent); }
+  }
+
+  &__main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100dvh;
+    padding:
+      calc(var(--header-height) + var(--safe-area-top) + 40px)
+      16px
+      48px;
+  }
+
+  @media (max-width: 767px) {
+    &__header {
+      height: calc(var(--header-height-mobile) + var(--safe-area-top));
+    }
+
+    &__main {
+      justify-content: flex-start;
+      padding-top: calc(var(--header-height-mobile) + var(--safe-area-top) + 28px);
+    }
+  }
+}

@@ -1,4 +1,5 @@
-import { NavLink, useLocation } from 'react-router-dom'
+import { Link, NavLink, useLocation } from 'react-router-dom'
+import useAuthStore from '../../store/authStore.js'
 import './Sidebar.scss'
 
 
@@ -116,6 +117,11 @@ export default function Sidebar({ isOpen, onClose }) {
   const { pathname } = useLocation()
   const slug = pathname.slice(1)
 
+  const user      = useAuthStore(s => s.user)
+  const loading   = useAuthStore(s => s.loading)
+  const hint      = useAuthStore(s => s.hint)
+  const clearAuth = useAuthStore(s => s.clearAuth)
+
   const isImageConverterActive  = IMAGE_CONVERTER_SLUGS.has(slug)
   const isCompressActive        = COMPRESS_SLUGS.has(slug)
   const isSchemaGeneratorActive = SCHEMA_GENERATOR_SLUGS.has(slug)
@@ -190,6 +196,9 @@ export default function Sidebar({ isOpen, onClose }) {
     )
   }
 
+  const showUser   = !loading && user
+  const showSignIn = !loading && !user && !hint
+
   return (
     <>
       {isOpen && <div className="Sidebar__backdrop" onClick={onClose} />}
@@ -200,6 +209,26 @@ export default function Sidebar({ isOpen, onClose }) {
 
         {/* ── Mobile top nav ──────────────────────────────── */}
         <div className="Sidebar__mobile-top">
+          {showUser && (
+            <>
+              <Link to="/profile" className="Sidebar__user" onClick={onClose}>
+                <div className="Sidebar__user-avatar">
+                  {user.photoUrl
+                    ? <img src={user.photoUrl} alt="" referrerPolicy="no-referrer" />
+                    : <span>{user.email?.[0]?.toUpperCase() ?? '?'}</span>
+                  }
+                </div>
+                <div className="Sidebar__user-info">
+                  <span className="Sidebar__user-name">
+                    {user.displayName || user.email?.split('@')[0]}
+                  </span>
+                  <span className="Sidebar__user-email">{user.email}</span>
+                </div>
+              </Link>
+              <div className="Sidebar__user-divider" />
+            </>
+          )}
+
           <NavLink
             to="/"
             end
@@ -237,6 +266,21 @@ export default function Sidebar({ isOpen, onClose }) {
           >
             About
           </NavLink>
+
+          {showSignIn && (
+            <Link to="/login" className="Sidebar__nav-item" onClick={onClose}>
+              Sign in
+            </Link>
+          )}
+
+          {showUser && (
+            <button
+              className="Sidebar__logout"
+              onClick={() => { clearAuth(); onClose() }}
+            >
+              Log out
+            </button>
+          )}
         </div>
 
         {/* ── Desktop tool sections ───────────────────────── */}

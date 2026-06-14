@@ -63,7 +63,7 @@
     &--accept {
       background: var(--accent);
       border: 1px solid var(--accent);
-      color: #fff;
+      color: var(--text-on-accent);
 
       &:hover {
         background: var(--accent-hover);

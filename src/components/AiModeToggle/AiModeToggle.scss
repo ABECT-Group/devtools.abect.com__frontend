@@ -1,0 +1,29 @@
+.AiModeToggle {
+  display: inline-flex;
+  background: var(--bg-card);
+  border: 1px solid var(--border-base);
+  border-radius: var(--radius-md);
+  padding: 3px;
+  gap: 2px;
+
+  &__tab {
+    font-size: 0.8125rem;
+    font-weight: 500;
+    padding: 5px 16px;
+    border-radius: 6px;
+    border: none;
+    background: transparent;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s;
+
+    &:hover {
+      color: var(--text-secondary);
+    }
+
+    &--active {
+      background: var(--bg-content);
+      color: var(--text-primary);
+    }
+  }
+}

@@ -132,13 +132,13 @@
       align-items: center;
       gap: 6px;
       font-size: 0.8125rem;
-      color: #f59e0b;
+      color: var(--color-warning);
 
       svg {
         width: 13px;
         height: 13px;
         flex-shrink: 0;
-        color: #f59e0b;
+        color: var(--color-warning);
       }
     }
   }

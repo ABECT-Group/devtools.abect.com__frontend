@@ -1,0 +1,124 @@
+.ProfileAccount {
+  display: flex;
+  flex-direction: column;
+
+  &__row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 11px 0;
+    border-bottom: 1px solid var(--border-row);
+
+    &:first-child { padding-top: 0; }
+    &:last-child  { border-bottom: none; padding-bottom: 0; }
+  }
+
+  &__label {
+    font-size: 0.875rem;
+    color: var(--text-muted);
+    flex-shrink: 0;
+  }
+
+  &__value {
+    font-size: 0.9375rem;
+    color: var(--text-primary);
+    text-align: right;
+  }
+
+  &__badge {
+    font-size: 0.6875rem;
+    font-weight: 600;
+    padding: 3px 9px;
+    border-radius: 20px;
+    letter-spacing: 0.02em;
+
+    &--google     { background: var(--badge-blue-bg); color: var(--badge-blue-text); }
+    &--local      { background: var(--bg-card); color: var(--text-secondary); }
+    &--verified   { background: var(--green-bg); color: var(--green); border: 1px solid var(--green-border); }
+    &--unverified { background: var(--color-error-bg); color: var(--color-error); border: 1px solid var(--color-error-border); }
+  }
+
+  &__theme-toggle {
+    display: flex;
+    gap: 4px;
+    background: var(--bg-page);
+    border: 1px solid var(--border-base);
+    border-radius: var(--radius-md);
+    padding: 3px;
+  }
+
+  &__theme-btn {
+    font-size: 0.8125rem;
+    padding: 4px 14px;
+    border: none;
+    border-radius: calc(var(--radius-md) - 2px);
+    background: transparent;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s;
+
+    &:hover:not(&--active) {
+      color: var(--text-secondary);
+    }
+
+    &--active {
+      background: var(--bg-content);
+      color: var(--text-primary);
+      font-weight: 500;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+    }
+  }
+
+  &__delete-note {
+    font-size: 0.875rem;
+    color: var(--text-muted);
+    margin: 0 0 20px;
+    line-height: 1.6;
+  }
+
+  &__error {
+    font-size: 0.8125rem;
+    color: var(--color-error);
+    margin: 0 0 14px;
+  }
+
+  &__delete-btn {
+    font-size: 0.875rem;
+    padding: 8px 16px;
+    background: transparent;
+    border: 1px solid var(--color-error-border);
+    border-radius: var(--radius-md);
+    color: var(--color-error);
+    cursor: pointer;
+    transition: background 0.1s;
+    opacity: 0.8;
+
+    &:hover { background: var(--color-error-bg); opacity: 1; }
+  }
+
+  &__delete-ask {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    margin: 0 0 16px;
+  }
+
+  &__delete-actions {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+  }
+
+  &__cancel {
+    font-size: 0.875rem;
+    padding: 8px 16px;
+    background: transparent;
+    border: 1px solid var(--border-base);
+    border-radius: var(--radius-md);
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: color 0.1s, border-color 0.1s;
+
+    &:hover { color: var(--text-primary); border-color: var(--text-muted); }
+  }
+}

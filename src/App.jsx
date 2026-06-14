@@ -1,5 +1,8 @@
+import { useEffect } from 'react'
 import { Route, Routes } from 'react-router-dom'
 import Layout from './components/Layout/Layout'
+import useAuthStore from './store/authStore'
+import './store/themeStore.js'
 import Home from './pages/Home/Home'
 import NotFound from './pages/NotFound/NotFound'
 import CompressImage from './pages/CompressImage/CompressImage'
@@ -12,6 +15,16 @@ import OGImageGenerator from './pages/OGImageGenerator/OGImageGenerator'
 import JsonLdGenerator from './pages/JsonLdGenerator/JsonLdGenerator'
 import About from './pages/About/About'
 import TextConverter from './pages/TextConverter/TextConverter'
+import Login from './pages/Login/Login'
+import Register from './pages/Register/Register'
+import ForgotPassword from './pages/ForgotPassword/ForgotPassword'
+import ResetPassword from './pages/ResetPassword/ResetPassword'
+import Profile from './pages/Profile/Profile'
+import ProfileAccount from './pages/Profile/ProfileAccount'
+import ProfileUsage from './pages/Profile/ProfileUsage'
+import ProfileBilling from './pages/Profile/ProfileBilling'
+import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute'
+import AuthLayout from './components/AuthLayout/AuthLayout'
 
 const TEXT_CONVERTER_SLUGS = [
   'html-to-markdown', 'markdown-to-html',
@@ -41,6 +54,12 @@ const SCHEMA_GENERATOR_SLUGS = [
 ]
 
 export default function App() {
+  const init = useAuthStore(s => s.init)
+
+  useEffect(() => {
+    init()
+  }, [])
+
   return (
     <Routes>
       <Route path="/" element={<Layout />}>
@@ -63,7 +82,20 @@ export default function App() {
         {COMPRESS_SLUGS.map(slug => (
           <Route key={slug} path={slug} element={<CompressImage />} />
         ))}
+        <Route element={<ProtectedRoute />}>
+          <Route path="profile" element={<Profile />}>
+            <Route index        element={<ProfileAccount />} />
+            <Route path="usage"   element={<ProfileUsage />} />
+            <Route path="billing" element={<ProfileBilling />} />
+          </Route>
+        </Route>
         <Route path="*" element={<NotFound />} />
+      </Route>
+      <Route element={<AuthLayout />}>
+        <Route path="login"           element={<Login />} />
+        <Route path="register"        element={<Register />} />
+        <Route path="forgot-password" element={<ForgotPassword />} />
+        <Route path="reset-password"  element={<ResetPassword />} />
       </Route>
     </Routes>
   )

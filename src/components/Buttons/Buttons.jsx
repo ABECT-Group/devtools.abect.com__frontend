@@ -45,10 +45,10 @@ export function ClearAllButton({ onClick }) {
 
 // ─── Text buttons ─────────────────────────────────────────────────────────────
 
-export function PrimaryButton({ onClick, disabled, loading, loadingText = 'Loading…', fullWidth, children }) {
+export function PrimaryButton({ onClick, disabled, loading, loadingText = 'Loading…', fullWidth, type = 'button', children }) {
   return (
     <button
-      type="button"
+      type={type}
       className={`PrimaryButton${fullWidth ? ' PrimaryButton--full' : ''}`}
       onClick={onClick}
       disabled={disabled || loading}

@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Outlet } from 'react-router-dom'
+import AuthModal from '../AuthModal/AuthModal'
 import CookieConsent from '../CookieConsent/CookieConsent'
 import Header from '../Header/Header'
 import Sidebar from '../Sidebar/Sidebar'
@@ -59,6 +60,7 @@ export default function Layout() {
         <Outlet />
       </div>
       <CookieConsent />
+      <AuthModal />
     </div>
   )
 }

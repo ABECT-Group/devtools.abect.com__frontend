@@ -62,7 +62,7 @@
     transition: color 0.15s;
 
     &--warn {
-      color: #f59e0b;
+      color: var(--color-warning);
     }
   }
 
@@ -102,7 +102,7 @@
     outline: none;
     transition: border-color 0.15s;
 
-    &::placeholder { color: var(--text-faint); }
+    &::placeholder { color: var(--text-placeholder); }
     &:focus        { border-color: var(--accent); }
   }
 
@@ -120,7 +120,7 @@
     line-height: 1.55;
     transition: border-color 0.15s;
 
-    &::placeholder { color: var(--text-faint); }
+    &::placeholder { color: var(--text-placeholder); }
     &:focus        { border-color: var(--accent); }
   }
 

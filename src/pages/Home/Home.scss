@@ -36,7 +36,7 @@
     align-items: center;
     gap: 8px;
     background: var(--accent);
-    color: #fff;
+    color: var(--text-on-accent);
     border: none;
     border-radius: 6px;
     padding: 8px 14px;
@@ -372,7 +372,7 @@
     color: var(--text-faint);
     text-transform: uppercase;
     letter-spacing: 0.06em;
-    background: var(--bg-main);
+    background: var(--bg-card);
     border: 1px solid var(--border-base);
     border-radius: 4px;
     padding: 2px 6px;

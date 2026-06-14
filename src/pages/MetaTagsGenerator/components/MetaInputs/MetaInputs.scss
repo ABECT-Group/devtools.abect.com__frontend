@@ -70,7 +70,7 @@
     transition: color 0.15s;
 
     &--warn {
-      color: #f59e0b;
+      color: var(--color-warning);
     }
   }
 
@@ -95,7 +95,7 @@
     transition: border-color 0.15s;
 
     &::placeholder {
-      color: var(--text-faint);
+      color: var(--text-placeholder);
     }
 
     &:focus {
@@ -118,7 +118,7 @@
     transition: border-color 0.15s;
 
     &::placeholder {
-      color: var(--text-faint);
+      color: var(--text-placeholder);
     }
 
     &:focus {
@@ -262,7 +262,7 @@
     letter-spacing: 0.04em;
 
     &::placeholder {
-      color: var(--text-faint);
+      color: var(--text-placeholder);
     }
   }
 

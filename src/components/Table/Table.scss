@@ -51,7 +51,7 @@
   }
 
   &__row--highlight {
-    background: rgba(59, 130, 246, 0.06);
+    background: var(--bg-row-highlight);
 
     td {
       color: var(--text-primary);

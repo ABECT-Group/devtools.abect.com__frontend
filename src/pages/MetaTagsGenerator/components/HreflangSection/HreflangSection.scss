@@ -29,7 +29,7 @@
     transition: border-color 0.15s;
 
     &::placeholder {
-      color: var(--text-faint);
+      color: var(--text-placeholder);
     }
 
     &:focus {
