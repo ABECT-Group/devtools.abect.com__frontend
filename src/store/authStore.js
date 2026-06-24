@@ -37,7 +37,7 @@ const useAuthStore = create((set, get) => ({
       try {
         const data = await userApi.getMe(urlToken)
         setHint()
-        set({ user: data.data, accessToken: urlToken, loading: false, hint: true })
+        set({ user: data.data.user, accessToken: urlToken, loading: false, hint: true })
         scheduleTokenRefresh(urlToken, () => get()._silentRefresh())
         return
       } catch {
