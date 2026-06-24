@@ -4,7 +4,8 @@ const THEME_KEY = 'theme'
 
 // Apply synchronously on module load — prevents flash before React renders
 ;(function applyStoredTheme() {
-  const stored = typeof window !== 'undefined' ? localStorage.getItem(THEME_KEY) : null
+  if (typeof window === 'undefined') return
+  const stored = localStorage.getItem(THEME_KEY)
   if (stored === 'light') {
     document.documentElement.dataset.theme = 'light'
   } else {
