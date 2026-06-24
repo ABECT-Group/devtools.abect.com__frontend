@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react'
-import { userApi } from '../../api/user.js'
+import useAuthStore from '../../store/authStore.js'
+import { formatTokens } from '../../utils/formatTokens.js'
 import './TokenBadge.scss'
 
 function LightningIcon() {
@@ -10,22 +10,16 @@ function LightningIcon() {
   )
 }
 
-export default function TokenBadge({ token }) {
-  const [balance, setBalance] = useState(null)
+export default function TokenBadge() {
+  const user    = useAuthStore(s => s.user)
+  const balance = user?.tokenWallet?.balance
 
-  useEffect(() => {
-    if (!token) return
-    userApi.getBalance(token)
-      .then(data => setBalance(data.data.balance))
-      .catch(() => {})
-  }, [token])
-
-  if (balance === null) return null
+  if (balance == null) return null
 
   return (
-    <div className="TokenBadge">
+    <div className="TokenBadge" title={`${balance.toLocaleString()} tokens`}>
       <LightningIcon />
-      <span className="TokenBadge__value">{balance.toLocaleString()}</span>
+      <span className="TokenBadge__value">{formatTokens(balance)}</span>
     </div>
   )
 }

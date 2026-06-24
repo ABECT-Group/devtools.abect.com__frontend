@@ -21,12 +21,14 @@ import { formatScriptTag } from './utils/formatOutput'
 import './JsonLdGenerator.scss'
 
 function renderText(text) {
-  const parts = text.split(/(\*\*[^*]+\*\*)/)
-  return parts.map((part, i) =>
-    part.startsWith('**') && part.endsWith('**')
-      ? <strong key={i}>{part.slice(2, -2)}</strong>
-      : part
-  )
+  const parts = text.split(/(\*\*[^*]+\*\*|\[[^\]]+\]\([^)]+\))/)
+  return parts.map((part, i) => {
+    if (part.startsWith('**') && part.endsWith('**'))
+      return <strong key={i}>{part.slice(2, -2)}</strong>
+    const m = part.match(/^\[([^\]]+)\]\(([^)]+)\)$/)
+    if (m) return <a key={i} href={m[2]}>{m[1]}</a>
+    return part
+  })
 }
 
 export default function JsonLdGenerator() {
@@ -96,6 +98,7 @@ export default function JsonLdGenerator() {
               scriptTag={scriptTag}
               onReset={handleReset}
               validation={validation}
+              aiHint={activeType === 'product'}
             />
           </div>
         </div>

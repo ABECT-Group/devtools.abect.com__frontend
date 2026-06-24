@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react'
 import { userApi } from '../../api/user.js'
 import useAuthStore from '../../store/authStore.js'
+import { formatTokens } from '../../utils/formatTokens.js'
 import './ProfileUsage.scss'
 
-const PLAN_LIMITS = { free: 100, plus: 3000, pro: 10000 }
+const PLAN_LIMITS = { free: 100_000, plus: 5_000_000, pro: 15_000_000 }
 
 const formatDate = iso =>
   new Date(iso).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
@@ -41,7 +42,7 @@ export default function ProfileUsage() {
   }, [accessToken, page])
 
   const plan      = user?.subscription?.plan ?? 'free'
-  const planLimit = PLAN_LIMITS[plan] ?? 100
+  const planLimit = PLAN_LIMITS[plan] ?? 100_000
   const balance   = wallet?.balance ?? 0
   const pct       = Math.min(100, Math.round((balance / planLimit) * 100))
 
@@ -58,9 +59,9 @@ export default function ProfileUsage() {
                 {plan.charAt(0).toUpperCase() + plan.slice(1)} plan
               </span>
               <span className="ProfileUsage__counts">
-                <span className="ProfileUsage__balance">{balance}</span>
+                <span className="ProfileUsage__balance" title={balance.toLocaleString()}>{formatTokens(balance)}</span>
                 <span className="ProfileUsage__sep">/</span>
-                <span className="ProfileUsage__limit">{planLimit}</span>
+                <span className="ProfileUsage__limit" title={planLimit.toLocaleString()}>{formatTokens(planLimit)}</span>
               </span>
             </div>
             <div className="ProfileUsage__bar">
@@ -97,7 +98,7 @@ export default function ProfileUsage() {
                     <td className="ProfileUsage__desc">{tx.description}</td>
                     <td className="ProfileUsage__date">{formatDate(tx.createdAt)}</td>
                     <td className={`ProfileUsage__amount ProfileUsage__amount--${tx.type === 'charge' ? 'minus' : 'plus'}`}>
-                      {tx.type === 'charge' ? `−${tx.amount}` : `+${tx.amount}`}
+                      {tx.type === 'charge' ? `−${formatTokens(Math.abs(tx.amount))}` : `+${formatTokens(tx.amount)}`}
                     </td>
                   </tr>
                 ))}

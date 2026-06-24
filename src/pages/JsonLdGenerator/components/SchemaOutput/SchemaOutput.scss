@@ -184,4 +184,18 @@
       border-color: var(--border-blue);
     }
   }
+
+  &__ai-hint {
+    display: block;
+    font-size: 0.8125rem;
+    color: var(--text-muted);
+    text-decoration: none;
+  }
+
+  &__ai-hint-cta {
+    color: var(--accent);
+    transition: color 0.15s;
+
+    .SchemaOutput__ai-hint:hover & { color: var(--accent-light); }
+  }
 }

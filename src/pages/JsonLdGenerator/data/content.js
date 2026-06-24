@@ -195,6 +195,15 @@ const PRODUCT = {
         },
       ],
     },
+    {
+      heading: 'Generating Product Schema with AI',
+      blocks: [
+        {
+          type: 'p',
+          text: 'For non-standard or data-heavy products, [Lora\'s Product Schema skill](/ai) generates a complete, validated JSON-LD from a plain English product description — no form to fill, no field lookup. Lora normalises price, currency, availability, and GTIN automatically, and flags values that would fail Google\'s Rich Results validation.',
+        },
+      ],
+    },
   ],
   faq: [
     {

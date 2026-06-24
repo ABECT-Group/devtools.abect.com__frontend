@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import './SchemaOutput.scss'
 
-export default function SchemaOutput({ scriptTag, onReset, validation }) {
+export default function SchemaOutput({ scriptTag, onReset, validation, aiHint }) {
   const [copied, setCopied] = useState(false)
 
   async function handleCopy() {
@@ -101,6 +101,12 @@ export default function SchemaOutput({ scriptTag, onReset, validation }) {
           Reset form
         </button>
       </div>
+
+      {aiHint && (
+        <a href="/ai" className="SchemaOutput__ai-hint">
+          Need AI-generated schema? <span className="SchemaOutput__ai-hint-cta">Try Lora →</span>
+        </a>
+      )}
     </div>
   )
 }

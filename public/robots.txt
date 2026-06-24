@@ -1,4 +1,5 @@
 User-agent: *
 Allow: /
+Disallow: /ai?
 
 Sitemap: https://devtools.abect.com/sitemap.xml

@@ -15,7 +15,7 @@
     margin-bottom: 28px;
   }
 
-  &__section + &__section {
+  &__section+&__section {
     margin-top: 22px;
   }
 
@@ -26,13 +26,22 @@
     margin-bottom: 8px;
   }
 
-  p {
+  a {
+    color: var(--accent);
+  }
+
+  p,
+  ul {
     font-size: 0.875rem;
     line-height: 1.7;
     color: var(--text-secondary);
   }
 
-  p + p {
+  ul {
+    padding-left: 20px;
+  }
+
+  p+p {
     margin-top: 10px;
   }
 }

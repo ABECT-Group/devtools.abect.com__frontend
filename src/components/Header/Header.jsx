@@ -4,10 +4,9 @@ import TokenBadge from '../TokenBadge/TokenBadge.jsx'
 import './Header.scss'
 
 export default function Header({ isSidebarOpen, onMenuToggle }) {
-  const user        = useAuthStore(s => s.user)
-  const accessToken = useAuthStore(s => s.accessToken)
-  const loading     = useAuthStore(s => s.loading)
-  const hint        = useAuthStore(s => s.hint)
+  const user = useAuthStore(s => s.user)
+  const loading = useAuthStore(s => s.loading)
+  const hint = useAuthStore(s => s.hint)
 
   return (
     <header className="Header">
@@ -26,6 +25,14 @@ export default function Header({ isSidebarOpen, onMenuToggle }) {
           Home
         </NavLink>
         <NavLink
+          to="/ai"
+          className={({ isActive }) =>
+            `Header__nav-link${isActive ? ' Header__nav-link--active' : ''}`
+          }
+        >
+          AI assistant
+        </NavLink>
+        <NavLink
           to="/about"
           className={({ isActive }) =>
             `Header__nav-link${isActive ? ' Header__nav-link--active' : ''}`
@@ -38,28 +45,36 @@ export default function Header({ isSidebarOpen, onMenuToggle }) {
       <div className="Header__right">
         {loading
           ? (hint
-              ? <div className="Header__avatar Header__avatar--skeleton" aria-hidden="true" />
-              : <Link to="/login" className="Header__signin">Sign in</Link>
+            ? (
+              <div className="Header__user-skeleton" aria-hidden="true">
+                <div className="Header__token-skeleton" />
+                <div className="Header__user-skeleton-text" />
+                <div className="Header__avatar Header__avatar--skeleton" />
+              </div>
             )
+            : <Link to="/login" className="Header__signin">Sign in</Link>
+          )
           : (user
-              ? (
-                <>
-                  <TokenBadge token={accessToken} />
-                  <Link to="/profile" className="Header__user">
-                    <span className="Header__user-email">
-                      {(() => { const u = user.email?.split('@')[0] ?? ''; return u.length > 18 ? u.slice(0, 15) + '…' : u })()}
-                    </span>
-                    <div className="Header__avatar">
-                      {user.photoUrl
-                        ? <img src={user.photoUrl} alt="" className="Header__avatar-img" referrerPolicy="no-referrer" />
-                        : <span className="Header__avatar-initials">{user.email?.[0]?.toUpperCase() ?? '?'}</span>
-                      }
-                    </div>
-                  </Link>
-                </>
-              )
-              : <Link to="/login" className="Header__signin">Sign in</Link>
+            ? (
+              <>
+                <div className="Header__token-wrap">
+                  <TokenBadge />
+                </div>
+                <Link to="/profile" className="Header__user">
+                  <span className="Header__user-email">
+                    {(() => { const u = user.email?.split('@')[0] ?? ''; return u.length > 18 ? u.slice(0, 15) + '…' : u })()}
+                  </span>
+                  <div className="Header__avatar">
+                    {user.photoUrl
+                      ? <img src={user.photoUrl} alt="" className="Header__avatar-img" referrerPolicy="no-referrer" />
+                      : <span className="Header__avatar-initials">{user.email?.[0]?.toUpperCase() ?? '?'}</span>
+                    }
+                  </div>
+                </Link>
+              </>
             )
+            : <Link to="/login" className="Header__signin">Sign in</Link>
+          )
         }
         <button
           className={`Header__burger${isSidebarOpen ? ' Header__burger--open' : ''}`}

@@ -115,6 +115,15 @@ export default function ProfileAccount() {
           </div>
         )}
       </div>
+
+      <div className="Profile__logout-mobile">
+        <button
+          className="Profile__logout-mobile-btn"
+          onClick={async () => { await clearAuth(); navigate('/') }}
+        >
+          Log out
+        </button>
+      </div>
     </div>
   )
 }

@@ -48,6 +48,11 @@ const TECH_STACK = [
 
 const CHANGELOG = [
   {
+    title: 'Lora — AI assistant for JSON-LD schema markup and SEO, powered by DeepSeek',
+    body: <>Generate valid <Link to="/ai?skillSlug=product-schema-markup-generator" className="Home__changelog-link">Product JSON-LD schema markup</Link>, Article, FAQ, BreadcrumbList and more structured data from plain English descriptions. Multi-turn AI chat with skills — select a task or ask anything. Free plan: 100K tokens/month. No credit card required.</>,
+    date: 'June 24, 2026', datetime: '2026-06-24',
+  },
+  {
     title: 'HTML→JSX & JSX→HTML — SVG fixes; JSON→XML root validation',
     body: <><Link to="/html-to-jsx" className="Home__changelog-link">HTML→JSX</Link>: SVG files from Figma or SVG Repo now convert correctly — <code>{'<?xml...?>'}</code> declaration stripped, <code>xmlns:xlink</code> removed, <code>xml:space</code>→<code>xmlSpace</code>, <code>xlink:href</code>→<code>href</code>, and all hyphenated SVG presentation attrs (<code>fill-rule</code>, <code>stroke-width</code>, <code>clip-path</code>, <code>enable-background</code> and 25 more) converted to camelCase. <Link to="/jsx-to-html" className="Home__changelog-link">JSX→HTML</Link>: full reverse — camelCase SVG attrs restored to their hyphenated forms; <code>{'<clipPath>'}</code> element tag correctly preserved while <code>clipPath=</code> attribute is converted. <Link to="/json-to-xml" className="Home__changelog-link">JSON→XML</Link>: multi-key top-level objects now throw a clear error with a fix suggestion instead of silently producing invalid XML.</>,
     date: 'June 11, 2026', datetime: '2026-06-11',

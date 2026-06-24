@@ -6,28 +6,25 @@
   padding: 0;
 }
 
-/* Custom scrollbar */
-::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
-}
-
-::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-::-webkit-scrollbar-thumb {
-  background: var(--scrollbar-thumb);
-  border-radius: 3px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: var(--scrollbar-thumb-hover);
-}
-
 * {
   scrollbar-width: thin;
   scrollbar-color: var(--scrollbar-thumb) transparent;
+}
+
+/* Chrome, Edge, Safari */
+*::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+  /* для горизонтального скролу */
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: var(--scrollbar-thumb);
+  border-radius: 4px;
+}
+
+*::-webkit-scrollbar-track {
+  background: transparent;
 }
 
 html {
@@ -35,6 +32,7 @@ html {
   min-height: 100%;
   background: var(--bg-page);
   overflow-x: clip;
+  scrollbar-gutter: stable;
 }
 
 body,
@@ -99,24 +97,24 @@ body {
   --code-comment: #6a9955;
 
   /* Plan badges */
-  --badge-blue-bg:     #1a3a6a;
-  --badge-blue-text:   #60a5fa;
-  --badge-purple-bg:   #2d1b69;
+  --badge-blue-bg: #1a3a6a;
+  --badge-blue-text: #60a5fa;
+  --badge-purple-bg: #2d1b69;
   --badge-purple-text: #a78bfa;
 
   /* Token badge */
-  --badge-token-bg:     rgba(59, 130, 246, 0.1);
+  --badge-token-bg: rgba(59, 130, 246, 0.1);
   --badge-token-border: rgba(59, 130, 246, 0.22);
 
   /* Overlays */
-  --overlay-bg:               rgba(0, 0, 0, 0.6);
-  --overlay-bg-heavy:         rgba(0, 0, 0, 0.85);
-  --overlay-control-bg:       rgba(255, 255, 255, 0.1);
+  --overlay-bg: rgba(0, 0, 0, 0.6);
+  --overlay-bg-heavy: rgba(0, 0, 0, 0.85);
+  --overlay-control-bg: rgba(255, 255, 255, 0.1);
   --overlay-control-bg-hover: rgba(255, 255, 255, 0.2);
-  --overlay-control-border:   rgba(255, 255, 255, 0.2);
+  --overlay-control-border: rgba(255, 255, 255, 0.2);
 
   /* Interactive states */
-  --bg-row-highlight:  rgba(59, 130, 246, 0.06);
+  --bg-row-highlight: rgba(59, 130, 246, 0.06);
   --focus-ring-shadow: rgba(59, 130, 246, 0.2);
 
   /* Image preview */
@@ -124,7 +122,10 @@ body {
 
   /* Scrollbar */
   --scrollbar-thumb: #1e3a5f;
-  --scrollbar-thumb-hover: #2d5282;
+  --scrollbar-thumb-hover: #111827;
+
+  /* Z-index layers */
+  --z-modal: 500;
 
   /* Radius */
   --radius-sm: 5px;
@@ -145,66 +146,66 @@ body {
 
 [data-theme="light"] {
   /* Backgrounds */
-  --bg-page:    #f8fafc;
+  --bg-page: #f8fafc;
   --bg-sidebar: #f1f5f9;
   --bg-content: #e8eaed;
-  --bg-card:    #f1f5f9;
-  --bg-hover:   #e2e8f0;
-  --bg-active:  #dbeafe;
+  --bg-card: #f1f5f9;
+  --bg-hover: #e2e8f0;
+  --bg-active: #dbeafe;
 
   /* Borders */
-  --border-base:  #bfc8d3;
-  --border-blue:  #bfdbfe;
+  --border-base: #bfc8d3;
+  --border-blue: #bfdbfe;
   --border-green: #5bad78;
-  --border-row:   #f1f5f9;
+  --border-row: #f1f5f9;
 
   /* Accent */
-  --accent:       #2563eb;
+  --accent: #2563eb;
   --accent-hover: #1d4ed8;
   --accent-light: #3b82f6;
-  --accent-code:  #1e40af;
+  --accent-code: #1e40af;
 
   /* Text */
-  --text-primary:   #0f172a;
+  --text-primary: #0f172a;
   --text-secondary: #475569;
-  --text-muted:     #777777;
-  --text-faint:     #8497ad;
+  --text-muted: #777777;
+  --text-faint: #8497ad;
   --text-placeholder: #6b7280;
 
   /* Status green */
-  --green:        #16a34a;
-  --green-bg:     #dcfce7;
+  --green: #16a34a;
+  --green-bg: #dcfce7;
   --green-border: #bbf7d0;
 
   /* Status error */
-  --color-error:           #dc2626;
-  --color-error-bg:        rgba(220, 38, 38, 0.08);
+  --color-error: #dc2626;
+  --color-error-bg: rgba(220, 38, 38, 0.08);
   --color-error-bg-strong: #fee2e2;
-  --color-error-border:    #fca5a5;
+  --color-error-border: #fca5a5;
 
   /* Status warning */
-  --color-warning:    #d97706;
+  --color-warning: #d97706;
   --color-warning-bg: rgba(217, 119, 6, 0.08);
 
   /* Code syntax */
   --code-comment: #4a7c59;
 
   /* Plan badges */
-  --badge-blue-bg:     #dbeafe;
-  --badge-blue-text:   #1d4ed8;
-  --badge-purple-bg:   #ede9fe;
+  --badge-blue-bg: #dbeafe;
+  --badge-blue-text: #1d4ed8;
+  --badge-purple-bg: #ede9fe;
   --badge-purple-text: #7c3aed;
 
   /* Token badge */
-  --badge-token-bg:     rgba(37, 99, 235, 0.1);
+  --badge-token-bg: rgba(37, 99, 235, 0.1);
   --badge-token-border: rgba(37, 99, 235, 0.25);
 
   /* Interactive states */
-  --bg-row-highlight:  rgba(37, 99, 235, 0.06);
+  --bg-row-highlight: rgba(37, 99, 235, 0.06);
   --focus-ring-shadow: rgba(37, 99, 235, 0.25);
 
   /* Scrollbar */
-  --scrollbar-thumb:       #cbd5e1;
+  --scrollbar-thumb: #cbd5e1;
   --scrollbar-thumb-hover: #94a3b8;
 }
 

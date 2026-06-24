@@ -1,0 +1,95 @@
+// Remove Layout padding when AI chat is active — flush with header
+body.ai-chatting .Layout__content {
+  padding-top: calc(var(--header-height) + var(--safe-area-top));
+  padding-bottom: var(--safe-area-bottom);
+}
+
+@media (max-width: 767px) {
+  body.ai-chatting .Layout__content {
+    padding-top: calc(var(--header-height-mobile) + var(--safe-area-top));
+  }
+}
+
+.AiPage {
+  // ── Chatting state: fill available height, AiChat fills the rest ──────────
+  &--chatting {
+    min-height: calc(100dvh - var(--header-height) - var(--safe-area-top) - var(--safe-area-bottom));
+    display: flex;
+    flex-direction: column;
+  }
+
+  @media (max-width: 767px) {
+    &--chatting {
+      min-height: calc(100dvh - var(--header-height-mobile) - var(--safe-area-top) - var(--safe-area-bottom));
+    }
+  }
+
+  // ── Skill switch modal ────────────────────────────────────────────────────
+  &__modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.45);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: var(--z-modal);
+    padding: 16px;
+  }
+
+  &__modal {
+    background: var(--bg-content);
+    border: 1px solid var(--border-base);
+    border-radius: var(--radius-lg);
+    padding: 28px 24px 24px;
+    max-width: 400px;
+    width: 100%;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.24);
+  }
+
+  &__modal-text {
+    font-size: 0.9375rem;
+    color: var(--text-secondary);
+    line-height: 1.65;
+    margin-bottom: 20px;
+
+    strong {
+      color: var(--text-primary);
+      font-weight: 600;
+    }
+  }
+
+  &__modal-actions {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+  }
+
+  &__modal-btn {
+    font-size: 0.875rem;
+    font-weight: 500;
+    padding: 8px 18px;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    border: 1px solid transparent;
+    transition: background 0.15s, border-color 0.15s, color 0.15s;
+
+    &--cancel {
+      background: transparent;
+      border-color: var(--border-base);
+      color: var(--text-secondary);
+
+      &:hover {
+        border-color: var(--border-blue);
+        color: var(--text-primary);
+      }
+    }
+
+    &--confirm {
+      background: var(--accent);
+      color: #fff;
+      border-color: var(--accent);
+
+      &:hover { background: var(--accent-hover); border-color: var(--accent-hover); }
+    }
+  }
+}

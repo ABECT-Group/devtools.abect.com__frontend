@@ -29,4 +29,20 @@
     font-size: 0.875rem;
     color: var(--color-error);
   }
+
+  &__ai-hint {
+    display: block;
+    margin-top: 10px;
+    font-size: 0.8125rem;
+    color: var(--text-muted);
+    text-decoration: none;
+    text-align: right;
+  }
+
+  &__ai-hint-cta {
+    color: var(--accent);
+    transition: color 0.15s;
+
+    .TextConverter__ai-hint:hover & { color: var(--accent-light); }
+  }
 }

@@ -137,6 +137,14 @@
     min-width: 0;
   }
 
+  &__logout-mobile {
+    display: none;
+  }
+
+  &__logout-mobile-btn {
+    display: none;
+  }
+
   @media (max-width: 767px) {
     grid-template-columns: 1fr;
     gap: 0;
@@ -169,6 +177,28 @@
     }
 
     &__content { gap: 0; }
+
+    &__logout-mobile {
+      display: block;
+      margin-top: 100px;
+    }
+
+    &__logout-mobile-btn {
+      display: block;
+      width: 100%;
+      background: transparent;
+      border: 1px solid var(--color-error);
+      border-radius: var(--radius-md);
+      padding: 13px;
+      font-size: 1rem;
+      color: var(--color-error);
+      cursor: pointer;
+      transition: background 0.15s;
+
+      &:hover {
+        background: var(--color-error-bg);
+      }
+    }
   }
 }
 

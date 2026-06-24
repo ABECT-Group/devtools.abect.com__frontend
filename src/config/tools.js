@@ -19,6 +19,7 @@ export const TOOLS = [
   { category: 'SEO', name: 'Organization Schema Generator', description: 'Generate Organization schema markup (JSON-LD) for Google Knowledge Panel and E-E-A-T', route: '/organization-schema-generator', lastmod: '2026-05-07' },
   { category: 'SEO', name: 'Local Business Schema Generator', description: 'Generate LocalBusiness schema markup (JSON-LD) for map cards, business hours and phone', route: '/local-business-schema-generator', lastmod: '2026-05-07' },
   { category: 'SEO', name: 'Breadcrumb Schema Generator', description: 'Generate BreadcrumbList schema markup (JSON-LD) for site path trails in Google SERP', route: '/breadcrumb-schema-generator', lastmod: '2026-05-07' },
+  { category: 'AI', name: 'Lora', description: 'Lora — AI assistant for JSON-LD schema markup and SEO. Generate Product, Article, FAQ, BreadcrumbList structured data from plain English. Free plan: 100K tokens/month.', route: '/ai', lastmod: '2026-06-24', priority: '0.9' },
   { category: 'Images', name: 'WebP converter', description: 'Convert any image to WebP format', route: '/webp-converter', lastmod: '2026-05-28' },
   { category: 'Images', name: 'Favicon generator', description: 'Generate favicons from text, emoji, or image', route: '/favicon-generator', lastmod: '2026-04-25' },
   { category: 'Images', name: 'Compress JPG', description: 'Reduce JPEG file size with quality control', route: '/compress-jpg', lastmod: '2026-04-28' },

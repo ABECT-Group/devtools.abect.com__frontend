@@ -975,6 +975,15 @@ style="background-color: #fff; font-size: 16px; margin-top: 8px; z-index: 100; -
         },
       ],
     },
+    {
+      heading: 'Handling complex JSX with AI',
+      blocks: [
+        {
+          type: 'p',
+          text: 'For components with nested logic, unclear prop structures, or multiple layers of composition, [Lora — Abect\'s AI assistant](/ai) converts JSX to HTML conversationally, explains every change, and reports any syntax errors it fixed along the way.',
+        },
+      ],
+    },
   ],
   faq: [
     {

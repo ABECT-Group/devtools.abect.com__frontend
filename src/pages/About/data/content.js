@@ -57,8 +57,8 @@ export const PRINCIPLES = [
     desc: 'Tools do exactly what they claim — no surprises, no hidden operations.',
   },
   {
-    title: 'Optional AI features',
-    desc: 'Advanced features may use a backend someday, but the core tools never will.',
+    title: 'Specialized AI for narrow tasks',
+    desc: 'General-purpose AI hallucinates on structured tasks — wrong schema properties, missing required fields, invalid formats. Our AI tools use constrained system prompts engineered for a specific task so the output is valid on the first try. Core browser tools remain free and account-free forever.',
   },
 ]
 
@@ -73,7 +73,7 @@ export const PROFILES = [
 export const FAQ = [
   {
     question: 'Is Abect Dev Tools completely free?',
-    answer: 'Yes — all tools are free with no usage limits, no paywalled tiers, and no watermarks. The site has no subscription model. Some future AI-powered features may require a backend, but every core tool will remain free and browser-based.',
+    answer: 'All browser-based tools — image converters, compressors, text converters, schema form generators — are completely free with no limits, no paywalls, and no watermarks. AI-powered tools require a free account and use a token-based model: the free plan gives 100,000 tokens per month at no cost, which covers hundreds of schema generations. No credit card required.',
   },
   {
     question: 'Do my files get uploaded to any server?',

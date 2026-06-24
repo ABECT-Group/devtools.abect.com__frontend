@@ -1,13 +1,14 @@
 import useAuthStore from '../../store/authStore.js'
+import { formatTokens } from '../../utils/formatTokens.js'
 import './ProfileBilling.scss'
 
-const PLAN_LIMITS = { free: 100, plus: 3000, pro: 10000 }
+const PLAN_LIMITS = { free: 100_000, plus: 5_000_000, pro: 15_000_000 }
 
 export default function ProfileBilling() {
   const user = useAuthStore(s => s.user)
   if (!user) return null
 
-  const plan = user.subscription?.plan ?? 'free'
+  const plan  = user.subscription?.plan ?? 'free'
   const limit = PLAN_LIMITS[plan]
 
   return (
@@ -18,7 +19,7 @@ export default function ProfileBilling() {
           <span className={`ProfileBilling__plan ProfileBilling__plan--${plan}`}>
             {plan.charAt(0).toUpperCase() + plan.slice(1)}
           </span>
-          <span className="ProfileBilling__desc">{limit.toLocaleString()} tokens / month</span>
+          <span className="ProfileBilling__desc">{formatTokens(limit)} tokens / month</span>
         </div>
       </div>
 
@@ -28,7 +29,7 @@ export default function ProfileBilling() {
           <div className="ProfileBilling__card">
             <div className="ProfileBilling__card-header">
               <span className="ProfileBilling__card-name">Plus</span>
-              <span className="ProfileBilling__card-tokens">3,000 tokens / month</span>
+              <span className="ProfileBilling__card-tokens">{formatTokens(PLAN_LIMITS.plus)} tokens / month</span>
             </div>
             <p className="ProfileBilling__card-desc">
               For developers working on multiple projects
@@ -41,7 +42,7 @@ export default function ProfileBilling() {
           <div className="ProfileBilling__card">
             <div className="ProfileBilling__card-header">
               <span className="ProfileBilling__card-name">Pro</span>
-              <span className="ProfileBilling__card-tokens">10,000 tokens / month</span>
+              <span className="ProfileBilling__card-tokens">{formatTokens(PLAN_LIMITS.pro)} tokens / month</span>
             </div>
             <p className="ProfileBilling__card-desc">
               For teams and power users

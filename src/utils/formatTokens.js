@@ -1,0 +1,12 @@
+/**
+ * Форматує кількість токенів у компактний рядок.
+ * 98745 → "98.7K", 5_000_000 → "5.0M", 843 → "843"
+ *
+ * @param {number} n
+ * @returns {string}
+ */
+export function formatTokens(n) {
+  if (n >= 1_000_000) return `${(n / 1_000_000).toFixed(1)}M`
+  if (n >= 1_000)     return `${(n / 1_000).toFixed(1)}K`
+  return String(n)
+}

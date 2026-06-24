@@ -128,7 +128,40 @@
     &--skeleton {
       background: var(--bg-hover);
       border-color: transparent;
+      animation: header-skeleton-pulse 1.5s ease-in-out infinite;
     }
+  }
+
+  @keyframes header-skeleton-pulse {
+    0%, 100% { opacity: 1; }
+    50%       { opacity: 0.45; }
+  }
+
+  // gap: 10px mirrors Header__right gap
+  &__user-skeleton {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 4px 6px 4px 4px;
+  }
+
+  // Mirrors TokenBadge: padding 5px 11px, border-radius 20px, font 0.8125rem line-height 1
+  &__token-skeleton {
+    width: 52px;
+    height: 25px;
+    border-radius: 20px;
+    background: var(--bg-hover);
+    border: 1px solid var(--border-base);
+    animation: header-skeleton-pulse 1.5s ease-in-out infinite;
+  }
+
+  // Mirrors Header__user: email text (0.8125rem) + gap 9px before avatar
+  &__user-skeleton-text {
+    width: 70px;
+    height: 12px;
+    border-radius: 4px;
+    background: var(--bg-hover);
+    animation: header-skeleton-pulse 1.5s ease-in-out infinite;
   }
 
   &__burger {
@@ -183,6 +216,14 @@
     }
 
     &__user {
+      display: none;
+    }
+
+    &__right {
+      margin-left: auto;
+    }
+
+    &__token-wrap {
       display: none;
     }
 

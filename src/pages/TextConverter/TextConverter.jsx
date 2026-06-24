@@ -18,12 +18,14 @@ import { CONVERTERS, buildContent } from './data/content'
 import './TextConverter.scss'
 
 function renderText(text) {
-  const parts = text.split(/(\*\*[^*]+\*\*)/)
-  return parts.map((part, i) =>
-    part.startsWith('**') && part.endsWith('**')
-      ? <strong key={i}>{part.slice(2, -2)}</strong>
-      : part
-  )
+  const parts = text.split(/(\*\*[^*]+\*\*|\[[^\]]+\]\([^)]+\))/)
+  return parts.map((part, i) => {
+    if (part.startsWith('**') && part.endsWith('**'))
+      return <strong key={i}>{part.slice(2, -2)}</strong>
+    const m = part.match(/^\[([^\]]+)\]\(([^)]+)\)$/)
+    if (m) return <a key={i} href={m[2]}>{m[1]}</a>
+    return part
+  })
 }
 
 const DELIMITER_OPTIONS = [
@@ -133,6 +135,11 @@ export default function TextConverter() {
             value={output}
             fileExt={config.outputExt}
           />
+          {(slug === 'jsx-to-html' || slug === 'html-to-jsx') && (
+            <a href="/ai" className="TextConverter__ai-hint">
+              Need AI-powered conversion? <span className="TextConverter__ai-hint-cta">Try Lora →</span>
+            </a>
+          )}
         </div>
       </ToolSection>
 

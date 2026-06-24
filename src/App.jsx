@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { Route, Routes } from 'react-router-dom'
+import { Route, Routes, useNavigate } from 'react-router-dom'
 import Layout from './components/Layout/Layout'
 import useAuthStore from './store/authStore'
 import './store/themeStore.js'
@@ -13,6 +13,7 @@ import PrivacyPolicy from './pages/PrivacyPolicy/PrivacyPolicy'
 import WebPConverter from './pages/WebPConverter/WebPConverter'
 import OGImageGenerator from './pages/OGImageGenerator/OGImageGenerator'
 import JsonLdGenerator from './pages/JsonLdGenerator/JsonLdGenerator'
+import AiPage from './pages/AiPage/AiPage'
 import About from './pages/About/About'
 import TextConverter from './pages/TextConverter/TextConverter'
 import Login from './pages/Login/Login'
@@ -54,10 +55,17 @@ const SCHEMA_GENERATOR_SLUGS = [
 ]
 
 export default function App() {
-  const init = useAuthStore(s => s.init)
+  const init     = useAuthStore(s => s.init)
+  const navigate = useNavigate()
 
   useEffect(() => {
-    init()
+    init().then(() => {
+      const returnPath = sessionStorage.getItem('auth:return')
+      if (returnPath && useAuthStore.getState().user) {
+        sessionStorage.removeItem('auth:return')
+        navigate(returnPath, { replace: true })
+      }
+    })
   }, [])
 
   return (
@@ -74,6 +82,7 @@ export default function App() {
         {SCHEMA_GENERATOR_SLUGS.map(slug => (
           <Route key={slug} path={slug} element={<JsonLdGenerator />} />
         ))}
+        <Route path="ai/*" element={<AiPage />} />
         <Route path="favicon-generator" element={<FaviconGenerator />} />
         <Route path="webp-converter" element={<WebPConverter />} />
         {IMAGE_CONVERTER_SLUGS.map(slug => (
