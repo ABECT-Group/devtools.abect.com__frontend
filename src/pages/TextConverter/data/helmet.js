@@ -27,6 +27,18 @@ const SEO = {
     subtitle: 'Paste JSX — get standard HTML output instantly. Nothing leaves your browser.',
     url: buildPageUrl('jsx-to-html'),
   },
+  'html-to-tsx': {
+    title: 'HTML to TSX Converter — Free React TypeScript Tool | Abect',
+    description: 'Convert HTML to TSX in your browser. Transforms class→className, inline styles, generates React.FC<Props> component scaffold. Free, no upload.',
+    subtitle: 'Paste HTML — get a ready-to-use TypeScript React component. Nothing leaves your browser.',
+    url: buildPageUrl('html-to-tsx'),
+  },
+  'tsx-to-html': {
+    title: 'TSX to HTML Converter — Free React TypeScript Tool | Abect',
+    description: 'Convert TSX to standard HTML in your browser. Strips TypeScript interfaces and type aliases, extracts JSX from component body. Free, no upload.',
+    subtitle: 'Paste TSX — get standard HTML output instantly. Nothing leaves your browser.',
+    url: buildPageUrl('tsx-to-html'),
+  },
   'json-to-csv': {
     title: 'JSON to CSV Converter — Free Online Data Tool | Abect',
     description: 'Convert JSON arrays to CSV instantly in your browser. Choose delimiter: comma, semicolon or tab. Free, no upload, no signup required.',

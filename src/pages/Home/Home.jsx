@@ -48,6 +48,11 @@ const TECH_STACK = [
 
 const CHANGELOG = [
   {
+    title: 'HTML ↔ TSX — convert HTML to TypeScript React components and back',
+    body: <>New tools: <Link to="/html-to-tsx" className="Home__changelog-link">HTML to TSX</Link> and <Link to="/tsx-to-html" className="Home__changelog-link">TSX to HTML</Link>. HTML→TSX converts any HTML snippet to a complete <code>React.FC&lt;Props&gt;</code> TypeScript component — renames attributes (class→className, for→htmlFor), converts inline styles to React style objects, and wraps the output in an <code>interface Props {'{}'}</code> scaffold. TSX→HTML strips TypeScript declarations (interfaces, type aliases, import statements, as-assertions) and extracts the JSX return body from a full component before applying the full JSX→HTML reverse transformation. Browser-based, no upload, no signup required.</>,
+    date: 'June 26, 2026', datetime: '2026-06-26',
+  },
+  {
     title: 'Lora — AI assistant for JSON-LD schema markup and SEO, powered by DeepSeek',
     body: <>Generate valid <Link to="/ai?skillSlug=product-schema-markup-generator" className="Home__changelog-link">Product JSON-LD schema markup</Link>, Article, FAQ, BreadcrumbList and more structured data from plain English descriptions. Multi-turn AI chat with skills — select a task or ask anything. Free plan: 100K tokens/month. No credit card required.</>,
     date: 'June 24, 2026', datetime: '2026-06-24',

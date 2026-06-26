@@ -30,6 +30,7 @@ import AuthLayout from './components/AuthLayout/AuthLayout'
 const TEXT_CONVERTER_SLUGS = [
   'html-to-markdown', 'markdown-to-html',
   'html-to-jsx',      'jsx-to-html',
+  'html-to-tsx',      'tsx-to-html',
   'json-to-csv',      'csv-to-json',
   'xml-to-json',      'json-to-xml',
   'yaml-to-json',     'json-to-yaml',

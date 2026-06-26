@@ -29,6 +29,20 @@ const FEATURE_LISTS = {
     'Handles self-closing void element normalization',
     'Free, instant, no signup required',
   ],
+  'html-to-tsx': [
+    'Browser-based TSX conversion — no upload, 100% private',
+    'Transforms class→className, for→htmlFor, tabindex→tabIndex',
+    'Converts inline styles from CSS string to React object syntax',
+    'Wraps output in React.FC<Props> TypeScript component scaffold with interface Props',
+    'Free, instant, no signup required',
+  ],
+  'tsx-to-html': [
+    'Browser-based HTML conversion — no upload, 100% private',
+    'Strips TypeScript interface and type alias declarations',
+    'Extracts JSX from component return body automatically',
+    'Strips as-type assertions, converts style objects to CSS strings',
+    'Free, instant, no signup required',
+  ],
   'json-to-csv': [
     'Browser-based JSON parsing — no upload, 100% private',
     'Comma, semicolon, and tab delimiter options',

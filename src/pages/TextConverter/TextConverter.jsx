@@ -135,7 +135,7 @@ export default function TextConverter() {
             value={output}
             fileExt={config.outputExt}
           />
-          {(slug === 'jsx-to-html' || slug === 'html-to-jsx') && (
+          {(slug === 'jsx-to-html' || slug === 'html-to-jsx' || slug === 'tsx-to-html' || slug === 'html-to-tsx') && (
             <a href="/ai" className="TextConverter__ai-hint">
               Need AI-powered conversion? <span className="TextConverter__ai-hint-cta">Try Lora →</span>
             </a>

@@ -2,6 +2,8 @@ import { htmlToMarkdown } from '../utils/htmlToMarkdown'
 import { markdownToHtml } from '../utils/markdownToHtml'
 import { htmlToJsx }      from '../utils/htmlToJsx'
 import { jsxToHtml }      from '../utils/jsxToHtml'
+import { htmlToTsx }      from '../utils/htmlToTsx'
+import { tsxToHtml }      from '../utils/tsxToHtml'
 import { jsonToCsv }      from '../utils/jsonToCsv'
 import { csvToJson }      from '../utils/csvToJson'
 import { xmlToJson }      from '../utils/xmlToJson'
@@ -21,6 +23,11 @@ const MARKDOWN_OPTIONS = [
 const JSX_OPTIONS = [
   { value: 'html-to-jsx', label: 'HTML → JSX' },
   { value: 'jsx-to-html', label: 'JSX → HTML' },
+]
+
+const TSX_OPTIONS = [
+  { value: 'html-to-tsx', label: 'HTML → TSX' },
+  { value: 'tsx-to-html', label: 'TSX → HTML' },
 ]
 
 const JSON_CSV_OPTIONS = [
@@ -82,6 +89,25 @@ export const CONVERTERS = {
     convertFn: (input) => jsxToHtml(input),
     hasDelimiter: false,
     segmentedOptions: JSX_OPTIONS,
+  },
+
+  'html-to-tsx': {
+    inputLabel: 'HTML',
+    outputLabel: 'TSX',
+    outputExt: 'tsx',
+    placeholder: '<div class="card">\n  <label for="name">Name</label>\n  <input type="text" id="name" readonly tabindex="1">\n  <p style="color: blue; font-size: 14px;">Hint text</p>\n  <button onclick="handleSubmit()">Submit</button>\n</div>',
+    convertFn: (input) => htmlToTsx(input),
+    hasDelimiter: false,
+    segmentedOptions: TSX_OPTIONS,
+  },
+  'tsx-to-html': {
+    inputLabel: 'TSX',
+    outputLabel: 'HTML',
+    outputExt: 'html',
+    placeholder: "import React from 'react'\n\ninterface Props {\n  label: string\n}\n\nconst Card: React.FC<Props> = ({ label }: Props) => {\n  return (\n    <div className=\"card\">\n      <label htmlFor=\"name\">{label as string}</label>\n      <input type=\"text\" id=\"name\" readOnly tabIndex={1} />\n      <p style={{ color: 'blue', fontSize: '14px' }}>Hint text</p>\n    </div>\n  )\n}\n\nexport default Card",
+    convertFn: (input) => tsxToHtml(input),
+    hasDelimiter: false,
+    segmentedOptions: TSX_OPTIONS,
   },
 
   'json-to-csv': {
@@ -2789,6 +2815,414 @@ base64Decode('SGVsbG8g8J+MjQ==')        // → 'Hello 🌍'`,
   ],
 }
 
+// ─── html-to-tsx ─────────────────────────────────────────────────────────────
+
+const HTML_TO_TSX = {
+  howToTitle: 'How to convert HTML to TSX',
+  howToSteps: [
+    'Paste your HTML markup into the input field — a component template, a design export, or a snippet from an existing page.',
+    'Click "Convert" — the TSX output appears instantly: attributes renamed, styles converted, and the JSX wrapped in a typed React.FC component scaffold.',
+    'Switch to "TSX → HTML" using the toggle above if you need the reverse direction.',
+    'Click "Copy" to copy the TSX and paste it directly into your TypeScript React project.',
+    'Rename Component and fill in the Props interface to match your actual prop types.',
+  ],
+  sections: [
+    {
+      heading: 'How the HTML to TSX converter works',
+      blocks: [
+        {
+          type: 'p',
+          text: 'The converter applies the same attribute transformations as HTML → JSX — class → className, for → htmlFor, tabindex → tabIndex, camelCase events, inline style string → object — and then wraps the resulting JSX in a complete TypeScript React component scaffold: an import statement, an empty Props interface, a React.FC<Props> arrow function, and an export default. The entire conversion runs in your browser — **no data is sent to any server.**',
+        },
+        {
+          type: 'p',
+          text: 'TSX is JSX written in a TypeScript file. The structural transformation rules are identical to JSX, but the output is typed from the start: you get a React.FC<Props> component declaration with an interface Props {} placeholder ready for your prop definitions. This saves the first few minutes of every "paste from Figma" workflow.',
+        },
+        {
+          type: 'code',
+          label: 'HTML input → TSX component output',
+          code: `// Input HTML:
+<div class="card">
+  <label for="name">Name</label>
+  <input type="text" id="name" readonly tabindex="1"
+         style="color: blue; font-size: 14px">
+  <button onclick="handleSubmit()">Submit</button>
+</div>
+
+// Output TSX:
+import React from 'react'
+
+interface Props {}
+
+const Component: React.FC<Props> = () => {
+  return (
+    <div className="card">
+      <label htmlFor="name">Name</label>
+      <input type="text" id="name" readOnly tabIndex={1}
+             style={{ color: 'blue', fontSize: '14px' }} />
+      <button onClick={handleSubmit}>Submit</button>
+    </div>
+  )
+}
+
+export default Component`,
+        },
+      ],
+    },
+    {
+      heading: 'HTML attributes that change in TSX (same as JSX)',
+      blocks: [
+        {
+          type: 'p',
+          text: 'TSX uses the same attribute names as JSX — the TypeScript layer adds types but does not change attribute naming. Every HTML attribute that differs in JSX also differs in TSX. The full mapping is identical to the HTML → JSX conversion.',
+        },
+        {
+          type: 'table',
+          headers: ['HTML', 'TSX (= JSX)', 'Reason'],
+          rows: [
+            ['class="…"',         'className="…"',             'class is a JS reserved word'],
+            ['for="…"',           'htmlFor="…"',               'for is a JS reserved word'],
+            ['onclick="fn()"',    'onClick={fn}',              'camelCase event; pass function reference'],
+            ['tabindex="1"',      'tabIndex={1}',              'camelCase; numeric value as JS expression'],
+            ['readonly',          'readOnly',                  'camelCase boolean attribute'],
+            ['maxlength="10"',    'maxLength={10}',            'camelCase; numeric value'],
+            ['style="color:red"', "style={{ color: 'red' }}", 'CSS string → JS object'],
+            ['font-size: 14px',   "fontSize: '14px'",          'kebab-case → camelCase CSS property'],
+            ['<br>',              '<br />',                    'void elements must self-close'],
+            ['<!-- text -->',     '{/* text */}',              'HTML comments → JSX comments'],
+          ],
+        },
+      ],
+    },
+    {
+      heading: 'The TypeScript component scaffold explained',
+      blocks: [
+        {
+          type: 'p',
+          text: 'The converter wraps every output in a minimal but complete TypeScript React component. Each part of the scaffold has a purpose.',
+        },
+        {
+          type: 'code',
+          label: 'TSX scaffold breakdown',
+          code: `import React from 'react'   // Required for JSX transform in older setups;
+                               // React 17+ with new JSX transform: can be removed
+
+interface Props {}             // Replace with your actual prop definitions:
+                               // interface Props { title: string; count?: number }
+
+const Component: React.FC<Props> = () => {  // Rename Component to match your file name;
+                                             // add destructured props: ({ title, count })
+  return (
+    // Your converted JSX here
+  )
+}
+
+export default Component       // Rename to match the component name above`,
+        },
+        {
+          type: 'p',
+          text: 'After conversion, the typical next steps are: rename Component to match your file name, add prop definitions to the Props interface, destructure the props in the function signature, and replace any static values that should come from props with the corresponding prop references.',
+        },
+      ],
+    },
+    {
+      heading: 'TSX vs JSX — what actually differs',
+      blocks: [
+        {
+          type: 'p',
+          text: 'JSX and TSX are identical at the markup level. The differences are in what TypeScript adds on top:',
+        },
+        {
+          type: 'ul',
+          items: [
+            '**Type-checked props** — TypeScript validates that every prop passed to a component matches its declared type at compile time. JSX has no equivalent check.',
+            '**React.FC<Props> declaration** — the function type annotation gives TypeScript enough information to check prop usage inside the component and at every call site.',
+            '**Generic components** — TSX supports typed generics: function List<T extends { id: string }>({ items }: { items: T[] }). JSX has no syntax for this.',
+            '**Event handler types** — TSX event handlers are typed: (e: React.ChangeEvent<HTMLInputElement>) => void. JSX accepts any function without type checking.',
+            '**Build output** — both JSX and TSX compile to identical JavaScript. TypeScript types are erased at build time and have zero runtime cost.',
+          ],
+        },
+      ],
+    },
+    {
+      heading: 'Inline styles: the same conversion, type-checked',
+      blocks: [
+        {
+          type: 'p',
+          text: 'Inline style conversion works identically to HTML → JSX. The CSS string is split by semicolons, each property name is camelCased, and the result is written as a JavaScript object literal. In TSX, the resulting object is type-checked against React.CSSProperties — TypeScript will catch misspelled property names at compile time.',
+        },
+        {
+          type: 'code',
+          label: 'Inline style conversion in TSX',
+          code: `// Input HTML style string:
+style="background-color: #fff; font-size: 16px; margin-top: 8px; z-index: 10"
+
+// Output TSX style object (type: React.CSSProperties):
+style={{ backgroundColor: '#fff', fontSize: '16px', marginTop: '8px', zIndex: 10 }}
+
+// TypeScript catches misspellings at compile time:
+// style={{ backroundColor: '#fff' }}  → Error: unknown property`,
+        },
+      ],
+    },
+  ],
+  faq: [
+    {
+      question: 'What is the difference between JSX and TSX?',
+      answer: 'JSX is React\'s HTML-like syntax extension for JavaScript (.jsx files). TSX is the same syntax used in TypeScript files (.tsx files). The markup is identical — the only difference is that TSX files are processed by the TypeScript compiler, which type-checks props, event handlers, and component interfaces. Converting HTML to TSX gives you the JSX markup plus a typed component wrapper from the start.',
+    },
+    {
+      question: 'Does the converter add TypeScript types to the converted JSX?',
+      answer: 'The converter adds a minimal typed scaffold: an interface Props {} placeholder and a React.FC<Props> type annotation on the component function. It does not infer prop types from the HTML content — the Props interface is intentionally empty so you can fill in your actual prop definitions. TypeScript types for existing attributes come from the React type definitions already installed in your project.',
+    },
+    {
+      question: 'Why is the component named "Component" in the output?',
+      answer: 'The converter has no way to know what your component should be called — it only sees the HTML markup. "Component" is a safe placeholder that TypeScript accepts. After conversion, rename it to match your file name. In TypeScript, the export default name and the file name should match for best IDE support.',
+    },
+    {
+      question: 'Do I need to import React in TSX files?',
+      answer: 'With React 17+ and the new JSX transform (configured in tsconfig.json with "jsx": "react-jsx"), you no longer need to import React at the top of every file. The converter includes the import for compatibility with older setups. If your project uses the new transform, you can safely remove the import React line from the output.',
+    },
+    {
+      question: 'Why does class become className in TSX?',
+      answer: 'For the same reason as in JSX: class is a reserved keyword in JavaScript. Since TSX compiles to TypeScript and then to JavaScript, using class as an attribute name would create a syntax conflict. React uses className, which maps directly to the DOM\'s className property.',
+    },
+    {
+      question: 'How are void elements handled in TSX?',
+      answer: 'Void elements (br, hr, img, input, meta, link) must self-close in JSX and TSX — <br> becomes <br />, <img src="…"> becomes <img src="…" />. This is a JSX requirement that the TypeScript compiler also enforces in TSX files. The converter applies self-closing automatically to all void elements.',
+    },
+    {
+      question: 'What happens to event handlers like onclick="handleSubmit()"?',
+      answer: 'Event attribute names are converted to camelCase (onclick → onClick, onchange → onChange, onmouseenter → onMouseEnter). After conversion, the string value should be replaced with a proper function reference: onClick={"handleSubmit()"} → onClick={handleSubmit}. The function must be in scope in your component.',
+    },
+    {
+      question: 'Can I convert a full HTML page to a TSX component?',
+      answer: 'You can convert a section of the page, but a full document including html, head, and body tags does not map to a valid React component. Extract the meaningful content section, convert it to TSX, then fill in the Props interface and event handlers.',
+    },
+    {
+      question: 'What about SVG attributes like viewBox and stroke-width?',
+      answer: 'The converter handles SVG attribute renaming. stroke-width becomes strokeWidth, fill-opacity becomes fillOpacity. Native SVG camelCase attributes like viewBox, gradientUnits, and preserveAspectRatio are left unchanged — they are already in the correct form for JSX and TSX.',
+    },
+    {
+      question: 'Does the output TypeScript compile without errors?',
+      answer: 'The scaffold compiles cleanly with an empty Props interface. You will get TypeScript errors only when you add prop references that are not declared in the interface. The interface Props {} placeholder is valid TypeScript that produces no errors on its own.',
+    },
+    {
+      question: 'Is any data sent to a server during conversion?',
+      answer: 'No. The entire conversion runs in your browser using JavaScript string processing. No data is transmitted over the network — there are no file size limits, no rate limits, and no privacy concerns.',
+    },
+    {
+      question: 'What is React.FC and should I use it?',
+      answer: 'React.FC (React.FunctionComponent) is a TypeScript generic type for React functional components. It accepts a type parameter for the props: React.FC<Props>. Some teams prefer explicit prop types without React.FC — both approaches are valid. The converter uses React.FC as a widely recognized pattern that gives you type safety with minimal boilerplate.',
+    },
+  ],
+  relatedTools: [
+    { to: '/tsx-to-html',      name: 'TSX to HTML',      desc: 'Convert a TypeScript React component back to standard HTML' },
+    { to: '/html-to-jsx',      name: 'HTML to JSX',      desc: 'Convert HTML to JSX without the TypeScript scaffold' },
+    { to: '/jsx-to-html',      name: 'JSX to HTML',      desc: 'Convert React JSX back to standard HTML — the reverse direction' },
+    { to: '/html-to-markdown', name: 'HTML to Markdown', desc: 'Convert HTML to clean Markdown for docs and READMEs' },
+  ],
+}
+
+// ─── tsx-to-html ─────────────────────────────────────────────────────────────
+
+const TSX_TO_HTML = {
+  howToTitle: 'How to convert TSX to HTML',
+  howToSteps: [
+    'Paste your TSX code into the input field — a full component file, a return block, or a JSX snippet with TypeScript types.',
+    'Click "Convert" — TypeScript declarations are stripped, JSX attributes are renamed, and clean HTML appears in the output panel.',
+    'Switch to "HTML → TSX" using the toggle above if you need the reverse direction.',
+    'Click "Copy" to copy the HTML to clipboard, or "Download .html" to save it locally.',
+    'Use the output in a static HTML page, email template, or any non-React context.',
+  ],
+  sections: [
+    {
+      heading: 'How the TSX to HTML converter works',
+      blocks: [
+        {
+          type: 'p',
+          text: 'The converter processes TSX in two stages. First it strips TypeScript-specific syntax: import statements, interface declarations, type alias declarations, and as-type assertions inside JSX expressions. If the input is a full component function, it extracts only the JSX return body using a balanced-parentheses parser. Then it applies the reverse JSX → HTML transformations: className → class, htmlFor → for, camelCase events → lowercase, style objects → CSS strings, and void elements normalized for HTML. The entire conversion runs in your browser — **no data is sent to any server.**',
+        },
+        {
+          type: 'code',
+          label: 'Full TSX component → clean HTML',
+          code: `// Input TSX:
+import React from 'react'
+
+interface CardProps {
+  title: string
+  disabled?: boolean
+}
+
+const Card: React.FC<CardProps> = ({ title }: CardProps) => {
+  return (
+    <div className="card" tabIndex={0}>
+      <h2>{title as string}</h2>
+      <input type="text" readOnly disabled={false} />
+    </div>
+  )
+}
+
+// Output HTML:
+<div class="card" tabindex="0">
+  <h2>{title}</h2>
+  <input type="text" readonly>
+</div>`,
+        },
+      ],
+    },
+    {
+      heading: 'TypeScript syntax that gets stripped',
+      blocks: [
+        {
+          type: 'p',
+          text: 'The converter removes TypeScript-specific constructs that have no HTML equivalent. The stripping is conservative — it targets known patterns and avoids touching the JSX markup itself.',
+        },
+        {
+          type: 'table',
+          headers: ['TypeScript syntax', 'Action', 'Example'],
+          rows: [
+            ['import statements',       'Removed',                "import React from 'react'"],
+            ['interface declarations',  'Removed',                'interface Props { name: string }'],
+            ['type alias declarations', 'Removed',                'type Status = "active" | "inactive"'],
+            ['as-type assertions',      'Expression kept',        '{value as string} → {value}'],
+            ['Component wrapper',       'Return body extracted',  'const Cmp = () => { return (...) }'],
+          ],
+        },
+      ],
+    },
+    {
+      heading: 'JSX attributes converted back to HTML',
+      blocks: [
+        {
+          type: 'p',
+          text: 'After TypeScript stripping, the converter applies the full JSX → HTML reverse transformation. Every JSX attribute is mapped back to its HTML equivalent.',
+        },
+        {
+          type: 'table',
+          headers: ['TSX / JSX', 'HTML output', 'Notes'],
+          rows: [
+            ['className="…"',                'class="…"',          'Reserved word resolved'],
+            ['htmlFor="…"',                  'for="…"',            'Reserved word resolved'],
+            ['onClick={fn}',                 'onclick="fn"',       'camelCase → lowercase'],
+            ['tabIndex={1}',                 'tabindex="1"',       'Value stringified'],
+            ['readOnly',                     'readonly',           'camelCase → lowercase'],
+            ["style={{ color: 'red' }}",     'style="color: red"', 'JS object → CSS string'],
+            ["style={{ fontSize: '14px' }}", 'style="font-size: 14px"', 'Property key kebab-cased'],
+            ['<br />',                       '<br>',               'Void element, slash removed'],
+            ['<div />',                      '<div></div>',        'Non-void, closing tag added'],
+            ['{/* comment */}',              '<!-- comment -->',   'JSX comment → HTML comment'],
+            ['disabled={false}',             '(removed)',          'false attrs omitted from HTML'],
+            ['disabled={true}',              'disabled',           'true attrs become bare boolean'],
+          ],
+        },
+      ],
+    },
+    {
+      heading: 'Return body extraction for full components',
+      blocks: [
+        {
+          type: 'p',
+          text: 'When the input contains a full React component function, the converter automatically extracts the content of the return statement. It supports two common patterns:',
+        },
+        {
+          type: 'code',
+          label: 'Supported component patterns for return body extraction',
+          code: `// Pattern 1: arrow function with block body and return
+const MyComponent: React.FC = () => {
+  return (
+    <div className="card">...</div>  // ← extracted
+  )
+}
+
+// Pattern 2: concise arrow body
+const MyComponent = () => (
+  <div className="card">...</div>    // ← extracted
+)
+
+// Pattern 3: JSX markup only (no component wrapper)
+<div className="card">...</div>      // ← used as-is, no extraction needed`,
+        },
+        {
+          type: 'p',
+          text: 'The extraction uses a balanced-parentheses parser that correctly handles deeply nested JSX with embedded JavaScript expressions. It does not use regex for parenthesis matching, which means it handles complex real-world components without mismatching open and close parens.',
+        },
+      ],
+    },
+    {
+      heading: 'Limitations: what TSX to HTML cannot convert',
+      blocks: [
+        {
+          type: 'p',
+          text: 'TSX is a superset of HTML. The TypeScript layer can be stripped mechanically, but the JSX layer still contains JavaScript expressions that have no static HTML equivalent:',
+        },
+        {
+          type: 'ul',
+          items: [
+            '**JavaScript expressions** — {variable}, {condition ? a : b}, {items.map(...)} are left as-is in the output. Replace them with the actual rendered values.',
+            '**Component references** — <Button />, <UserCard user={user} />, and other component tags are not HTML elements. The converter cannot know what HTML they render.',
+            '**Conditional rendering** — {isVisible && <Panel />} expressions are left in the output. Resolve the condition by hand.',
+            '**React-specific props** — key, ref, and dangerouslySetInnerHTML are left as attributes. Remove them manually after conversion.',
+            '**Deep TypeScript generics** — if stripping fails for unusually nested types, paste only the JSX return body as input.',
+          ],
+        },
+      ],
+    },
+  ],
+  faq: [
+    {
+      question: 'What TypeScript syntax does the converter strip?',
+      answer: 'The converter strips import statements, interface declarations (interface Props { name: string }), type alias declarations (type Status = "active"), and as-type assertions inside JSX expression blocks ({value as string} → {value}). It also extracts the JSX return body from a full component function, removing the function wrapper and leaving only the markup.',
+    },
+    {
+      question: 'Does the converter handle a full TSX component file?',
+      answer: 'Yes. Paste the entire component file — imports, interface, component function, and export — and the converter extracts the JSX return body and converts it to HTML. The TypeScript declarations, the function wrapper, and the export statement are all stripped automatically.',
+    },
+    {
+      question: 'What happens if I paste only JSX markup without the TypeScript wrapper?',
+      answer: 'That works too. If the input contains no return statement or arrow function body, the converter skips the extraction step and applies the JSX → HTML transformations directly to the input. You can paste either a full component file or just the JSX markup.',
+    },
+    {
+      question: 'Why does {value as string} become {value}?',
+      answer: 'The as keyword in TypeScript is a type assertion — it tells the compiler to treat a value as a specific type. It has no runtime effect and no HTML equivalent. The converter strips the as clause and keeps only the expression: {value as string} becomes {value}, {label as number} becomes {label}. The resulting {value} is still a JSX expression placeholder in the HTML output.',
+    },
+    {
+      question: 'What is the difference between JSX to HTML and TSX to HTML?',
+      answer: 'JSX to HTML (from the HTML ↔ JSX page) converts JSX markup that has no TypeScript wrapper. TSX to HTML also strips TypeScript-specific syntax before applying the same JSX → HTML transformation. Use TSX to HTML when your input is a typed component file; use JSX to HTML when your input is plain JSX markup without TypeScript annotations.',
+    },
+    {
+      question: 'How are SVG attributes like fillRule and strokeWidth handled?',
+      answer: 'SVG camelCase attributes are converted back to their hyphenated equivalents: fillRule → fill-rule, strokeWidth → stroke-width, stopColor → stop-color. Native SVG camelCase attributes that are already correct — viewBox, gradientUnits, preserveAspectRatio, stdDeviation — are not touched.',
+    },
+    {
+      question: 'How does disabled={false} get removed?',
+      answer: 'In HTML, a boolean attribute is either present or absent. disabled={false} in JSX means the attribute is not set — the equivalent HTML has no disabled attribute at all. The converter removes attributes set to false, null, or undefined. Attributes set to true become bare boolean attributes (disabled) in the HTML output.',
+    },
+    {
+      question: 'What happens to JSX fragments?',
+      answer: 'JSX fragments (<> </> and <React.Fragment>) have no HTML equivalent. The converter unwraps them and keeps only the children. If the return body is wrapped in a fragment, the fragment tags are removed and the children become the output.',
+    },
+    {
+      question: 'Can I convert TSX components that use hooks?',
+      answer: 'The converter extracts only the JSX return body. Hook calls (useState, useEffect, useRef) are inside the component function body but outside the return statement — they are discarded along with the function wrapper. Only the markup returned by the component is converted to HTML.',
+    },
+    {
+      question: 'Are React-specific props like key and ref converted?',
+      answer: 'key and ref are React-internal props that do not appear as DOM attributes. The converter leaves them in the output as regular attributes. Remove them manually — they are not valid in standard HTML.',
+    },
+    {
+      question: 'Is any data sent to a server during conversion?',
+      answer: 'No. The entire conversion — TypeScript stripping, return body extraction, JSX attribute conversion — runs in your browser using JavaScript string processing. No data is transmitted over the network.',
+    },
+  ],
+  relatedTools: [
+    { to: '/html-to-tsx',      name: 'HTML to TSX',      desc: 'Convert HTML to a typed React TypeScript component — the reverse direction' },
+    { to: '/jsx-to-html',      name: 'JSX to HTML',      desc: 'Convert React JSX to HTML without TypeScript stripping' },
+    { to: '/html-to-jsx',      name: 'HTML to JSX',      desc: 'Convert HTML to JSX without the TypeScript component scaffold' },
+    { to: '/html-to-markdown', name: 'HTML to Markdown', desc: 'Convert HTML to clean Markdown for docs and READMEs' },
+  ],
+}
+
 // ─── Content map ──────────────────────────────────────────────────────────────
 
 const CONTENT_BY_SLUG = {
@@ -2796,6 +3230,8 @@ const CONTENT_BY_SLUG = {
   'markdown-to-html': MARKDOWN_TO_HTML,
   'html-to-jsx':      HTML_TO_JSX,
   'jsx-to-html':      JSX_TO_HTML,
+  'html-to-tsx':      HTML_TO_TSX,
+  'tsx-to-html':      TSX_TO_HTML,
   'json-to-csv':      JSON_TO_CSV,
   'csv-to-json':      CSV_TO_JSON,
   'xml-to-json':      XML_TO_JSON,

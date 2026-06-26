@@ -102,6 +102,7 @@ const NAV_SECTIONS = [
     items: [
       { name: 'HTML ↔ Markdown', route: '/html-to-markdown', ready: true, slugSet: new Set(['html-to-markdown', 'markdown-to-html']) },
       { name: 'HTML ↔ JSX', route: '/html-to-jsx', ready: true, slugSet: new Set(['html-to-jsx', 'jsx-to-html']) },
+      { name: 'HTML ↔ TSX', route: '/html-to-tsx', ready: true, slugSet: new Set(['html-to-tsx', 'tsx-to-html']) },
       { name: 'JSON ↔ CSV', route: '/json-to-csv', ready: true, slugSet: new Set(['json-to-csv', 'csv-to-json']) },
       { name: 'XML ↔ JSON', route: '/xml-to-json', ready: true, slugSet: new Set(['xml-to-json', 'json-to-xml']) },
       { name: 'YAML ↔ JSON', route: '/yaml-to-json', ready: true, slugSet: new Set(['yaml-to-json', 'json-to-yaml']) },

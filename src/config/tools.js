@@ -3,6 +3,8 @@ export const TOOLS = [
   { category: 'Text & Code', name: 'Markdown to HTML', description: 'Convert Markdown to valid HTML — browser-based, instant', route: '/markdown-to-html', lastmod: '2026-05-28' },
   { category: 'Text & Code', name: 'HTML to JSX', description: 'Convert HTML to React JSX — class→className, events, styles', route: '/html-to-jsx', lastmod: '2026-06-11' },
   { category: 'Text & Code', name: 'JSX to HTML', description: 'Convert React JSX to standard HTML — browser-based, instant', route: '/jsx-to-html', lastmod: '2026-06-11' },
+  { category: 'Text & Code', name: 'HTML to TSX', description: 'Convert HTML to a TypeScript React component (TSX) — class→className, styles, interface Props scaffold', route: '/html-to-tsx', lastmod: '2026-06-26' },
+  { category: 'Text & Code', name: 'TSX to HTML', description: 'Convert TSX to standard HTML — strips TypeScript types, interfaces, and JSX attributes', route: '/tsx-to-html', lastmod: '2026-06-26' },
   { category: 'Text & Code', name: 'JSON to CSV', description: 'Convert JSON array to CSV — comma, semicolon or tab delimiter', route: '/json-to-csv', lastmod: '2026-05-09' },
   { category: 'Text & Code', name: 'CSV to JSON', description: 'Convert CSV to JSON array — supports any delimiter, instant', route: '/csv-to-json', lastmod: '2026-05-28' },
   { category: 'Text & Code', name: 'XML to JSON', description: 'Convert XML to formatted JSON — browser-based, instant', route: '/xml-to-json', lastmod: '2026-05-28' },
