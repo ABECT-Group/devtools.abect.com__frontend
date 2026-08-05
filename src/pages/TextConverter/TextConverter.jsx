@@ -14,6 +14,7 @@ import TextInput from './components/TextInput/TextInput'
 import TextOutput from './components/TextOutput/TextOutput'
 import { buildHelmet, OG_IMAGE } from './data/helmet'
 import { buildJsonLdApp, buildJsonLdHowTo, buildJsonLdFaq } from './data/jsonld'
+import JsonLd from '../../components/JsonLd/JsonLd'
 import { CONVERTERS, buildContent } from './data/content'
 import './TextConverter.scss'
 
@@ -57,10 +58,12 @@ export default function TextConverter() {
     setError(null)
   }, [slug])
 
-  function handleConvert() {
+  // Awaited because some converters (Markdown, YAML) load their parser on
+  // first use. Synchronous converters resolve immediately — await is a no-op.
+  async function handleConvert() {
     if (!input.trim()) return
     try {
-      const result = config.convertFn(input, delimiter)
+      const result = await config.convertFn(input, delimiter)
       setOutput(result)
       setError(null)
     } catch (e) {
@@ -87,10 +90,11 @@ export default function TextConverter() {
         <meta name="twitter:title" content={title} />
         <meta name="twitter:description" content={description} />
         <meta name="twitter:image" content={OG_IMAGE} />
-        <script type="application/ld+json">{JSON.stringify(jsonLdApp)}</script>
-        {jsonLdHowTo && <script type="application/ld+json">{JSON.stringify(jsonLdHowTo)}</script>}
-        {jsonLdFaq   && <script type="application/ld+json">{JSON.stringify(jsonLdFaq)}</script>}
       </Helmet>
+
+      <JsonLd data={jsonLdApp} />
+      <JsonLd data={jsonLdHowTo} />
+      <JsonLd data={jsonLdFaq} />
 
       <PageHeader title={title.split(' —')[0]} subtitle={subtitle} />
 

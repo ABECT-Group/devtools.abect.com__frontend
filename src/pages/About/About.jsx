@@ -1,9 +1,11 @@
 import { Helmet } from 'react-helmet-async'
+import { Link } from 'react-router-dom'
 import ContentSection from '../../components/ContentSection/ContentSection'
 import FAQ            from '../../components/FAQ/FAQ'
 import { PAGE_TITLE, PAGE_DESC, PAGE_URL, OG_IMAGE } from './data/helmet'
-import { jsonLdPerson, jsonLdWebSite, jsonLdBreadcrumb } from './data/jsonld'
+import { jsonLdPerson, jsonLdWebSite, jsonLdBreadcrumb, jsonLdFaq } from './data/jsonld'
 import { PRINCIPLES, CREATORS, PROFILES, FAQ as FAQ_ITEMS } from './data/content'
+import JsonLd from '../../components/JsonLd/JsonLd'
 import './About.scss'
 
 function IconLinkedIn() {
@@ -46,10 +48,12 @@ export default function About() {
         <meta name="twitter:title" content={PAGE_TITLE} />
         <meta name="twitter:description" content={PAGE_DESC} />
         <meta name="twitter:image" content={OG_IMAGE} />
-        <script type="application/ld+json">{JSON.stringify(jsonLdPerson)}</script>
-        <script type="application/ld+json">{JSON.stringify(jsonLdWebSite)}</script>
-        <script type="application/ld+json">{JSON.stringify(jsonLdBreadcrumb)}</script>
       </Helmet>
+
+      <JsonLd data={jsonLdPerson} />
+      <JsonLd data={jsonLdWebSite} />
+      <JsonLd data={jsonLdBreadcrumb} />
+      <JsonLd data={jsonLdFaq} />
 
       {/* ── Hero ────────────────────────────────────────────── */}
       <div className="About__hero">
@@ -194,6 +198,13 @@ export default function About() {
           <a className="About__contact-email" href="mailto:support@abect.com">
             support@abect.com
           </a>
+        </p>
+        <p className="About__contact-row">
+          <Link className="About__text-link" to="/privacy-policy">Privacy Policy</Link>
+          {' · '}
+          <Link className="About__text-link" to="/terms">Terms of Service</Link>
+          {' · '}
+          <a className="About__text-link" href="/.well-known/security.txt">Report a security issue</a>
         </p>
         <div className="About__profiles">
           {PROFILES.map(({ label, href, icon }) => (

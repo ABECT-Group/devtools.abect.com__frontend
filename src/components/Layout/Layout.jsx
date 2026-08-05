@@ -1,13 +1,21 @@
 import { useEffect, useState } from 'react'
-import { Outlet } from 'react-router-dom'
+import { Outlet, useLocation } from 'react-router-dom'
 import AuthModal from '../AuthModal/AuthModal'
 import CookieConsent from '../CookieConsent/CookieConsent'
 import Header from '../Header/Header'
+import JsonLd from '../JsonLd/JsonLd'
 import Sidebar from '../Sidebar/Sidebar'
+import { ORGANIZATION_SCHEMA, buildToolBreadcrumb } from '../../config/schema'
 import './Layout.scss'
 
 export default function Layout() {
   const [sidebarOpen, setSidebarOpen] = useState(false)
+  const { pathname } = useLocation()
+
+  // Site-wide structured data. Declared once here instead of in 50 page
+  // components: the publisher entity on every page, and a Home › Tool
+  // breadcrumb for every route registered in tools.js.
+  const breadcrumb = buildToolBreadcrumb(pathname)
 
   useEffect(() => {
     if (!sidebarOpen) {
@@ -51,6 +59,8 @@ export default function Layout() {
 
   return (
     <div className="Layout">
+      <JsonLd data={ORGANIZATION_SCHEMA} />
+      <JsonLd data={breadcrumb} />
       <Header
         isSidebarOpen={sidebarOpen}
         onMenuToggle={() => setSidebarOpen(prev => !prev)}

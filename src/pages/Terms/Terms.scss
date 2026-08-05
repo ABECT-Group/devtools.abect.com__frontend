@@ -1,0 +1,60 @@
+.Terms {
+  max-width: 760px;
+
+  &__title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 10px;
+  }
+
+  &__lead {
+    font-size: 0.9375rem;
+    line-height: 1.65;
+    color: var(--text-secondary);
+    margin-bottom: 28px;
+  }
+
+  &__section+&__section {
+    margin-top: 22px;
+  }
+
+  h2 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 8px;
+  }
+
+  h3 {
+    font-size: 0.9375rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-top: 16px;
+    margin-bottom: 6px;
+  }
+
+  a {
+    color: var(--accent);
+  }
+
+  p,
+  ul {
+    font-size: 0.875rem;
+    line-height: 1.7;
+    color: var(--text-secondary);
+  }
+
+  ul {
+    padding-left: 20px;
+  }
+
+  p+p,
+  ul+p {
+    margin-top: 10px;
+  }
+
+  p+ul {
+    margin-top: 6px;
+  }
+}

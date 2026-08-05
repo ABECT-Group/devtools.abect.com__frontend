@@ -91,4 +91,24 @@ export const FAQ = [
     question: 'What technologies power the tools?',
     answer: 'All tools use modern browser APIs with no third-party processing services. Core APIs: Canvas API for image transformations and exports, File API for reading files locally, Blob URL API for in-memory downloads, Web Crypto API for unique ID generation, and TypedArrays for binary file construction (ICO format). JSZip handles in-browser batch ZIP archives.',
   },
+  {
+    question: 'How can I verify that my files really are not uploaded?',
+    answer: 'Open your browser DevTools, switch to the Network panel, and use any of the browser tools. No request carrying image or text data will appear — you will see the page assets load once and nothing after that. A stronger test: load the page, disconnect from the network entirely, and keep using the tool. It continues to work, because there is no server for it to reach.',
+  },
+  {
+    question: 'Will the browser tools ever require an account or start charging?',
+    answer: 'No. Every browser-based tool is free, account-free, and stays that way — there is no server cost behind them to recover, because they run on your own device. The Lora AI assistant is a separate product with its own economics: it calls a paid AI API, so it needs an account and a token allowance. That distinction is deliberate and permanent, not a step towards putting the converters behind a login.',
+  },
+  {
+    question: 'Why are the pages so fast even though this is a React site?',
+    answer: 'Every page is prerendered to static HTML at build time. The server sends a fully formed document with all the text, headings and structured data already in it, so the browser paints immediately and search engines index the content without executing any JavaScript. React then hydrates on top to make the tool interactive. There is no server rendering at request time and no database query in the critical path.',
+  },
+  {
+    question: 'What happens to my data if I use Lora, the AI assistant?',
+    answer: 'Lora is the only part of the site that sends anything to a server. Your messages and conversation history go to the DeepSeek API to generate a reply, and are stored in our database linked to your account so you can return to the conversation. They are never used for training or advertising. You can delete individual conversations, or delete your account to remove everything permanently. The full detail is in the Privacy Policy.',
+  },
+  {
+    question: 'Can I use the generated files commercially?',
+    answer: 'Yes. Anything the tools produce — converted images, compressed files, favicon packages, meta tags, JSON-LD schema — is yours, with no attribution requirement, no watermark and no licence attached. The tools only transform files you already own; we never see them, so we could not claim anything over them even if we wanted to.',
+  },
 ]

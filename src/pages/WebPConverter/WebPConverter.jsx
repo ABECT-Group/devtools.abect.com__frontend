@@ -16,6 +16,7 @@ import { triggerDownload } from './utils/download'
 import { buildZip } from './utils/buildZip'
 import { PAGE_TITLE, PAGE_DESC, PAGE_URL, OG_IMAGE } from './data/helmet'
 import { jsonLdApp, jsonLdHowTo, jsonLdFaq } from './data/jsonld'
+import JsonLd from '../../components/JsonLd/JsonLd'
 import { HOW_TO_STEPS, FAQ as FAQ_ITEMS, PICTURE_CODE, RELATED_TOOLS } from './data/content'
 import './WebPConverter.scss'
 
@@ -137,10 +138,11 @@ export default function WebPConverter() {
           <meta name="twitter:title" content={PAGE_TITLE} />
           <meta name="twitter:description" content={PAGE_DESC} />
           <meta name="twitter:image" content={OG_IMAGE} />
-          <script type="application/ld+json">{JSON.stringify(jsonLdApp)}</script>
-          <script type="application/ld+json">{JSON.stringify(jsonLdHowTo)}</script>
-          <script type="application/ld+json">{JSON.stringify(jsonLdFaq)}</script>
         </Helmet>
+
+        <JsonLd data={jsonLdApp} />
+        <JsonLd data={jsonLdHowTo} />
+        <JsonLd data={jsonLdFaq} />
 
         <PageHeader
           title="Free WebP Converter Online"

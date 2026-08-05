@@ -123,6 +123,18 @@
   }
 
   // ── Markdown content renderer ────────────────────────────────────────────────
+  // Shown for the few hundred ms while the markdown renderer chunk loads on the
+  // first message of a session. Matches __markdown so the swap is invisible.
+  &__markdown-fallback {
+    width: 100%;
+    margin: 0;
+    font-size: 0.9375rem;
+    line-height: 1.7;
+    color: var(--text-primary);
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
+
   &__markdown {
     width: 100%;
     font-size: 0.9375rem;

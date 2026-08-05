@@ -19,6 +19,7 @@ import { buildZip } from './utils/buildZip'
 import { convertHeicImage } from './utils/convertHeicImage'
 import { convertImage } from './utils/convertImage'
 import { triggerDownload } from './utils/download'
+import JsonLd from '../../components/JsonLd/JsonLd'
 import './ImageConverter.scss'
 
 function renderText(text) {
@@ -182,10 +183,11 @@ export default function ImageConverter() {
         <meta name="twitter:title" content={config.title} />
         <meta name="twitter:description" content={config.description} />
         <meta name="twitter:image" content={OG_IMAGE} />
-        <script type="application/ld+json">{JSON.stringify(jsonLdApp)}</script>
-        <script type="application/ld+json">{JSON.stringify(jsonLdHowTo)}</script>
-        <script type="application/ld+json">{JSON.stringify(jsonLdFaq)}</script>
       </Helmet>
+
+      <JsonLd data={jsonLdApp} />
+      <JsonLd data={jsonLdHowTo} />
+      <JsonLd data={jsonLdFaq} />
 
       <PageHeader title={config.h1} subtitle={config.sub} />
 

@@ -357,7 +357,7 @@ export default function Sidebar({ isOpen, onClose }) {
         <div className="Sidebar__mode-toggle">
           <SegmentedControl
             options={[
-              { value: 'tools', label: 'Menu' },
+              { value: 'tools', label: 'Tools' },
               { value: 'ai', label: 'AI' },
             ]}
             value={sidebarMode}
@@ -430,6 +430,16 @@ export default function Sidebar({ isOpen, onClose }) {
               </NavLink>
 
               <NavLink
+                to="/changelog"
+                className={({ isActive }) =>
+                  `Sidebar__nav-item${isActive ? ' Sidebar__nav-item--active' : ''}`
+                }
+                onClick={onClose}
+              >
+                Changelog
+              </NavLink>
+
+              <NavLink
                 to="/privacy-policy"
                 className={({ isActive }) =>
                   `Sidebar__nav-item${isActive ? ' Sidebar__nav-item--active' : ''}`
@@ -437,6 +447,16 @@ export default function Sidebar({ isOpen, onClose }) {
                 onClick={onClose}
               >
                 Privacy Policy
+              </NavLink>
+
+              <NavLink
+                to="/terms"
+                className={({ isActive }) =>
+                  `Sidebar__nav-item${isActive ? ' Sidebar__nav-item--active' : ''}`
+                }
+                onClick={onClose}
+              >
+                Terms of Service
               </NavLink>
 
               <button
@@ -453,6 +473,15 @@ export default function Sidebar({ isOpen, onClose }) {
         {/* ── Desktop footer ──────────────────────────────── */}
         <footer className="Sidebar__footer">
           <NavLink
+            to="/changelog"
+            className={({ isActive }) =>
+              `Sidebar__footer-link${isActive ? ' Sidebar__footer-link--active' : ''}`
+            }
+            onClick={onClose}
+          >
+            Changelog
+          </NavLink>
+          <NavLink
             to="/privacy-policy"
             className={({ isActive }) =>
               `Sidebar__footer-link${isActive ? ' Sidebar__footer-link--active' : ''}`
@@ -460,6 +489,15 @@ export default function Sidebar({ isOpen, onClose }) {
             onClick={onClose}
           >
             Privacy Policy
+          </NavLink>
+          <NavLink
+            to="/terms"
+            className={({ isActive }) =>
+              `Sidebar__footer-link${isActive ? ' Sidebar__footer-link--active' : ''}`
+            }
+            onClick={onClose}
+          >
+            Terms
           </NavLink>
           <button
             type="button"

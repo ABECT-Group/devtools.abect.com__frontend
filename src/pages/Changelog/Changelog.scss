@@ -1,0 +1,46 @@
+.Changelog {
+  max-width: 860px;
+
+  &__title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 10px;
+  }
+
+  &__lead {
+    font-size: 0.9375rem;
+    line-height: 1.65;
+    color: var(--text-secondary);
+    margin-bottom: 8px;
+
+    a {
+      color: var(--accent);
+    }
+  }
+
+  &__meta {
+    font-size: 0.8125rem;
+    color: var(--text-faint);
+    margin-bottom: 28px;
+  }
+
+  &__year {
+    margin-bottom: 32px;
+  }
+
+  &__year-title {
+    font-size: 0.8125rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-faint);
+    margin-bottom: 12px;
+  }
+
+  &__list {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+}

@@ -1,7 +1,6 @@
 import { forwardRef, useCallback, useEffect, useImperativeHandle, useLayoutEffect, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import ReactMarkdown from 'react-markdown'
-import remarkGfm from 'remark-gfm'
+import Markdown from './Markdown.jsx'
 import { aiApi } from '../../../../api/ai.js'
 import useAuthStore from '../../../../store/authStore.js'
 import useConversationStore from '../../../../store/conversationStore.js'
@@ -178,7 +177,7 @@ function MarkdownContent({ content, streaming, onFileClick }) {
     if (!hasFiles) {
       return (
         <div className="AiChat__markdown AiChat__markdown--streaming">
-          <ReactMarkdown remarkPlugins={[remarkGfm]} components={mdComponents}>{content}</ReactMarkdown>
+          <Markdown components={mdComponents}>{content}</Markdown>
         </div>
       )
     }
@@ -188,7 +187,7 @@ function MarkdownContent({ content, streaming, onFileClick }) {
         {segments.map((seg, i) =>
           seg.type === 'file'
             ? <FileCard key={i} file={seg} isStreaming={seg.streaming} onView={() => onFileClick?.(seg)} />
-            : seg.content && <ReactMarkdown key={i} remarkPlugins={[remarkGfm]} components={mdComponents}>{seg.content}</ReactMarkdown>
+            : seg.content && <Markdown key={i} components={mdComponents}>{seg.content}</Markdown>
         )}
       </div>
     )
@@ -200,7 +199,7 @@ function MarkdownContent({ content, streaming, onFileClick }) {
   if (!hasFiles) {
     return (
       <div className="AiChat__markdown">
-        <ReactMarkdown remarkPlugins={[remarkGfm]} components={mdComponents}>{content}</ReactMarkdown>
+        <Markdown components={mdComponents}>{content}</Markdown>
       </div>
     )
   }
@@ -210,7 +209,7 @@ function MarkdownContent({ content, streaming, onFileClick }) {
       {segments.map((seg, i) =>
         seg.type === 'file'
           ? <FileCard key={i} file={seg} isStreaming={false} onView={() => onFileClick?.(seg)} />
-          : <ReactMarkdown key={i} remarkPlugins={[remarkGfm]} components={mdComponents}>{seg.content}</ReactMarkdown>
+          : <Markdown key={i} components={mdComponents}>{seg.content}</Markdown>
       )}
     </div>
   )

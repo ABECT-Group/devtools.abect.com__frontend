@@ -1,0 +1,21 @@
+# Security contact for devtools.abect.com — RFC 9116
+#
+# Found a vulnerability? Email us. We read every report, we will confirm
+# receipt, and we will not pursue legal action against good-faith research.
+
+Contact: mailto:support@abect.com
+Expires: 2027-08-05T00:00:00.000Z
+Preferred-Languages: en, uk
+Canonical: https://devtools.abect.com/.well-known/security.txt
+Policy: https://devtools.abect.com/terms
+
+# In scope:
+#   devtools.abect.com        — website
+#   devtools-api.abect.com    — API
+#
+# Please do not run automated scanners or load tests against the API; it is a
+# free service on a single server. Manual, low-volume testing only. Do not
+# access, modify or delete data belonging to other users — if you find a way
+# to, stop and report it.
+#
+# Please give us a reasonable window to ship a fix before public disclosure.

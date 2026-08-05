@@ -10,6 +10,8 @@ import MetaTagsGenerator from './pages/MetaTagsGenerator/MetaTagsGenerator'
 import FaviconGenerator from './pages/FaviconGenerator/FaviconGenerator'
 import ImageConverter from './pages/ImageConverter/ImageConverter'
 import PrivacyPolicy from './pages/PrivacyPolicy/PrivacyPolicy'
+import Terms from './pages/Terms/Terms'
+import Changelog from './pages/Changelog/Changelog'
 import WebPConverter from './pages/WebPConverter/WebPConverter'
 import OGImageGenerator from './pages/OGImageGenerator/OGImageGenerator'
 import JsonLdGenerator from './pages/JsonLdGenerator/JsonLdGenerator'
@@ -74,6 +76,8 @@ export default function App() {
       <Route path="/" element={<Layout />}>
         <Route index element={<Home />} />
         <Route path="privacy-policy" element={<PrivacyPolicy />} />
+        <Route path="terms" element={<Terms />} />
+        <Route path="changelog" element={<Changelog />} />
         <Route path="about" element={<About />} />
         {TEXT_CONVERTER_SLUGS.map(slug => (
           <Route key={slug} path={slug} element={<TextConverter />} />

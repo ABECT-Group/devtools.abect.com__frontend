@@ -39,6 +39,22 @@ export const FAQ = [
     question: 'Are my images uploaded anywhere?',
     answer: 'No. All processing happens directly in your browser using the Canvas API. Your images never leave your device — nothing is uploaded to any server. You can verify this by opening browser DevTools → Network tab while generating — you will see zero file transfers.',
   },
+  {
+    question: 'Why does my favicon look blurry or muddy in the browser tab?',
+    answer: 'Almost always because it is being downscaled from a detailed image. A logo with thin strokes, gradients or small text turns to mush at 16×16 — there simply are not enough pixels. Favicons need to be designed for the size: a single bold letter, a simple mark, or one recognisable shape with high contrast against the background. Check the 16×16 preview in the panel above before you download; if you cannot read it there, no browser will render it better.',
+  },
+  {
+    question: 'What is site.webmanifest and do I actually need it?',
+    answer: 'It is a small JSON file that tells Android and Chrome how your site should behave when a user adds it to their home screen — which icon to use, the app name, the splash-screen colours, and whether it opens in a browser tab or standalone. You need it if you want a proper icon on Android home screens or plan to ship a PWA; you can skip it for a simple static site. The generated ZIP includes a template with the icon paths already wired up — just fill in "name", "short_name" and the two colour values.',
+  },
+  {
+    question: 'Does a favicon affect SEO?',
+    answer: 'Indirectly, and more than most people expect. A favicon is not a ranking factor, but Google displays it next to your result in mobile search — a missing or broken icon leaves a blank space where competitors show a brand mark, which costs click-through rate. Google requires the icon to be a square multiple of 48×48, reachable by Googlebot (not blocked in robots.txt), and stable across crawls. The 192×192 and 512×512 files in the generated package satisfy those requirements.',
+  },
+  {
+    question: 'Should the favicon go in the site root or can I put it anywhere?',
+    answer: 'Anywhere, as long as you declare the path in a link tag. The one exception is favicon.ico: browsers request /favicon.ico from the site root automatically even when no link tag exists, so keeping it there gives you a free fallback. The recommended setup is favicon.ico in the root, the PNG files wherever your build outputs static assets, and explicit link tags in the head pointing at each one.',
+  },
 ]
 
 export const HTML_CODE = `<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">

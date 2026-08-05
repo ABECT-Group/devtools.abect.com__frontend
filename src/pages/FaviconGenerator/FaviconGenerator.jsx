@@ -7,6 +7,7 @@ import Table from '../../components/Table/Table'
 import CodeBox from '../../components/CodeBox/CodeBox'
 import ToolSection from '../../components/ToolSection/ToolSection'
 import ContentSection from '../../components/ContentSection/ContentSection'
+import JsonLd from '../../components/JsonLd/JsonLd'
 import FaviconControls from './components/FaviconControls/FaviconControls'
 import FaviconPreview from './components/FaviconPreview/FaviconPreview'
 import { downloadBlob } from './utils/download'
@@ -91,10 +92,11 @@ export default function FaviconGenerator() {
         <meta name="twitter:title" content={PAGE_TITLE} />
         <meta name="twitter:description" content={PAGE_DESC} />
         <meta name="twitter:image" content={OG_IMAGE} />
-        <script type="application/ld+json">{JSON.stringify(jsonLdApp)}</script>
-        <script type="application/ld+json">{JSON.stringify(jsonLdHowTo)}</script>
-        <script type="application/ld+json">{JSON.stringify(jsonLdFaq)}</script>
       </Helmet>
+
+      <JsonLd data={jsonLdApp} />
+      <JsonLd data={jsonLdHowTo} />
+      <JsonLd data={jsonLdFaq} />
 
       <PageHeader
         title="Free Favicon Generator Online"

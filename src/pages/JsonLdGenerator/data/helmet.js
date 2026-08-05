@@ -11,7 +11,7 @@ const SEO = {
   },
   'article-schema-generator': {
     title: 'Article Schema Markup Generator — Free JSON-LD | Abect',
-    description: 'Generate Article JSON-LD schema markup with author, publisher and dates. Boost visibility in Google News and Discover. Live preview, copy-ready output. Free.',
+    description: 'Generate Article JSON-LD schema markup with author, publisher and dates. Boost visibility in Google News and Discover. Live preview, copy-ready. Free.',
     subtitle: 'Help Google show your author, publication date and image in News and Discover — generate valid Article schema markup instantly.',
     url: buildPageUrl('article-schema-generator'),
   },
@@ -29,7 +29,7 @@ const SEO = {
   },
   'local-business-schema-generator': {
     title: 'Local Business Schema Markup Generator — JSON-LD | Abect',
-    description: 'Generate Local Business JSON-LD schema markup for map cards and business hours in Google Search. Live preview, validation, copy-ready output. Free, no signup.',
+    description: 'Generate LocalBusiness JSON-LD schema for map cards and business hours in Google Search. Live preview, validation, copy-ready output. Free, no signup.',
     subtitle: 'Show map cards, opening hours and phone number in Google Search — generate valid LocalBusiness schema markup in seconds.',
     url: buildPageUrl('local-business-schema-generator'),
   },

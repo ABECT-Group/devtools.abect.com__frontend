@@ -1,7 +1,9 @@
-import JSZip from 'jszip'
 import { triggerDownload } from './download'
 
 export async function buildZip(files) {
+  // JSZip (~95 kB) is only needed when the user clicks "Download all", so it is
+  // imported here instead of being bundled into every page's entry chunk.
+  const { default: JSZip } = await import('jszip')
   const zip = new JSZip()
   const seen = {}
   files.forEach(f => {

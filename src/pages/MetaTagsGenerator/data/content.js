@@ -40,6 +40,14 @@ export const FAQ = [
     answer: 'In Next.js 13+ App Router: export a metadata object or generateMetadata function from your page.js file. Next.js renders the tags server-side automatically — no extra library needed. In older Next.js with Pages Router, use next/head. For Vite + React, use react-helmet-async.',
   },
   {
+    question: 'Why does Google show a different description than the one I wrote?',
+    answer: 'Google treats your meta description as a suggestion, not an instruction. When it judges that a different passage from the page answers the query better, it generates a snippet from the body content instead — this happens on roughly half of all results. You cannot force it, but you can make your description the obvious choice: match the language of the query you are targeting, keep it under about 155 characters so it is not truncated, and make sure the promise it makes is actually fulfilled by the visible content on the page.',
+  },
+  {
+    question: 'Do meta tags need to be different on every page?',
+    answer: 'Yes, and duplicates are one of the most common technical SEO problems. Every indexable page needs its own title, its own description and its own canonical URL. Identical titles across pages make it hard for a search engine to tell which one answers a query, and identical descriptions get discarded and rewritten. If you generate pages from a template, build the meta values from the page data rather than hardcoding a site-wide default.',
+  },
+  {
     question: 'What is the viewport meta tag and do I need it?',
     answer: 'The viewport tag tells mobile browsers to display the page at the device\'s actual width instead of zooming out to fit a desktop layout. It is required for any responsive website. Without it, Google may flag your site as not mobile-friendly, which negatively affects rankings on mobile searches.',
   },

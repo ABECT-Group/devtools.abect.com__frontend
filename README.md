@@ -1,6 +1,6 @@
 # Abect Developer Tools
 
-**Free online image converter, compressor, favicon generator & SEO tools — all in your browser.**
+**Free online image converters, compressors, text/code converters, favicon and SEO generators — all running in your browser.**
 
 [![Live](https://img.shields.io/badge/Live-devtools.abect.com-blue?style=flat-square)](https://devtools.abect.com)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green?style=flat-square)](LICENSE)
@@ -12,20 +12,23 @@
 
 ## What is this?
 
-[devtools.abect.com](https://devtools.abect.com) is an open-source collection of **browser-based developer tools** — no backend, no uploads, no account required. Every tool runs entirely in the browser using native APIs (Canvas API, File API, Blob URL API). Files never leave your device.
+[devtools.abect.com](https://devtools.abect.com) has two clearly separated layers.
 
-**27 tools available today:**
+**Layer 1 — 49 free browser tools.** No backend, no uploads, no account. Everything runs in the browser via native APIs (Canvas, File, Blob URL, TypedArrays). Files never leave the device.
 
-| Category | Tools |
-|----------|-------|
-| **Image Conversion** | PNG→JPG, JPG→PNG, JPG→WebP, PNG→WebP, WebP→JPG, WebP→PNG, GIF→JPG/PNG/WebP, BMP→JPG/PNG/WebP, AVIF→JPG/PNG/WebP, TIFF→JPG/PNG/WebP |
-| **Image Compression** | Compress JPG, Compress PNG, Compress WebP |
-| **Image Tools** | WebP Converter (with quality slider), Favicon Generator (from text, emoji, or image) |
-| **SEO Tools** | Meta Tag Generator (title, description, OG, hreflang, canonical), OG Image Generator (crop to 1200×630, live preview) |
+| Category | Count | Tools |
+|----------|-------|-------|
+| **Images** | 27 | 22 format conversions (PNG/JPG/JPEG/WebP/GIF/BMP/AVIF/TIFF/HEIC pairs), 3 compressors (JPG, PNG, WebP), WebP Converter, Favicon Generator |
+| **Text & Code** | 14 | HTML ↔ Markdown, HTML ↔ JSX, HTML ↔ TSX, JSON ↔ CSV, XML ↔ JSON, YAML ↔ JSON, Base64 encode/decode |
+| **SEO** | 8 | Meta Tag Generator, OG Image Generator, and 6 JSON-LD schema generators (Product, Article, FAQ, Organization, Local Business, Breadcrumb) |
+
+**Layer 2 — Lora, an AI assistant** at `/ai`. Unlike everything above, it runs server-side: it requires a free account and spends tokens from a monthly allowance, calling `devtools-api.abect.com` (a separate repository) which proxies DeepSeek. The free browser tools are unaffected by it and stay account-free.
+
+The distinction matters throughout the codebase and the copy: the home page counts and describes **only** the 49 free tools.
 
 ---
 
-## How it works
+## How the browser tools work
 
 ```
 User drops a file
@@ -39,7 +42,7 @@ Blob URL API creates a download link
 User downloads the result
 ```
 
-**Zero network activity.** Open DevTools → Network tab while using any tool — you will see no file transfers.
+**Zero network activity.** Open DevTools → Network while using any of them — no file transfers. They keep working with the network disconnected.
 
 ---
 
@@ -48,16 +51,16 @@ User downloads the result
 | Layer | Technology |
 |-------|-----------|
 | UI | React 19 |
-| Bundler | Vite 8 |
-| Routing | React Router 7 |
-| SEO / Head | react-helmet-async |
-| Styles | SASS (component-scoped) |
-| Rendering | SSR pre-rendering (static HTML at build time) |
+| Bundler | Vite 8 (rolldown) |
+| Routing | React Router 7 — classic `<Routes>`, not the data router |
+| State | Zustand (auth, conversations, theme) |
+| Head tags | React 19 native metadata hoisting, via `react-helmet-async` |
+| Styles | SCSS, BEM, one file per component, all colours through CSS custom properties |
+| Rendering | SSG — every route prerendered to static HTML at build time |
 | Deployment | Vercel |
-| Analytics | Google Tag Manager → GA4 + Microsoft Clarity (consent-gated) |
-| Zip archives | JSZip |
+| Analytics | GTM → GA4 + Microsoft Clarity (consent-gated), Vercel Web Analytics (cookieless) |
 
-All image processing is done via the **Canvas API** — no third-party image libraries, no WASM, no server.
+Lazy-loaded on demand only: `jszip`, `marked`, `turndown`, `js-yaml`, `react-markdown` + `remark-gfm`, and a WebAssembly build of `libheif` (`heic-to`) that loads only when a HEIC file is detected.
 
 ---
 
@@ -79,21 +82,24 @@ npm run dev
 
 Open [http://localhost:5173](http://localhost:5173).
 
+`VITE_API_URL` in `.env` points at the backend for the AI layer (`http://localhost:3001` in dev). The browser tools work without it.
+
 ### Production build
 
 ```bash
 npm run build
 ```
 
-This runs three steps:
-1. `vite build` — builds the client bundle
-2. `vite build --ssr` — builds the SSR entry
-3. `node scripts/prerender.mjs` — renders all routes to static HTML, generates `sitemap.xml`
+Three steps:
 
-Preview the production build locally:
+1. `vite build` — client bundle
+2. `vite build --ssr src/entry-server.jsx` — SSR entry
+3. `node scripts/prerender.mjs` — renders every route to static HTML and generates `sitemap.xml`, `llms.txt` and `404.html`
 
 ```bash
-npm run preview
+npm run preview   # serve the production build
+npm run lint
+node tests/<name>.test.mjs   # plain Node assertions, no framework
 ```
 
 ---
@@ -102,137 +108,187 @@ npm run preview
 
 ```
 ├── public/
-│   ├── seo/                    # OG images (1200×630 JPG, one per tool category)
-│   ├── llms.txt                # AI crawler index (Anthropic, OpenAI, etc.)
+│   ├── seo/                      # OG images, 1200×630 JPG (one per tool family)
+│   ├── .well-known/
+│   │   └── security.txt          # RFC 9116 — has a mandatory Expires field, renew yearly
 │   ├── robots.txt
 │   └── site.webmanifest
+│                                 # NOTE: llms.txt is NOT here — it is generated at build time
 ├── scripts/
-│   └── prerender.mjs           # SSR prerender + sitemap.xml generation
+│   └── prerender.mjs             # SSG pass: HTML + sitemap.xml + llms.txt + 404.html
 ├── src/
-│   ├── components/
-│   │   ├── FAQ/                # Reusable FAQ accordion (schema-ready)
-│   │   ├── Header/
-│   │   ├── Layout/
-│   │   ├── Lightbox/
-│   │   └── Sidebar/
+│   ├── api/                      # fetch wrappers per domain (auth, user, ai, skills)
+│   ├── store/                    # Zustand stores
 │   ├── config/
-│   │   └── tools.js            # Master list of all tools (name, route, category)
+│   │   ├── tools.js              # SINGLE SOURCE OF TRUTH — drives prerender, sitemap, llms.txt, home index
+│   │   ├── site.js               # BASE_URL, buildPageUrl, buildOgImageUrl
+│   │   ├── schema.js             # site-wide Organization + tool BreadcrumbList builder
+│   │   └── llms.js               # prose for the generated llms.txt
+│   ├── components/               # shared UI kit (see docs/contribution.md)
+│   │   ├── JsonLd/               # declares structured data — see "SEO architecture"
+│   │   ├── ChangelogCard/        # one card, used by both / and /changelog
+│   │   └── …
 │   ├── pages/
-│   │   ├── CompressImage/      # Handles compress-jpg, compress-png, compress-webp
-│   │   │   └── data/
-│   │   │       ├── helmet.js         # SEO constants
-│   │   │       ├── jsonld.js         # JSON-LD builders
-│   │   │       ├── content.js        # Per-slug text: sections, FAQ, howTo
-│   │   │       └── formats.js        # Mime types, quality values
-│   │   ├── FaviconGenerator/
 │   │   ├── Home/
-│   │   ├── ImageConverter/     # Handles all 20 format conversion routes
-│   │   │   └── data/
-│   │   │       ├── helmet.js
-│   │   │       ├── jsonld.js
-│   │   │       ├── content.js        # CONVERSIONS dict — one entry per slug
-│   │   │       └── formats.js
-│   │   ├── MetaTagsGenerator/
-│   │   ├── OGImageGenerator/
-│   │   ├── NotFound/
-│   │   ├── PrivacyPolicy/
-│   │   └── WebPConverter/
-│   ├── App.jsx                 # Route definitions
-│   ├── entry-server.jsx        # SSR entry point
-│   ├── main.jsx                # Client entry point
-│   └── prerender-routes.js     # List of routes to prerender
+│   │   ├── Changelog/
+│   │   │   └── data/entries.jsx  # the changelog itself — one entry per calendar day
+│   │   ├── ImageConverter/       # family page: 22 conversion routes
+│   │   ├── CompressImage/        # family page: 3 compressor routes
+│   │   ├── TextConverter/        # family page: 14 routes
+│   │   ├── JsonLdGenerator/      # family page: 6 schema routes
+│   │   ├── FaviconGenerator/  WebPConverter/  MetaTagsGenerator/  OGImageGenerator/
+│   │   ├── AiPage/               # Lora — chat, SSE streaming, skills
+│   │   ├── About/  Terms/  PrivacyPolicy/  NotFound/
+│   │   └── Login/  Register/  ForgotPassword/  ResetPassword/  Profile/
+│   ├── App.jsx                   # route definitions
+│   ├── entry-server.jsx          # SSR entry — also injects collected JSON-LD into <head>
+│   ├── main.jsx                  # client entry (hydration)
+│   └── prerender-routes.js       # sitemapRoutes (indexable) + noindexRoutes (private)
 ├── docs/
-│   └── SEO.md                  # Full SEO audit + action plan (score: 77/100)
+│   ├── contribution.md           # how to add a tool — read this before contributing
+│   └── technical_specification.md
+├── tests/                        # plain Node assertion tests for the text converters
 ├── vercel.json
-└── index.html                  # HTML shell (charset first, then GTM)
+└── index.html                    # HTML shell
 ```
 
 ---
 
-## SEO Architecture
+## SEO architecture
 
-Every page is pre-rendered to static HTML at build time — Google crawls fully-populated pages without executing JavaScript.
+Every route is prerendered to static HTML at build time, so a crawler receives a fully populated page without executing JavaScript. There is no server rendering at request time.
 
-Each page includes:
-- Unique `<title>` and `<meta name="description">`
-- `<link rel="canonical">`
-- Full Open Graph and Twitter Card tags
-- Per-page OG image (1200×630 JPG)
-- `WebApplication` + `FAQPage` JSON-LD structured data on tool pages
-- `WebSite` + `FAQPage` JSON-LD on the homepage
+### What every indexable page carries
 
-The sitemap is generated automatically during build. `lastmod` dates are **hardcoded per page** in `src/config/tools.js` — not derived from file modification time — so Vercel rebuilds don't reset all dates to the same value.
+- Unique `<title>` (≤ 65 chars) and `<meta name="description">` (≤ 155 chars)
+- `<link rel="canonical">` — exact URL, no trailing slash
+- Full Open Graph + Twitter Card tags
+- `WebApplication` + `HowTo` + `FAQPage` JSON-LD on tool pages
+- `BreadcrumbList` and the site-wide `Organization` entity, injected once from `Layout` for every route in `tools.js`
+- ~5 000+ characters of visible text and at least 10 FAQ items
 
-Full SEO audit: [`docs/SEO.md`](docs/SEO.md) — current score **77/100**.
+### Structured data — use the `JsonLd` component
+
+React 19 hoists `<title>`, `<meta>` and `<link>` into `<head>` automatically, but **not** inline `<script>` tags. Rendering JSON-LD directly in a component leaves it in `<body>`.
+
+So pages declare schemas with `<JsonLd data={…} />`, placed right after `</Helmet>`. The component renders `null` on both server and client; the prerender pass collects everything declared during SSR and serialises it into `<head>`, escaping every `<` as a `<` unicode sequence so schema text can never break out of the script tag.
+
+```jsx
+<Helmet>{/* title, description, canonical, OG, Twitter */}</Helmet>
+
+<JsonLd data={jsonLdApp} />
+<JsonLd data={jsonLdHowTo} />
+<JsonLd data={jsonLdFaq} />
+```
+
+A `FAQPage` schema must always match the `<FAQ>` items actually rendered — build both from the same array.
+
+### Indexable vs private routes
+
+`src/prerender-routes.js` exports two lists:
+
+- **`sitemapRoutes`** — prerendered *and* listed in `sitemap.xml`
+- **`noindexRoutes`** — prerendered but kept out of the sitemap: `/login`, `/register`, `/forgot-password`, `/reset-password`, `/profile/*`
+
+Private pages are still prerendered on purpose: they must answer **HTTP 200**, not fall through to `404.html`. A password-reset link landing on a 404 status is both a UX and an indexing problem. Every route in `noindexRoutes` must render `<meta name="robots" content="noindex">`; for anything behind `ProtectedRoute` that directive is declared in the guard itself, because during prerender `loading` is still true and no child page renders.
+
+`robots.txt` intentionally contains **no `Disallow` rules** — a crawler has to be able to fetch a page to read its `noindex`.
+
+### Generated at build time
+
+| File | Source |
+|------|--------|
+| `sitemap.xml` | `sitemapRoutes` — `lastmod` hardcoded per page, never derived from the build date |
+| `llms.txt` | `tools.js` + prose in `src/config/llms.js`. **Never hand-edit it** — adding a tool to the registry updates it automatically, and a new category without a matching section fails the build loudly |
+| `404.html` | rendered from the `/404` route; Vercel serves it with a real 404 status |
+
+---
+
+## Gotchas worth knowing before you touch the build
+
+**1. `renderToString` cannot render `React.lazy`.** The SSG pass uses `renderToString`, which does not support Suspense — a lazy component emits its *fallback* into the static HTML instead of the content. Route-level code splitting would therefore replace the indexable content of all 50+ pages with a loading placeholder. Heavy dependencies are dynamically imported at their call sites instead (`await import('jszip')` inside the ZIP builder, and so on). `React.lazy` is only safe for UI that never renders during prerender — the chat's Markdown renderer is one such case, because the prerendered `/ai` page has zero messages.
+
+**2. Never use a string replacement when injecting rendered markup.** In `String.prototype.replace`, a *string* replacement treats `$$`, `$&`, `` $` `` and `$'` as substitution patterns. Page copy containing a price range (`"$", "$$", "$$$"`), a regex or a shell snippet silently corrupts the output — `$&` literally injects the matched text back into the page. `scripts/prerender.mjs` uses replacer **functions** for exactly this reason. Do not "simplify" them back.
+
+**3. `vercel.json` must not use the legacy `routes` property.** Mixing it with `cleanUrls` / `headers` / `rewrites` makes Vercel silently ignore the modern ones — which is how the security headers went missing in production for months. The current config uses `cleanUrls`, `trailingSlash`, `rewrites` and `headers` only.
 
 ---
 
 ## Contributing
 
-This project is **open for contributions**. If you want to add a new tool, fix a bug, or improve content — pull requests are welcome.
+Pull requests are welcome. Full instructions live in [`docs/contribution.md`](docs/contribution.md) — read it before starting. Short version:
 
-### Adding a new tool
-
-Each tool is a self-contained page. Full instructions are in [`docs/contribution.md`](docs/contribution.md). Short version:
-
-**1. Create the page directory**
+### 1. Create the page directory
 
 ```
 src/pages/YourTool/
 ├── data/
 │   ├── helmet.js    # SLUG, PAGE_URL, OG_IMAGE, PAGE_TITLE, PAGE_DESC
 │   ├── jsonld.js    # JSON-LD objects — never build these inside the component
-│   └── content.js  # All user-visible text: howTo steps, sections, FAQ, related slugs
+│   └── content.js   # all user-visible text: howTo steps, sections, FAQ, related slugs
 ├── YourTool.jsx
 └── YourTool.scss
 ```
 
-**2. Register in four places**
+### 2. Register it
 
 | File | What to add |
 |------|-------------|
-| `src/config/tools.js` | `{ category, name, description, route, lastmod }` — auto-adds to prerender + sitemap |
+| `src/config/tools.js` | `{ category, name, description, route, lastmod }` — this alone adds the page to the prerender pass, `sitemap.xml`, `llms.txt` and the home-page index |
 | `src/App.jsx` | `<Route path="your-tool" element={<YourTool />} />` |
-| `src/components/Sidebar/Sidebar.jsx` | Item in `NAV_SECTIONS` with `ready: true` |
-| `src/pages/Home/Home.jsx` | Add to `POPULAR_ROUTES` if priority; add to `CHANGELOG` for big launches |
+| `src/components/Sidebar/Sidebar.jsx` | entry in `NAV_SECTIONS` with `ready: true` |
+| `src/pages/Home/Home.jsx` | add to `POPULAR_ROUTES` if it is a priority page |
+| `src/pages/Changelog/data/entries.jsx` | changelog entry for a new tool or a significant update |
 
-**3. Content requirements**
+### 3. Changelog rules
+
+One file feeds two pages: the home page shows the three newest entries as `summary` text with a "Show more →" link, `/changelog` shows every entry in full.
+
+- **One entry per calendar day** — the anchor is derived from the date (`2026-08-05` → `#05-08-2026`), so two entries on one date would collide. Shipped several things at once? Merge them into one entry with a paragraph per topic.
+- `summary` — plain text, **max 300 characters**, no JSX, no links.
+- `body` — JSX; links use `className={L}` (the shared `ChangelogCard__link`).
+- Newest first. Never rewrite a published entry's facts — correct it in a new one.
+
+### 4. Content requirements
 
 - `<title>` 50–60 chars, keyword first, ends with `| Abect`
 - `<meta name="description">` 120–155 chars with a CTA
 - `<link rel="canonical">` — exact URL, no trailing slash
-- Full OG + Twitter Card tags + `WebApplication` + `FAQPage` JSON-LD
-- At least **10 FAQ items**
-- At least **~5 000 characters** of visible text across `<ContentSection>` blocks (use tables, lists, code examples — not padding)
-- OG image: `public/seo/your-tool-og.jpg` — 1200×630 px JPEG
+- Full OG + Twitter tags, and `WebApplication` + `FAQPage` JSON-LD **via `<JsonLd>`**
+- At least **10 FAQ items**, matching the `FAQPage` schema exactly
+- At least **~5 000 characters** of visible text across `<ContentSection>` blocks — tables, lists and code examples, not padding
+- OG image at `public/seo/your-tool-og.jpg`, 1200×630 JPEG (families may share one)
 
 ### Code style
 
-- No comments unless the **why** is non-obvious
+- Comment the **why**, not the what
 - Plain JSX — no TypeScript
-- SASS scoped per component (`ComponentName.scss`)
-- All processing logic in `utils/` as pure functions
-- No backend calls, no external APIs, no file uploads — everything must run in the browser
+- SCSS scoped per component, BEM naming, colours only through CSS custom properties
+- Processing logic lives in `utils/` as pure functions
+- Browser tools make no backend calls and never upload anything
 
 ### Pull request checklist
 
 - [ ] Tool runs 100% in the browser (no uploads, no server calls)
 - [ ] `data/helmet.js`, `data/jsonld.js`, `data/content.js` created
-- [ ] Page has a complete `<Helmet>` block (title, description, canonical, OG, JSON-LD)
-- [ ] OG image added to `public/seo/` — `your-tool-og.jpg`, 1200×630 px
-- [ ] Tool registered in `src/config/tools.js` with hardcoded `lastmod`
-- [ ] Route added in `src/App.jsx`
-- [ ] Tool added to `Sidebar.jsx` nav
-- [ ] Changelog entry added in `Home.jsx` (new tools only)
-- [ ] Visible text content is ~5 000+ characters
-- [ ] FAQ has at least 10 items
+- [ ] Schemas rendered with `<JsonLd>` — no raw `<script type="application/ld+json">` in the component
+- [ ] Complete `<Helmet>` block (title, description, canonical, OG, Twitter)
+- [ ] OG image in `public/seo/`, 1200×630
+- [ ] Registered in `src/config/tools.js` with a hardcoded `lastmod`
+- [ ] Route added in `src/App.jsx`, entry added to `Sidebar.jsx`
+- [ ] Changelog entry in `src/pages/Changelog/data/entries.jsx` (new tools and big updates only, one per day)
+- [ ] Visible text ≥ 5 000 characters, FAQ ≥ 10 items
+- [ ] `npm run lint` clean of new errors, text-converter tests pass
 - [ ] `npm run build` completes without errors
 
 ---
 
 ## License
 
-MIT
+[MIT](LICENSE) — © 2026 Roman Popovych.
+
+The licence covers the source code. The Abect name, branding and site copy are not
+covered by it, as stated in the [Terms of Service](https://devtools.abect.com/terms).
 
 ---
 

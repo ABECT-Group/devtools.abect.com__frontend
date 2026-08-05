@@ -1,4 +1,3 @@
-import JSZip from 'jszip'
 import { renderFaviconPngBlob } from './drawFaviconToCanvas'
 
 const PNG_ASSET_SPECS = [
@@ -111,6 +110,10 @@ export async function generateFaviconAssets(options) {
   )
 
   const icoBlob = createIcoBlob(icoBuffers)
+
+  // JSZip (~95 kB) is only needed once the user asks for the package, so it is
+  // imported here instead of being bundled into every page's entry chunk.
+  const { default: JSZip } = await import('jszip')
   const zip = new JSZip()
 
   pngAssets.forEach(asset => zip.file(asset.name, asset.blob))

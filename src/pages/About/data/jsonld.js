@@ -1,4 +1,5 @@
 import { PAGE_URL } from './helmet'
+import { FAQ } from './content'
 
 export const jsonLdPerson = {
   '@context': 'https://schema.org',
@@ -41,6 +42,17 @@ export const jsonLdWebSite = {
       'https://github.com/forze-dev',
     ],
   },
+}
+
+// Must stay in sync with the <FAQ> block rendered on the page — same source array.
+export const jsonLdFaq = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  'mainEntity': FAQ.map(item => ({
+    '@type': 'Question',
+    'name': item.question,
+    'acceptedAnswer': { '@type': 'Answer', 'text': item.answer },
+  })),
 }
 
 export const jsonLdBreadcrumb = {

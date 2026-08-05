@@ -1,5 +1,16 @@
 User-agent: *
 Allow: /
-Disallow: /ai?
+
+# No Disallow rules on purpose.
+#
+# The private pages (/login, /register, /forgot-password, /reset-password,
+# /profile/*, /ai/<conversationId>) are excluded from the index with a robots
+# directive instead: a noindex <meta> in their prerendered HTML, plus an
+# X-Robots-Tag header on /ai/<conversationId> (see vercel.json). A crawler has
+# to be able to FETCH a page to read that directive, so blocking these paths
+# here would keep them out of the crawl but leave the URLs indexable.
+#
+# /ai is a public, indexable page and is listed in the sitemap.
+# /ai?skillSlug=... is a parameter variant that canonicalises to /ai.
 
 Sitemap: https://devtools.abect.com/sitemap.xml

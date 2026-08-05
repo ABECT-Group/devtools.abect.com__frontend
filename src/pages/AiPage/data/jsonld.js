@@ -33,16 +33,7 @@ export function buildJsonLdApp() {
   }
 }
 
-export function buildJsonLdBreadcrumb() {
-  return {
-    '@context': 'https://schema.org',
-    '@type':    'BreadcrumbList',
-    itemListElement: [
-      { '@type': 'ListItem', position: 1, name: 'Home',         item: 'https://devtools.abect.com' },
-      { '@type': 'ListItem', position: 2, name: 'Lora', item: URL },
-    ],
-  }
-}
+// BreadcrumbList is generated site-wide in Layout from tools.js — see config/schema.js
 
 export function buildJsonLdFaq(faq) {
   return {

@@ -1,4 +1,3 @@
-import { Helmet } from 'react-helmet-async'
 import { NavLink, Outlet, useNavigate } from 'react-router-dom'
 import useAuthStore from '../../store/authStore.js'
 import './Profile.scss'
@@ -15,10 +14,7 @@ export default function Profile() {
 
   return (
     <>
-      <Helmet>
-        <title>Profile — Abect Dev Tools</title>
-        <meta name="robots" content="noindex" />
-      </Helmet>
+      {/* title + noindex are declared once in ProtectedRoute — see the note there */}
       <div className="Profile">
         <aside className="Profile__sidebar">
           {user && (

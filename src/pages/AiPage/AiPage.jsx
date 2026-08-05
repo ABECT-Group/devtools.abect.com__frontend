@@ -10,7 +10,8 @@ import { skillsApi } from '../../api/skills.js'
 import useAuthStore from '../../store/authStore.js'
 import { buildHelmet, OG_IMAGE } from './data/helmet'
 import { buildContent } from './data/content'
-import { buildJsonLdApp, buildJsonLdBreadcrumb, buildJsonLdFaq } from './data/jsonld'
+import { buildJsonLdApp, buildJsonLdFaq } from './data/jsonld'
+import JsonLd from '../../components/JsonLd/JsonLd'
 import './AiPage.scss'
 
 function renderText(text) {
@@ -26,9 +27,8 @@ function renderText(text) {
 const { title, description, url, subtitle } = buildHelmet()
 const HERO_TITLE = 'Lora, your AI assistant'
 const { howToSteps, sections, faq, relatedTools } = buildContent()
-const jsonLdApp        = buildJsonLdApp()
-const jsonLdBreadcrumb = buildJsonLdBreadcrumb()
-const jsonLdFaq        = buildJsonLdFaq(faq)
+const jsonLdApp = buildJsonLdApp()
+const jsonLdFaq = buildJsonLdFaq(faq)
 
 export default function AiPage() {
   const { '*': conversationPath } = useParams()
@@ -127,10 +127,15 @@ export default function AiPage() {
         <meta name="twitter:description" content={description} />
         <meta name="twitter:image" content={OG_IMAGE} />
         {urlConversationId && <meta name="robots" content="noindex, nofollow" />}
-        <script type="application/ld+json">{JSON.stringify(jsonLdApp)}</script>
-        <script type="application/ld+json">{JSON.stringify(jsonLdBreadcrumb)}</script>
-        <script type="application/ld+json">{JSON.stringify(jsonLdFaq)}</script>
       </Helmet>
+
+      {/* Private conversation URLs stay out of the index — no structured data there */}
+      {!urlConversationId && (
+        <>
+          <JsonLd data={jsonLdApp} />
+          <JsonLd data={jsonLdFaq} />
+        </>
+      )}
 
       <AiChat
         ref={chatRef}

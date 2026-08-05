@@ -254,74 +254,60 @@
     margin-bottom: 16px;
   }
 
-  &__changelog-card {
-    background: var(--bg-sidebar);
-    border: 1px solid var(--border-base);
-    border-radius: var(--radius-lg);
-    padding: 16px 20px;
-  }
-
-  &__changelog-title {
-    font-size: 0.9375rem;
-    font-weight: 600;
-    color: var(--text-primary);
-    line-height: 1.55;
-    margin: 0 0 8px;
-  }
-
-  &__changelog-link {
-    color: var(--accent);
-    text-decoration: underline;
-
-    &:visited {
-      color: var(--accent);
-    }
-
-    &:hover {
-      color: var(--accent-hover);
-    }
-  }
-
-  &__changelog-body {
-    font-size: 0.875rem;
-    color: var(--text-muted);
-    line-height: 1.65;
-    margin-bottom: 12px;
-  }
-
-  &__changelog-meta {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-  }
-
-  &__changelog-author {
-    font-size: 0.8125rem;
-    font-weight: 600;
-    color: var(--accent);
-    text-decoration: none;
-
-    &:hover {
-      text-decoration: underline;
-    }
-  }
-
-  &__changelog-date {
-    font-size: 0.8125rem;
-    color: var(--text-faint);
-  }
+  // Card styling lives in components/ChangelogCard — shared with /changelog
 
   &__changelog-more {
+    display: inline-block;
     background: none;
     border: 1px solid var(--border-base);
     border-radius: var(--radius-md);
     color: var(--text-secondary);
     font-size: 0.875rem;
+    text-decoration: none;
     padding: 8px 16px;
     cursor: pointer;
     transition: border-color 0.2s, color 0.2s;
 
     &:hover {
+      border-color: var(--accent);
+      color: var(--text-primary);
+    }
+  }
+
+  // ── Tool index by category ───────────────────────────────────
+
+  &__category {
+    margin-bottom: 40px;
+  }
+
+  &__category-desc {
+    font-size: 0.875rem;
+    line-height: 1.7;
+    color: var(--text-secondary);
+    margin-bottom: 14px;
+    max-width: 760px;
+  }
+
+  &__chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  &__chip {
+    display: inline-block;
+    background: var(--bg-sidebar);
+    border: 1px solid var(--border-base);
+    border-radius: var(--radius-md);
+    color: var(--text-secondary);
+    font-size: 0.8125rem;
+    line-height: 1.2;
+    padding: 7px 12px;
+    text-decoration: none;
+    transition: border-color 0.15s, color 0.15s, background 0.15s;
+
+    &:hover {
+      background: var(--bg-hover);
       border-color: var(--accent);
       color: var(--text-primary);
     }

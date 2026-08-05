@@ -18,6 +18,7 @@ import { buildContent } from './data/content'
 import { buildSchema } from './utils/buildSchema'
 import { validateSchema } from './utils/validateSchema'
 import { formatScriptTag } from './utils/formatOutput'
+import JsonLd from '../../components/JsonLd/JsonLd'
 import './JsonLdGenerator.scss'
 
 function renderText(text) {
@@ -77,10 +78,11 @@ export default function JsonLdGenerator() {
         <meta name="twitter:title" content={title} />
         <meta name="twitter:description" content={description} />
         <meta name="twitter:image" content={OG_IMAGE} />
-        <script type="application/ld+json">{JSON.stringify(jsonLdApp)}</script>
-        <script type="application/ld+json">{JSON.stringify(jsonLdHowTo)}</script>
-        <script type="application/ld+json">{JSON.stringify(jsonLdFaq)}</script>
       </Helmet>
+
+      <JsonLd data={jsonLdApp} />
+      <JsonLd data={jsonLdHowTo} />
+      <JsonLd data={jsonLdFaq} />
 
       <PageHeader
         title={title.split(' —')[0]}

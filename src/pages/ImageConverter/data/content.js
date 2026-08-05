@@ -146,7 +146,7 @@ function convertPNGtoJPG(file, quality = 0.92) {
   'webp-to-jpg': {
     from: 'webp', to: 'jpg',
     title: 'WebP Won\'t Open? Convert to JPG Free — No Upload | Abect',
-    description: 'WebP files won\'t open in Photoshop, Lightroom, Outlook, or print shops. Convert to JPG instantly — universal compatibility, processed in your browser. Try now.',
+    description: 'WebP won\'t open in Photoshop, Lightroom, Outlook or print shops. Convert to JPG instantly — universal compatibility, processed in your browser. Try now.',
     h1: 'WebP to JPG Converter — Opens Everywhere, No Upload',
     sub: 'Fix WebP compatibility in seconds — convert to JPG that opens in every app, email client, print shop, and CMS.',
     howTo: [
@@ -236,7 +236,7 @@ function convertPNGtoJPG(file, quality = 0.92) {
   'gif-to-jpg': {
     from: 'gif', to: 'jpg',
     title: 'GIF to JPG Converter — Full Color, No Upload, No Ads | Abect',
-    description: 'Convert GIF to JPG free — full color, no banding. First frame of animated GIFs exported as static JPG. Browser-based, no upload, no ads. Batch ready. Try now.',
+    description: 'Convert GIF to JPG free — full color, no banding. First frame of animated GIFs exported as static JPG. Browser-based, no upload, no ads. Try now.',
     h1: 'Free GIF to JPG Converter Online — Full Color, No 256-Color Limit',
     sub: 'Extract a full-color static JPG from any GIF — no 256-color limit, no upload, no signup.',
     howTo: [
@@ -363,7 +363,7 @@ function convertGIFtoJPG(file, quality = 0.92) {
   'bmp-to-jpg': {
     from: 'bmp', to: 'jpg',
     title: '20 MB BMP to Under 500 KB JPG — Free Converter | Abect',
-    description: 'BMP stores every pixel raw — a 1920×1080 screenshot is 6 MB, a photo can hit 50 MB. Convert to JPG and shrink it by 95% with no visible quality loss. Try now.',
+    description: 'BMP stores every pixel raw — a 1920×1080 screenshot is 6 MB, a photo up to 50 MB. Convert to JPG and shrink it 95% with no visible quality loss. Try now.',
     h1: 'BMP to JPG Converter — From 20 MB to Under 500 KB',
     sub: 'Shrink massive BMP files to shareable JPG — 90–98% size reduction, no upload, runs entirely in your browser.',
     howTo: [
@@ -452,7 +452,7 @@ function convertGIFtoJPG(file, quality = 0.92) {
   'avif-to-jpg': {
     from: 'avif', to: 'jpg',
     title: 'AVIF to JPG — Open in Any App, No Software Update | Abect',
-    description: 'AVIF won\'t open in older Photoshop, Lightroom, or email clients. Convert to JPG instantly — 100% browser-based, no upload, universal compatibility. Try now.',
+    description: 'AVIF won\'t open in older Photoshop, Lightroom or email clients. Convert to JPG — 100% browser-based, no upload, universal compatibility. Try now.',
     h1: 'AVIF to JPG Converter — Universal App Compatibility',
     sub: 'Convert AVIF to JPG when your photo editor, email client, or upload form won\'t accept it. No upload needed.',
     howTo: [
@@ -721,7 +721,7 @@ function convertGIFtoJPG(file, quality = 0.92) {
   'jpeg-to-png': {
     from: 'jpeg', to: 'png',
     title: 'JPEG Files from Camera? Convert to PNG for Editing | Abect',
-    description: 'JPEG files from your camera or iPhone lose quality each re-save. Convert to PNG for a lossless editing base — no upload, processed in your browser. Try now.',
+    description: 'JPEG files from your camera or iPhone lose quality each re-save. Convert to PNG for a lossless editing base — no upload, all in your browser. Try now.',
     h1: 'JPEG to PNG Converter — Lossless Base for Camera Photo Editing',
     sub: 'Turn camera JPEG files into lossless PNG — protect quality through every editing round, no upload, runs in your browser.',
     howTo: [
@@ -1116,7 +1116,7 @@ function convertWebPtoPNG(file) {
   'avif-to-png': {
     from: 'avif', to: 'png',
     title: 'AVIF to PNG — Keep Transparency, Edit in Any Tool | Abect',
-    description: 'AVIF with a transparent background? Only PNG preserves alpha for lossless editing in Photoshop, Figma, Sketch, or Canva. No upload, no quality loss. Try now.',
+    description: 'AVIF with transparency? Only PNG preserves alpha for lossless editing in Photoshop, Figma, Sketch or Canva. No upload, no quality loss. Try now.',
     h1: 'AVIF to PNG Converter — Lossless and Transparency-Aware',
     sub: 'Convert AVIF to editable, lossless PNG — preserves transparency, compatible with Photoshop, Figma, and every design tool. No upload.',
     howTo: [
@@ -1205,7 +1205,7 @@ function convertWebPtoPNG(file) {
   'tiff-to-png': {
     from: 'tiff', to: 'png',
     title: 'TIFF to PNG — Open Pro Photos in Any Design Tool | Abect',
-    description: 'TIFF won\'t open in Canva, Google Slides, or most web tools. Convert to lossless PNG — no quality loss, no upload, compatible with every design app. Try now.',
+    description: 'TIFF won\'t open in Canva, Google Slides or most web tools. Convert to lossless PNG — no quality loss, no upload, works in every design app. Try now.',
     h1: 'TIFF to PNG Converter — Lossless, Compatible Everywhere',
     sub: 'Convert TIFF to PNG for universal compatibility — zero quality loss, works in Canva, Figma, Keynote, and every browser.',
     howTo: [
@@ -1296,7 +1296,7 @@ function convertWebPtoPNG(file) {
   'png-to-webp': {
     from: 'png', to: 'webp',
     title: 'PNG to WebP — Keep Transparency, Cut File Size Free | Abect',
-    description: 'PNG logos and UI assets keep full transparency when converted to WebP — with files 26–80% smaller. No upload, no signup, runs entirely in your browser. Try now.',
+    description: 'PNG logos and UI assets keep full transparency in WebP — with files 26–80% smaller. No upload, no signup, runs entirely in your browser. Try now.',
     h1: 'PNG to WebP Converter — Full Transparency, 26–80% Smaller',
     sub: 'Convert PNG logos and UI assets to WebP — full transparency preserved, 26–80% smaller files, processed entirely in your browser.',
     howTo: [
@@ -1385,7 +1385,7 @@ function convertWebPtoPNG(file) {
   'jpg-to-webp': {
     from: 'jpg', to: 'webp',
     title: 'Free JPG to WebP Converter — No Upload, No Ads | Abect',
-    description: 'Convert JPG to WebP free — no upload, no ads. Files are 25–34% smaller than JPG at equivalent quality. Boosts Google PageSpeed score. Batch supported. Try now.',
+    description: 'Convert JPG to WebP free — no upload, no ads. Files are 25–34% smaller than JPG at equivalent quality. Boosts your Google PageSpeed score. Try now.',
     h1: 'Free JPG to WebP Converter Online — 25–34% Smaller Files',
     sub: 'Speed up your website with WebP — 25–34% smaller than JPG, same visual quality. Batch, no upload.',
     howTo: [
@@ -1597,7 +1597,7 @@ function convertJPGtoWebP(file, quality = 0.82) {
   'gif-to-webp': {
     from: 'gif', to: 'webp',
     title: 'Fix GIF Color Banding — Convert to WebP Free | Abect',
-    description: 'GIF\'s 256-color limit causes visible banding on photos and gradients. Convert to WebP — 16M colors, 50–80% smaller, processed entirely in your browser. Try now.',
+    description: 'GIF\'s 256-color limit causes visible banding on photos and gradients. Convert to WebP — 16M colors, 50–80% smaller, all in your browser. Try now.',
     h1: 'GIF to WebP Converter — Full Color, 50–80% Smaller',
     sub: 'Convert GIF to WebP and escape 256-color banding — 50–80% smaller files, full alpha transparency, processed entirely in your browser.',
     howTo: [

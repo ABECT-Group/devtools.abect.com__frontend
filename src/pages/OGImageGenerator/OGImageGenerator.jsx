@@ -18,6 +18,7 @@ import { loadImage, cropToBlob } from './utils/cropToBlob'
 import { downloadBlob } from './utils/download'
 import { PAGE_TITLE, PAGE_DESC, PAGE_URL, OG_IMAGE } from './data/helmet'
 import { jsonLdApp, jsonLdHowTo, jsonLdFaq } from './data/jsonld'
+import JsonLd from '../../components/JsonLd/JsonLd'
 import { HOW_TO_STEPS, FAQ as FAQ_ITEMS, RELATED_TOOLS, HTML_CODE, REACT_CODE, NEXTJS_CODE, NUXT_CODE, OG_SIZE_TABLE } from './data/content'
 import './OGImageGenerator.scss'
 
@@ -236,10 +237,11 @@ export default function OGImageGenerator() {
         <meta name="twitter:title" content={PAGE_TITLE} />
         <meta name="twitter:description" content={PAGE_DESC} />
         <meta name="twitter:image" content={OG_IMAGE} />
-        <script type="application/ld+json">{JSON.stringify(jsonLdApp)}</script>
-        <script type="application/ld+json">{JSON.stringify(jsonLdHowTo)}</script>
-        <script type="application/ld+json">{JSON.stringify(jsonLdFaq)}</script>
       </Helmet>
+
+      <JsonLd data={jsonLdApp} />
+      <JsonLd data={jsonLdHowTo} />
+      <JsonLd data={jsonLdFaq} />
 
       <PageHeader
         title="Free OG Image Generator"

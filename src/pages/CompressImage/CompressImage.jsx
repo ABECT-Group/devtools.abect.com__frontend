@@ -8,6 +8,8 @@ import Lightbox from '../../components/Lightbox/Lightbox'
 import DropZone from '../../components/DropZone/DropZone'
 import ToolSection from '../../components/ToolSection/ToolSection'
 import ContentSection from '../../components/ContentSection/ContentSection'
+import CodeBox from '../../components/CodeBox/CodeBox'
+import Table from '../../components/Table/Table'
 import CompressFileTable from './components/CompressFileTable/CompressFileTable'
 import CompressFormatSelector from './components/CompressFormatSelector/CompressFormatSelector'
 import { COMPRESSIONS, COMPRESS_CARD_DESC, CONVERT_CARD_DESC } from './data/content'
@@ -19,8 +21,17 @@ import { FORMAT_LABELS } from '../ImageConverter/data/formats'
 import { buildZip } from './utils/buildZip'
 import { compressImage } from './utils/compressImage'
 import { triggerDownload } from './utils/download'
+import JsonLd from '../../components/JsonLd/JsonLd'
 import './CompressImage.scss'
 
+function renderText(text) {
+  const parts = text.split(/(\*\*[^*]+\*\*)/)
+  return parts.map((part, i) =>
+    part.startsWith('**') && part.endsWith('**')
+      ? <strong key={i}>{part.slice(2, -2)}</strong>
+      : part
+  )
+}
 
 export default function CompressImage() {
   const { pathname } = useLocation()
@@ -181,9 +192,10 @@ export default function CompressImage() {
         <meta name="twitter:title" content={config.title} />
         <meta name="twitter:description" content={config.description} />
         <meta name="twitter:image" content={OG_IMAGE} />
-        <script type="application/ld+json">{JSON.stringify(jsonLdApp)}</script>
-        <script type="application/ld+json">{JSON.stringify(jsonLdFaq)}</script>
       </Helmet>
+
+      <JsonLd data={jsonLdApp} />
+      <JsonLd data={jsonLdFaq} />
 
       <PageHeader title={config.h1} subtitle={config.sub} />
 
@@ -213,24 +225,38 @@ export default function CompressImage() {
         </ol>
       </ContentSection>
 
-      <ContentSection title={config.whatIs.heading}>
-        {config.whatIs.blocks.map((block, i) => {
-          if (block.type === 'p') {
-            return <p key={i} className="ContentSection__text">{block.text}</p>
-          }
-          if (block.type === 'h3') {
-            return <h3 key={i} className="ContentSection__subsection-title">{block.text}</h3>
-          }
-          if (block.type === 'ul') {
-            return (
-              <ul key={i} className="ContentSection__list">
-                {block.items.map((item, j) => <li key={j}>{item}</li>)}
-              </ul>
-            )
-          }
-          return null
-        })}
-      </ContentSection>
+      {(config.sections ?? [config.whatIs]).map((section, si) => (
+        <ContentSection key={si} title={section.heading}>
+          {section.blocks.map((block, i) => {
+            if (block.type === 'p') {
+              return <p key={i} className="ContentSection__text">{renderText(block.text)}</p>
+            }
+            if (block.type === 'h3') {
+              return <h3 key={i} className="ContentSection__subsection-title">{block.text}</h3>
+            }
+            if (block.type === 'ul') {
+              return (
+                <ul key={i} className="ContentSection__list">
+                  {block.items.map((item, j) => <li key={j}>{renderText(item)}</li>)}
+                </ul>
+              )
+            }
+            if (block.type === 'table') {
+              return (
+                <Table key={i} columns={block.headers}>
+                  {block.rows.map((row, j) => (
+                    <tr key={j}>{row.map((cell, k) => <td key={k}>{cell}</td>)}</tr>
+                  ))}
+                </Table>
+              )
+            }
+            if (block.type === 'code') {
+              return <CodeBox key={i} label={block.label} code={block.code} />
+            }
+            return null
+          })}
+        </ContentSection>
+      ))}
 
       <FAQ items={config.faq} />
 
