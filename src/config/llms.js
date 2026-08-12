@@ -16,16 +16,23 @@ export const LLMS_SUMMARY =
  * `category` field in src/config/tools.js — a tool with an unlisted category
  * would be dropped, so the build fails loudly instead if that ever happens.
  */
+// Same order as the sidebar and the home page index. Keep the three in sync —
+// an assistant reading llms.txt should see the hierarchy a human sees.
 export const LLMS_SECTIONS = [
-  {
-    category: 'Images',
-    heading: 'Images',
-    note: 'Format conversion, compression and favicon generation via the Canvas API. Batch processing and ZIP download. Files never leave the device.',
-  },
   {
     category: 'Text & Code',
     heading: 'Text & code',
     note: 'Markup, data-format and encoding converters. Pure client-side parsing — nothing is transmitted.',
+  },
+  {
+    category: 'Utilities',
+    heading: 'Utilities',
+    note: 'Generators that build something from scratch rather than converting a file. QR codes are static — the payload is encoded directly into the pattern, so there is no redirect service and no expiry.',
+  },
+  {
+    category: 'Images',
+    heading: 'Images',
+    note: 'Format conversion, compression and favicon generation via the Canvas API. Batch processing and ZIP download. Files never leave the device.',
   },
   {
     category: 'SEO',

@@ -107,7 +107,20 @@ const HOME_FAQ = [
 
 // Browsable index of every free tool, grouped by the `category` field in
 // tools.js. Adding a tool to the registry puts it here automatically.
+// Order matches the sidebar: Text & Code carries almost all organic traffic,
+// Utilities is the current bet, Images and SEO follow. Keep the three orderings
+// (here, Sidebar NAV_SECTIONS, llms.js LLMS_SECTIONS) in sync.
 const CATEGORIES = [
+  {
+    category: 'Text & Code',
+    heading: 'Text & Code',
+    desc: 'Convert between text and code formats — HTML to Markdown, HTML to JSX and TSX, JSON to CSV, XML to JSON, YAML to JSON, and Base64 encode/decode. All conversion runs entirely in the browser — no server calls, no uploads.',
+  },
+  {
+    category: 'Utilities',
+    heading: 'Utilities',
+    desc: 'Generate QR codes for links, plain text, WiFi networks and contact cards — with your own colors, a center logo and export as PNG or print-ready SVG. Every code is static, so it never expires and depends on no third-party redirect service.',
+  },
   {
     category: 'Images',
     heading: 'Image tools',
@@ -117,11 +130,6 @@ const CATEGORIES = [
     category: 'SEO',
     heading: 'SEO & Schema',
     desc: 'Generate complete SEO meta tags — title, description, canonical URL, robots directives, Open Graph, Twitter Card and hreflang — plus JSON-LD schema markup for Product, Article, FAQ, Organization, Local Business and Breadcrumb. Live preview of every result.',
-  },
-  {
-    category: 'Text & Code',
-    heading: 'Text & Code',
-    desc: 'Convert between text and code formats — HTML to Markdown, HTML to JSX and TSX, JSON to CSV, XML to JSON, YAML to JSON, and Base64 encode/decode. All conversion runs entirely in the browser — no server calls, no uploads.',
   },
 ].map(group => ({ ...group, tools: FREE_TOOLS.filter(t => t.category === group.category) }))
 

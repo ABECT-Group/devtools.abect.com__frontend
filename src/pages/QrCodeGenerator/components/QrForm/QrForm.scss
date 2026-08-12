@@ -1,0 +1,189 @@
+// Field styling mirrors SchemaForm — the two family tools must look identical.
+
+.QrForm {
+  background: var(--bg-sidebar);
+  border: 1px solid var(--border-base);
+  border-radius: var(--radius-lg);
+  display: flex;
+  flex-direction: column;
+
+  // ── Group ─────────────────────────────────────────────────
+  &__group {
+    padding: 18px 20px;
+    border-bottom: 1px solid var(--border-base);
+
+    &:last-child {
+      border-bottom: none;
+    }
+  }
+
+  &__group-toggle {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: none;
+    border: none;
+    padding: 0;
+    margin-bottom: 14px;
+    cursor: pointer;
+
+    .QrForm__group-label {
+      margin-bottom: 0;
+    }
+
+    &:hover .QrForm__group-label {
+      color: var(--text-primary);
+    }
+
+    &:hover .QrForm__group-chevron {
+      color: var(--text-muted);
+    }
+  }
+
+  &__group-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--text-faint);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 14px;
+    transition: color 0.15s;
+  }
+
+  &__group-chevron {
+    color: var(--text-faint);
+    flex-shrink: 0;
+    transition: transform 0.2s ease, color 0.15s;
+
+    &--open {
+      transform: rotate(90deg);
+    }
+  }
+
+  // ── Field ─────────────────────────────────────────────────
+  &__field {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 14px;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  &__label-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 8px;
+
+    .QrForm__label {
+      margin-bottom: 0;
+    }
+  }
+
+  &__label {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--text-faint);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 8px;
+  }
+
+  &__required {
+    color: var(--color-error);
+    font-size: 0.75rem;
+    margin-left: 1px;
+    font-style: normal;
+  }
+
+  &__counter {
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--text-faint);
+    transition: color 0.15s;
+
+    &--warn { color: var(--color-warning); }
+  }
+
+  &__hint {
+    font-size: 0.8125rem;
+    color: var(--text-muted);
+    margin-top: 6px;
+    line-height: 1.5;
+  }
+
+  // ── Inputs ────────────────────────────────────────────────
+  &__input,
+  &__select {
+    width: 100%;
+    background: var(--bg-content);
+    border: 1px solid var(--border-blue);
+    border-radius: var(--radius-md);
+    color: var(--text-primary);
+    font-size: 0.9375rem;
+    padding: 10px 14px;
+    outline: none;
+    transition: border-color 0.15s;
+    font-family: inherit;
+
+    &::placeholder { color: var(--text-placeholder); }
+    &:focus { border-color: var(--accent); }
+  }
+
+  &__textarea {
+    width: 100%;
+    background: var(--bg-content);
+    border: 1px solid var(--border-blue);
+    border-radius: var(--radius-md);
+    color: var(--text-primary);
+    font-size: 0.9375rem;
+    padding: 10px 14px;
+    outline: none;
+    resize: vertical;
+    font-family: inherit;
+    line-height: 1.55;
+    transition: border-color 0.15s;
+
+    &::placeholder { color: var(--text-placeholder); }
+    &:focus { border-color: var(--accent); }
+  }
+
+  &__select {
+    appearance: none;
+    cursor: pointer;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%234a5568' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    padding-right: 32px;
+
+    [data-theme="light"] & {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23475569' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+    }
+
+    option { background: var(--bg-content); }
+  }
+
+  // ── Checkbox ──────────────────────────────────────────────
+  &__checkbox {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    font-size: 0.9375rem;
+    color: var(--text-secondary);
+
+    input[type="checkbox"] {
+      width: 16px;
+      height: 16px;
+      accent-color: var(--accent);
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+  }
+}

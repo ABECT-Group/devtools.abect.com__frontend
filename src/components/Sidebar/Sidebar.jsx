@@ -19,6 +19,13 @@ const IMAGE_CONVERTER_SLUGS = new Set([
 
 const COMPRESS_SLUGS = new Set(['compress-jpg', 'compress-png', 'compress-webp'])
 
+const QR_SLUGS = new Set([
+  'qr-code-generator',
+  'text-to-qr-code-generator',
+  'wifi-qr-code-generator',
+  'vcard-qr-code-generator',
+])
+
 const SCHEMA_GENERATOR_SLUGS = new Set([
   'product-schema-generator',
   'article-schema-generator',
@@ -30,23 +37,34 @@ const SCHEMA_GENERATOR_SLUGS = new Set([
 
 // ─── Nav tree ────────────────────────────────────────────────────────────────
 
+// Ordered by where the traffic actually is, not by how many tools a section
+// holds: Text & Code carries almost all organic clicks, Utilities is the
+// current bet, Images and SEO follow.
 const NAV_SECTIONS = [
   {
-    label: 'SEO & Schema',
+    label: 'Text & Code',
     items: [
-      { name: 'Meta Tag Generator', route: '/meta-tags-generator', ready: true },
-      { name: 'OG Image Generator', route: '/og-image-generator', ready: true },
+      { name: 'HTML ↔ Markdown', route: '/html-to-markdown', ready: true, slugSet: new Set(['html-to-markdown', 'markdown-to-html']) },
+      { name: 'HTML ↔ JSX', route: '/html-to-jsx', ready: true, slugSet: new Set(['html-to-jsx', 'jsx-to-html']) },
+      { name: 'HTML ↔ TSX', route: '/html-to-tsx', ready: true, slugSet: new Set(['html-to-tsx', 'tsx-to-html']) },
+      { name: 'JSON ↔ CSV', route: '/json-to-csv', ready: true, slugSet: new Set(['json-to-csv', 'csv-to-json']) },
+      { name: 'XML ↔ JSON', route: '/xml-to-json', ready: true, slugSet: new Set(['xml-to-json', 'json-to-xml']) },
+      { name: 'YAML ↔ JSON', route: '/yaml-to-json', ready: true, slugSet: new Set(['yaml-to-json', 'json-to-yaml']) },
+      { name: 'Base64', route: '/base64-encode', ready: true, slugSet: new Set(['base64-encode', 'base64-decode']) },
+    ],
+  },
+  {
+    label: 'Utilities',
+    items: [
       {
-        name: 'Schema Markup Generator',
+        name: 'QR Code Generator',
         group: true,
-        customActive: 'schemaGenerator',
+        customActive: 'qrGenerator',
         children: [
-          { name: 'Product Schema Generator', route: '/product-schema-generator' },
-          { name: 'Article Schema Generator', route: '/article-schema-generator' },
-          { name: 'FAQ Schema Generator', route: '/faq-schema-generator' },
-          { name: 'Organization Schema Generator', route: '/organization-schema-generator' },
-          { name: 'Local Business Schema Generator', route: '/local-business-schema-generator' },
-          { name: 'Breadcrumb Schema Generator', route: '/breadcrumb-schema-generator' },
+          { name: 'Link / URL QR Code', route: '/qr-code-generator' },
+          { name: 'Text QR Code', route: '/text-to-qr-code-generator' },
+          { name: 'WiFi QR Code', route: '/wifi-qr-code-generator' },
+          { name: 'vCard QR Code', route: '/vcard-qr-code-generator' },
         ],
       },
     ],
@@ -98,15 +116,23 @@ const NAV_SECTIONS = [
     ],
   },
   {
-    label: 'Text & Code',
+    label: 'SEO & Schema',
     items: [
-      { name: 'HTML ↔ Markdown', route: '/html-to-markdown', ready: true, slugSet: new Set(['html-to-markdown', 'markdown-to-html']) },
-      { name: 'HTML ↔ JSX', route: '/html-to-jsx', ready: true, slugSet: new Set(['html-to-jsx', 'jsx-to-html']) },
-      { name: 'HTML ↔ TSX', route: '/html-to-tsx', ready: true, slugSet: new Set(['html-to-tsx', 'tsx-to-html']) },
-      { name: 'JSON ↔ CSV', route: '/json-to-csv', ready: true, slugSet: new Set(['json-to-csv', 'csv-to-json']) },
-      { name: 'XML ↔ JSON', route: '/xml-to-json', ready: true, slugSet: new Set(['xml-to-json', 'json-to-xml']) },
-      { name: 'YAML ↔ JSON', route: '/yaml-to-json', ready: true, slugSet: new Set(['yaml-to-json', 'json-to-yaml']) },
-      { name: 'Base64', route: '/base64-encode', ready: true, slugSet: new Set(['base64-encode', 'base64-decode']) },
+      { name: 'Meta Tag Generator', route: '/meta-tags-generator', ready: true },
+      { name: 'OG Image Generator', route: '/og-image-generator', ready: true },
+      {
+        name: 'Schema Markup Generator',
+        group: true,
+        customActive: 'schemaGenerator',
+        children: [
+          { name: 'Product Schema Generator', route: '/product-schema-generator' },
+          { name: 'Article Schema Generator', route: '/article-schema-generator' },
+          { name: 'FAQ Schema Generator', route: '/faq-schema-generator' },
+          { name: 'Organization Schema Generator', route: '/organization-schema-generator' },
+          { name: 'Local Business Schema Generator', route: '/local-business-schema-generator' },
+          { name: 'Breadcrumb Schema Generator', route: '/breadcrumb-schema-generator' },
+        ],
+      },
     ],
   },
 ]
@@ -172,6 +198,7 @@ export default function Sidebar({ isOpen, onClose }) {
   const isImageConverterActive = IMAGE_CONVERTER_SLUGS.has(slug)
   const isCompressActive = COMPRESS_SLUGS.has(slug)
   const isSchemaGeneratorActive = SCHEMA_GENERATOR_SLUGS.has(slug)
+  const isQrGeneratorActive = QR_SLUGS.has(slug)
 
   // Sync sidebar mode with route: /ai/* → ai, everything else → tools
   useEffect(() => {
@@ -191,7 +218,8 @@ export default function Sidebar({ isOpen, onClose }) {
     return (
       (item.customActive === 'schemaGenerator' && isSchemaGeneratorActive) ||
       (item.customActive === 'imageConverter' && isImageConverterActive) ||
-      (item.customActive === 'compress' && isCompressActive)
+      (item.customActive === 'compress' && isCompressActive) ||
+      (item.customActive === 'qrGenerator' && isQrGeneratorActive)
     )
   }
 

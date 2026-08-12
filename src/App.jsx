@@ -8,6 +8,7 @@ import NotFound from './pages/NotFound/NotFound'
 import CompressImage from './pages/CompressImage/CompressImage'
 import MetaTagsGenerator from './pages/MetaTagsGenerator/MetaTagsGenerator'
 import FaviconGenerator from './pages/FaviconGenerator/FaviconGenerator'
+import QrCodeGenerator from './pages/QrCodeGenerator/QrCodeGenerator'
 import ImageConverter from './pages/ImageConverter/ImageConverter'
 import PrivacyPolicy from './pages/PrivacyPolicy/PrivacyPolicy'
 import Terms from './pages/Terms/Terms'
@@ -47,6 +48,13 @@ const IMAGE_CONVERTER_SLUGS = [
 ]
 
 const COMPRESS_SLUGS = ['compress-jpg', 'compress-png', 'compress-webp']
+
+const QR_SLUGS = [
+  'qr-code-generator',
+  'text-to-qr-code-generator',
+  'wifi-qr-code-generator',
+  'vcard-qr-code-generator',
+]
 
 const SCHEMA_GENERATOR_SLUGS = [
   'product-schema-generator',
@@ -89,6 +97,9 @@ export default function App() {
         ))}
         <Route path="ai/*" element={<AiPage />} />
         <Route path="favicon-generator" element={<FaviconGenerator />} />
+        {QR_SLUGS.map(slug => (
+          <Route key={slug} path={slug} element={<QrCodeGenerator />} />
+        ))}
         <Route path="webp-converter" element={<WebPConverter />} />
         {IMAGE_CONVERTER_SLUGS.map(slug => (
           <Route key={slug} path={slug} element={<ImageConverter />} />

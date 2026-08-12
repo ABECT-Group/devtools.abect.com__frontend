@@ -5,11 +5,11 @@ import { TOOLS } from './config/tools.js'
  * `lastmod` is always hardcoded — never derive it from the build date.
  */
 export const sitemapRoutes = [
-  { route: '/',               lastmod: '2026-08-05', priority: '1.0', changefreq: 'weekly'  },
+  { route: '/',               lastmod: '2026-08-12', priority: '1.0', changefreq: 'weekly'  },
   { route: '/privacy-policy', lastmod: '2026-08-05', priority: '0.3', changefreq: 'yearly'  },
   { route: '/terms',          lastmod: '2026-08-05', priority: '0.3', changefreq: 'yearly'  },
   { route: '/about',          lastmod: '2026-05-04', priority: '0.6', changefreq: 'yearly'  },
-  { route: '/changelog',      lastmod: '2026-08-05', priority: '0.5', changefreq: 'weekly'  },
+  { route: '/changelog',      lastmod: '2026-08-12', priority: '0.5', changefreq: 'weekly'  },
   ...TOOLS.map(({ route, lastmod, priority }) => ({ route, lastmod, priority: priority ?? '0.8', changefreq: 'monthly' })),
 ]
 

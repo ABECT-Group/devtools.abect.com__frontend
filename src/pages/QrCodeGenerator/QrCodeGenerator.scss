@@ -1,0 +1,21 @@
+.QrCodeGenerator {
+  &__cols {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 340px;
+    gap: 20px;
+    align-items: start;
+  }
+
+  &__form-col,
+  &__preview-col {
+    min-width: 0;
+  }
+
+  // Single column on mobile, preview below the form: the code only becomes
+  // meaningful once the fields are filled, so the form leads.
+  @media (max-width: 960px) {
+    &__cols {
+      grid-template-columns: 1fr;
+    }
+  }
+}

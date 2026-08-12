@@ -1,0 +1,156 @@
+// Structure mirrors SchemaOutput: result box, validation panel, actions.
+
+.QrPreview {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+
+  // ── Result box ────────────────────────────────────────────
+  &__box {
+    border-radius: var(--radius-md);
+    overflow: hidden;
+  }
+
+  &__canvas-wrap {
+    position: relative;
+    border: 1px solid var(--border-base);
+  }
+
+  &__canvas {
+    // Always the full column width at a locked square ratio, so swapping the
+    // placeholder for the real code never shifts the layout.
+    display: block;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    height: auto;
+    border-radius: var(--radius-sm);
+    transition: opacity 0.2s ease;
+
+    &--placeholder {
+      opacity: 0.3;
+    }
+  }
+
+  &__placeholder-label {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    max-width: calc(100% - 56px);
+    text-align: center;
+    font-size: 0.8125rem;
+    line-height: 1.5;
+    color: var(--text-secondary);
+    background: var(--bg-sidebar);
+    border: 1px solid var(--border-base);
+    border-radius: var(--radius-md);
+    padding: 8px 14px;
+    pointer-events: none;
+  }
+
+  // ── Validation ────────────────────────────────────────────
+  &__validation {
+    background: var(--bg-sidebar);
+    border: 1px solid var(--border-base);
+    border-radius: var(--radius-md);
+    padding: 12px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  &__status {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 0.8125rem;
+    font-weight: 600;
+
+    &--ok {
+      color: var(--green);
+    }
+
+    &--error {
+      color: var(--color-error);
+    }
+  }
+
+  &__status-icon {
+    width: 15px;
+    height: 15px;
+    flex-shrink: 0;
+  }
+
+  &__missing {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    padding-left: 22px;
+
+    li {
+      font-size: 0.8125rem;
+      color: var(--color-error);
+      position: relative;
+
+      &::before {
+        content: '·';
+        position: absolute;
+        left: -10px;
+      }
+    }
+  }
+
+  &__warnings {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+
+    li {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.8125rem;
+      color: var(--color-warning);
+
+      svg {
+        width: 13px;
+        height: 13px;
+        flex-shrink: 0;
+        color: var(--color-warning);
+      }
+    }
+  }
+
+  &__error {
+    font-size: 0.8125rem;
+    color: var(--color-error);
+    line-height: 1.5;
+  }
+
+  // ── Actions ───────────────────────────────────────────────
+  // Stacked, not side by side: the preview column is a fixed 340 px, which
+  // leaves ~140 px per button — not enough for "Download PNG" without wrapping.
+  &__actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+
+    // SecondaryButton is smaller by default. The two sit stacked as a pair, so
+    // match the primary's type size and padding — otherwise the outline button
+    // reads as a lesser, half-height control.
+    .SecondaryButton {
+      font-size: 0.875rem;
+      font-weight: 600;
+      padding: 12px 20px;
+      border-radius: var(--radius-md);
+    }
+  }
+
+  &__note {
+    font-size: 0.8125rem;
+    color: var(--text-muted);
+    line-height: 1.5;
+  }
+}

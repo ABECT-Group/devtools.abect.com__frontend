@@ -49,4 +49,8 @@ export const TOOLS = [
   { category: 'Images', name: 'TIFF to WebP', description: 'Convert TIFF images to WebP', route: '/tiff-to-webp', lastmod: '2026-05-01' },
   { category: 'Images', name: 'HEIC to JPG', description: 'Convert iPhone HEIC photos to JPG — no upload', route: '/heic-to-jpg', lastmod: '2026-05-18' },
   { category: 'Images', name: 'HEIC to WebP', description: 'Convert iPhone HEIC photos to WebP — no upload', route: '/heic-to-webp', lastmod: '2026-05-18' },
+  { category: 'Utilities', name: 'QR Code Generator', description: 'Generate a QR code for any link with custom colours, a logo and PNG or SVG export', route: '/qr-code-generator', lastmod: '2026-08-12' },
+  { category: 'Utilities', name: 'Text to QR Code Generator', description: 'Turn plain text into a QR code that displays instantly on scan — no link, no internet needed', route: '/text-to-qr-code-generator', lastmod: '2026-08-12' },
+  { category: 'Utilities', name: 'WiFi QR Code Generator', description: 'Create a WiFi QR code guests scan to join — handles WPA3, hidden networks and special characters', route: '/wifi-qr-code-generator', lastmod: '2026-08-12' },
+  { category: 'Utilities', name: 'vCard QR Code Generator', description: 'Generate a contact QR code that saves name, phone, email and company straight to any phone', route: '/vcard-qr-code-generator', lastmod: '2026-08-12' },
 ]

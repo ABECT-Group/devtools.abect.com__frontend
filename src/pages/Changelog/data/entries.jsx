@@ -20,6 +20,57 @@ const L = 'ChangelogCard__link'
 
 export const CHANGELOG = [
   {
+    title: 'QR code generator — links, text, WiFi and contact cards, with logos and SVG export',
+    summary: 'Four new tools generate QR codes for a link, plain text, a WiFi network or a contact card. Pick your own colors and module shape, drop a logo in the center, and export as PNG or print-ready vector SVG. Every code is static — nothing expires, nothing is tracked.',
+    date: 'August 12, 2026',
+    datetime: '2026-08-12',
+    body: (
+      <>
+        <p>
+          A new Utilities section opens with four QR generators:{' '}
+          <Link to="/qr-code-generator" className={L}>links</Link>,{' '}
+          <Link to="/text-to-qr-code-generator" className={L}>plain text</Link>,{' '}
+          <Link to="/wifi-qr-code-generator" className={L}>WiFi networks</Link>, and{' '}
+          <Link to="/vcard-qr-code-generator" className={L}>vCard contact cards</Link>. Like every other
+          free tool here, they run entirely in the browser — the URL, the network password and the contact
+          details are never transmitted anywhere.
+        </p>
+        <p>
+          <strong>Text codes work with no network at all.</strong> A link code stores an address the phone
+          still has to fetch; a text code stores the message itself, so it displays instantly on a machine in
+          a basement plant room or a sign on a hiking trail. The generator is offline in the same sense —
+          load the page, disconnect, keep generating.
+        </p>
+        <p>
+          <strong>Static, not dynamic.</strong> The destination is encoded directly into the pattern. There is
+          no redirect service in the middle, so a printed code cannot stop working because a subscription
+          lapsed or a company shut down. The trade-off is honest and stated on every page: static codes
+          cannot count scans.
+        </p>
+        <p>
+          <strong>Escaping done properly.</strong> The WiFi format reserves five characters —{' '}
+          <code>\</code> <code>;</code> <code>,</code> <code>:</code> and <code>"</code> — and most free
+          generators pass them through unescaped, which silently truncates the password at the first one. The
+          encoder here escapes all five in both the network name and the password. vCard output uses CRLF line
+          endings and escapes commas and semicolons, so a job title like "Head of Sales, EMEA" imports
+          intact instead of being split across fields.
+        </p>
+        <p>
+          <strong>Styling.</strong> Foreground and background colors, quiet-zone width, square, rounded or dot
+          modules, and a logo in the center. Adding a logo raises error correction to level H automatically and
+          punches the covered modules out rather than painting over them. The three corner finder patterns stay
+          square in every style, because those are what a scanner locks onto first.
+        </p>
+        <p>
+          <strong>PNG and SVG.</strong> The renderer draws from the raw module matrix, which makes vector output
+          free — the same geometry becomes an SVG that prints crisply at any size, from a business card to a
+          banner. The live preview reports the QR version and byte usage, and warns before the payload grows
+          dense enough to fail at print size.
+        </p>
+      </>
+    ),
+  },
+  {
     title: 'Changelog page, category browsing on the home page, and lighter bundles',
     summary: 'Every update now lives on a dedicated changelog page. The home page gained a browsable index of all 49 tools by category, heavy libraries load only when a tool needs them, and every tool page emits breadcrumb structured data.',
     date: 'August 5, 2026',

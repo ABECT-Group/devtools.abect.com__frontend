@@ -8,11 +8,11 @@ import ToolSection from '../../components/ToolSection/ToolSection'
 import ContentSection from '../../components/ContentSection/ContentSection'
 import Table from '../../components/Table/Table'
 import CodeBox from '../../components/CodeBox/CodeBox'
-import SchemaTypeNav from './components/SchemaTypeNav/SchemaTypeNav'
+import TypeTabs from '../../components/TypeTabs/TypeTabs'
 import SchemaForm from './components/SchemaForm/SchemaForm'
 import SchemaOutput from './components/SchemaOutput/SchemaOutput'
-import { SCHEMA_CONFIGS } from './data/schemas'
-import { buildHelmet, SLUG_TO_TYPE, OG_IMAGE } from './data/helmet'
+import { SCHEMA_CONFIGS, SCHEMA_TYPE_KEYS } from './data/schemas'
+import { buildHelmet, SLUG_TO_TYPE, TYPE_TO_SLUG, OG_IMAGE } from './data/helmet'
 import { buildJsonLdApp, buildJsonLdHowTo, buildJsonLdFaq } from './data/jsonld'
 import { buildContent } from './data/content'
 import { buildSchema } from './utils/buildSchema'
@@ -20,6 +20,12 @@ import { validateSchema } from './utils/validateSchema'
 import { formatScriptTag } from './utils/formatOutput'
 import JsonLd from '../../components/JsonLd/JsonLd'
 import './JsonLdGenerator.scss'
+
+const TYPE_TABS = SCHEMA_TYPE_KEYS.map(key => ({
+  key,
+  label: SCHEMA_CONFIGS[key].label,
+  to: `/${TYPE_TO_SLUG[key]}`,
+}))
 
 function renderText(text) {
   const parts = text.split(/(\*\*[^*]+\*\*|\[[^\]]+\]\([^)]+\))/)
@@ -90,7 +96,7 @@ export default function JsonLdGenerator() {
       />
 
       <ToolSection>
-        <SchemaTypeNav activeType={activeType} />
+        <TypeTabs items={TYPE_TABS} activeKey={activeType} description={config.description} />
         <div className="JsonLdGenerator__cols">
           <div className="JsonLdGenerator__form-col">
             <SchemaForm config={config} values={values} onChange={handleChange} />
