@@ -38,8 +38,10 @@ const SCHEMA_GENERATOR_SLUGS = new Set([
 // ─── Nav tree ────────────────────────────────────────────────────────────────
 
 // Ordered by where the traffic actually is, not by how many tools a section
-// holds: Text & Code carries almost all organic clicks, Utilities is the
-// current bet, Images and SEO follow.
+// holds: Text & Code carries almost all organic clicks, SEO & Schema is the
+// current bet, Utilities and Images follow. Within Schema Markup Generator,
+// FAQ leads the list — its own page was rewritten in Aug 2026 and needs the
+// visibility while Google re-crawls it.
 const NAV_SECTIONS = [
   {
     label: 'Text & Code',
@@ -51,6 +53,26 @@ const NAV_SECTIONS = [
       { name: 'XML ↔ JSON', route: '/xml-to-json', ready: true, slugSet: new Set(['xml-to-json', 'json-to-xml']) },
       { name: 'YAML ↔ JSON', route: '/yaml-to-json', ready: true, slugSet: new Set(['yaml-to-json', 'json-to-yaml']) },
       { name: 'Base64', route: '/base64-encode', ready: true, slugSet: new Set(['base64-encode', 'base64-decode']) },
+    ],
+  },
+  {
+    label: 'SEO & Schema',
+    items: [
+      {
+        name: 'Schema Markup Generator',
+        group: true,
+        customActive: 'schemaGenerator',
+        children: [
+          { name: 'FAQ Schema Generator', route: '/faq-schema-generator' },
+          { name: 'Product Schema Generator', route: '/product-schema-generator' },
+          { name: 'Article Schema Generator', route: '/article-schema-generator' },
+          { name: 'Organization Schema Generator', route: '/organization-schema-generator' },
+          { name: 'Local Business Schema Generator', route: '/local-business-schema-generator' },
+          { name: 'Breadcrumb Schema Generator', route: '/breadcrumb-schema-generator' },
+        ],
+      },
+      { name: 'Meta Tag Generator', route: '/meta-tags-generator', ready: true },
+      { name: 'OG Image Generator', route: '/og-image-generator', ready: true },
     ],
   },
   {
@@ -111,26 +133,6 @@ const NAV_SECTIONS = [
           { name: 'Compress JPG', route: '/compress-jpg' },
           { name: 'Compress PNG', route: '/compress-png' },
           { name: 'Compress WebP', route: '/compress-webp' },
-        ],
-      },
-    ],
-  },
-  {
-    label: 'SEO & Schema',
-    items: [
-      { name: 'Meta Tag Generator', route: '/meta-tags-generator', ready: true },
-      { name: 'OG Image Generator', route: '/og-image-generator', ready: true },
-      {
-        name: 'Schema Markup Generator',
-        group: true,
-        customActive: 'schemaGenerator',
-        children: [
-          { name: 'Product Schema Generator', route: '/product-schema-generator' },
-          { name: 'Article Schema Generator', route: '/article-schema-generator' },
-          { name: 'FAQ Schema Generator', route: '/faq-schema-generator' },
-          { name: 'Organization Schema Generator', route: '/organization-schema-generator' },
-          { name: 'Local Business Schema Generator', route: '/local-business-schema-generator' },
-          { name: 'Breadcrumb Schema Generator', route: '/breadcrumb-schema-generator' },
         ],
       },
     ],

@@ -17,7 +17,7 @@ export const TOOLS = [
   { category: 'SEO', name: 'OG Image Generator', description: 'Crop and export Open Graph images at 1200×630', route: '/og-image-generator', lastmod: '2026-05-04' },
   { category: 'SEO', name: 'Product Schema Generator', description: 'Generate Product schema markup (JSON-LD) for price, ratings, availability, shipping and returns', route: '/product-schema-generator', lastmod: '2026-05-28' },
   { category: 'SEO', name: 'Article Schema Generator', description: 'Generate Article schema markup (JSON-LD) for Google News, Discover and Search', route: '/article-schema-generator', lastmod: '2026-05-07' },
-  { category: 'SEO', name: 'FAQ Schema Generator', description: 'Generate FAQPage schema markup (JSON-LD) for expandable Q&A in Google Search results', route: '/faq-schema-generator', lastmod: '2026-05-07' },
+  { category: 'SEO', name: 'FAQ Schema Generator', description: 'Generate FAQPage schema markup (JSON-LD) — still valid for AI Overviews and semantic search', route: '/faq-schema-generator', lastmod: '2026-08-14' },
   { category: 'SEO', name: 'Organization Schema Generator', description: 'Generate Organization schema markup (JSON-LD) for Google Knowledge Panel and E-E-A-T', route: '/organization-schema-generator', lastmod: '2026-05-07' },
   { category: 'SEO', name: 'Local Business Schema Generator', description: 'Generate LocalBusiness schema markup (JSON-LD) for map cards, business hours and phone', route: '/local-business-schema-generator', lastmod: '2026-05-07' },
   { category: 'SEO', name: 'Breadcrumb Schema Generator', description: 'Generate BreadcrumbList schema markup (JSON-LD) for site path trails in Google SERP', route: '/breadcrumb-schema-generator', lastmod: '2026-05-07' },

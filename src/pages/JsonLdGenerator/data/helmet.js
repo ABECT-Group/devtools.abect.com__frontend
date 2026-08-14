@@ -16,9 +16,9 @@ const SEO = {
     url: buildPageUrl('article-schema-generator'),
   },
   'faq-schema-generator': {
-    title: 'FAQ Schema Markup Generator — Free JSON-LD | Abect',
-    description: 'Generate FAQ JSON-LD schema markup to show expandable Q&A answers in Google Search. Live preview, validation, copy-ready output. Free, no signup required.',
-    subtitle: 'Show expandable Q&A answers directly in Google Search results — generate valid FAQPage schema markup in seconds.',
+    title: 'FAQ Schema Generator — Does It Still Work in 2026? | Abect',
+    description: 'Google retired the FAQ accordion on May 7, 2026. FAQPage schema still matters for AI Overviews and semantic SEO — generate valid JSON-LD free, no signup.',
+    subtitle: 'The FAQ accordion is gone from Google Search — the schema itself still has real, narrower value. Here is what actually happened and what to do now.',
     url: buildPageUrl('faq-schema-generator'),
   },
   'organization-schema-generator': {

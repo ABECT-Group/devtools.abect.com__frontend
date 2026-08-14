@@ -24,7 +24,21 @@ function renderText(text) {
     if (part.startsWith('**') && part.endsWith('**'))
       return <strong key={i}>{part.slice(2, -2)}</strong>
     const m = part.match(/^\[([^\]]+)\]\(([^)]+)\)$/)
-    if (m) return <a key={i} href={m[2]}>{m[1]}</a>
+    if (m) {
+      // External links open in a new tab with noopener/noreferrer; internal
+      // links stay in the same tab and get neither attribute.
+      const isExternal = /^https?:\/\//.test(m[2])
+      return (
+        <a
+          key={i}
+          href={m[2]}
+          className="ContentSection__link"
+          {...(isExternal ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+        >
+          {m[1]}
+        </a>
+      )
+    }
     return part
   })
 }

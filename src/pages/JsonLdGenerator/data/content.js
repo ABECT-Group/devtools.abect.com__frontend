@@ -491,7 +491,7 @@ const ARTICLE = {
     },
     {
       question: 'Can I combine Article schema with FAQ schema on the same page?',
-      answer: 'Yes — this is a recommended combination for long-form articles that include a Q&A section. Add Article schema for the overall article metadata and a separate FAQPage schema block for the Q&A content. Google reads both independently. Keep them in separate <script type="application/ld+json"> blocks. The FAQ accordion can appear in the SERP alongside the article snippet.',
+      answer: 'Yes — this is a recommended combination for long-form articles that include a Q&A section. Add Article schema for the overall article metadata and a separate FAQPage schema block for the Q&A content. Google reads both independently. Keep them in separate <script type="application/ld+json"> blocks. Note that as of May 2026 Google retired the FAQ accordion rich result, so the practical benefit today is semantic clarity and potential AI Overview citation rather than a visual SERP element.',
     },
     {
       question: 'What happens if datePublished is wrong or missing?',
@@ -507,7 +507,7 @@ const ARTICLE = {
     },
   ],
   relatedTools: [
-    { to: '/faq-schema-generator',          name: 'FAQ Schema Generator',          desc: 'Add expandable Q&A accordion to your articles directly in Google Search results' },
+    { to: '/faq-schema-generator',          name: 'FAQ Schema Generator',          desc: 'Add a Q&A block to your articles — still valid for AI Overviews and semantic search' },
     { to: '/organization-schema-generator', name: 'Organization Schema Generator', desc: 'Define your publisher entity to strengthen E-E-A-T signals across all articles' },
     { to: '/meta-tags-generator',           name: 'Meta Tag Generator',            desc: 'Generate title, description, OG and Twitter Card tags for your article pages' },
   ],
@@ -520,13 +520,40 @@ const FAQ_SCHEMA = {
   howToSteps: [
     'Add your first question — enter the full question text exactly as it appears on your page. Google compares schema content against what users actually see.',
     'Enter the answer for that question. You can use basic HTML in answers: <p>, <ul>, <li>, <a>, <b>, <strong>, <i>, <em> are all supported.',
-    'Click "Add question" to add more Q&A pairs. Google typically displays the first 2–3 in the SERP accordion — put the most valuable questions first.',
+    'Click "Add question" to add more Q&A pairs. Put the most important questions first — they carry the most weight for topical relevance even without an on-page accordion in the SERP.',
     'Copy the generated JSON-LD block from the output panel.',
     'Paste it inside the <head> of your HTML — or anywhere in <body>. Both placements work for Google.',
-    'Verify that every question and answer in the schema is also visibly present on the page — Google rejects schemas where structured data is not reflected in the visible content.',
-    'Test with the Google Rich Results Test and monitor FAQ accordion appearance in Google Search Console → Enhancements → FAQ.',
+    'Verify that every question and answer in the schema is also visibly present on the page — undisclosed or hidden content still risks a manual action, accordion or not.',
+    'Test with the Google Rich Results Test to confirm the JSON-LD is technically valid. Note: as of May 2026, the test no longer scores FAQPage for a dedicated rich result — it will validate the markup without offering FAQ-specific eligibility, and Search Console\'s old Enhancements → FAQ report is gone too.',
   ],
   sections: [
+    {
+      heading: 'What changed on May 7, 2026 — and what still works',
+      blocks: [
+        {
+          type: 'p',
+          text: 'Google retired the FAQ rich result on **May 7, 2026**. The expandable Q&A accordion that used to appear beneath a search snippet no longer shows up — for anyone, on any query. This is not a ranking drop or a site-specific issue: Google announced the deprecation directly in its Search Central changelog on May 8, then removed the FAQPage documentation entirely on June 17, confirming the feature is gone for good rather than paused.',
+        },
+        {
+          type: 'p',
+          text: 'You can verify this yourself in under a minute. Run any page through the [Rich Results Test](https://search.google.com/test/rich-results) — it will validate your JSON-LD as technically correct, but it no longer lists FAQPage among the rich results it checks for. And in Search Console, the **Enhancements → FAQ** report that used to track accordion coverage has been removed from the sidebar entirely — not hidden, not merged, just gone.',
+        },
+        { type: 'h3', text: 'What still works' },
+        {
+          type: 'ul',
+          items: [
+            '**The schema.org type is still valid.** FAQPage remains part of the schema.org vocabulary — adding it does not break anything, trigger a penalty, or waste effort. Google has explicitly said unused structured data does not cause problems.',
+            '**Semantic understanding.** Structured data still gives Google\'s crawler an unambiguous, machine-readable read of your Q&A content, separate from whatever visual rich result it may or may not generate.',
+            '**AI Overviews and AI Mode.** Google\'s own May 2026 guidance on optimizing for generative AI features says structured data continues to help its systems understand and potentially cite page content — this was never exclusive to the now-retired accordion.',
+            '**Your actual FAQ content, not the markup.** A genuinely useful, well-written Q&A section on the page still helps with long-tail queries, featured snippets and user trust — that value was always driven by the visible text, not the JSON-LD wrapped around it.',
+          ],
+        },
+        {
+          type: 'p',
+          text: 'The honest recommendation: if the only reason you were adding FAQPage schema was the accordion, that specific payoff is gone and re-platforming effort just for this markup is no longer justified. If you already have a real FAQ section, keep the schema — it costs nothing, stays valid, and may still feed AI-driven search features. What follows below explains what the schema still does, and — where the old documentation made claims that no longer hold — says so plainly rather than pretending May 2026 did not happen.',
+        },
+      ],
+    },
     {
       heading: 'How the FAQ Schema Markup Generator works',
       blocks: [
@@ -536,7 +563,7 @@ const FAQ_SCHEMA = {
         },
         {
           type: 'p',
-          text: 'Once the markup is on your page, Google reads it during the next crawl and uses it to decide whether your page qualifies for FAQ Rich Results — the expandable accordion displayed directly beneath your SERP snippet. This lets users read answers without clicking through to your site, which sounds counterproductive but in practice increases total SERP visibility and click-through rate for users who want more detail.',
+          text: 'Once the markup is on your page, Google reads it during the next crawl and can use it to better understand your Q&A content in machine-readable form. Until May 2026 this also decided whether a page qualified for the FAQ Rich Results accordion; Google has since retired that specific display, so the practical benefit today is semantic clarity for crawlers and AI features rather than a visual change in the SERP.',
         },
         {
           type: 'code',
@@ -569,21 +596,35 @@ const FAQ_SCHEMA = {
       ],
     },
     {
-      heading: 'What FAQ Schema unlocks in Google Search',
+      heading: 'What FAQ Schema does — and no longer does — in Google Search',
       blocks: [
         {
           type: 'p',
-          text: 'FAQPage is one of the most visually impactful schema types in Google Search. A standard blue-link snippet occupies a fixed amount of vertical space in the SERP. With FAQ schema, your listing can expand to show two or three question-answer pairs below the main snippet — effectively multiplying the screen real estate your result occupies without requiring additional rankings.',
+          text: 'Before May 2026, FAQPage was one of the most visually impactful schema types in Search — a standard snippet could expand into a multi-row accordion, several times taller than a plain blue link. That specific mechanism is gone. What is left is a mix of effects that were never about the accordion in the first place, plus a couple of claims that were always weaker than the marketing around them suggested.',
         },
+        { type: 'h3', text: 'Retired — do not expect these anymore' },
         {
           type: 'ul',
           items: [
-            '**Expandable Q&A accordion** — questions appear as collapsed rows beneath your snippet. Users click to expand individual answers without leaving the search results page.',
-            '**Larger SERP footprint** — a result with three FAQ entries visible can be 3–4× taller than a standard snippet, pushing competitors below the fold on both desktop and mobile.',
-            '**Voice search answers** — Google Assistant and other voice interfaces frequently pull answers from FAQPage schema when responding to spoken queries.',
-            '**Zero-click answer visibility** — users get answers immediately from the SERP. While this can reduce some clicks, it increases brand exposure and drives higher-intent clicks from users who want the full page.',
-            '**Featured snippet competition** — FAQ answers formatted clearly and concisely compete for featured snippet positions for the individual question queries.',
-            '**Sitelink extension** — in some layouts, Google uses FAQ content to generate additional sitelinks visible in mobile search results.',
+            '**Expandable Q&A accordion** — removed sitewide, for every query, as of May 7, 2026. This was the headline feature and it is simply not shown anymore, regardless of how well-formed your schema is.',
+            '**Larger SERP footprint from the accordion** — with no accordion, there is no extra vertical space to claim. A page with FAQPage schema now looks identical in the SERP to one without it.',
+            '**Sitelink extension from FAQ content** — this was an occasional side effect of the accordion feature and appears to have gone with it; Google has not documented a replacement mechanism.',
+          ],
+        },
+        { type: 'h3', text: 'Uncertain — not officially confirmed either way' },
+        {
+          type: 'ul',
+          items: [
+            '**Voice search answers** — Google Assistant is being absorbed into Gemini, and there is no current Google documentation confirming FAQPage schema still feeds voice responses. Treat this as unverified rather than assume it still works.',
+          ],
+        },
+        { type: 'h3', text: 'Still real — but was never about the schema markup itself' },
+        {
+          type: 'ul',
+          items: [
+            '**Featured snippet competition** — driven by your visible, well-written Q&A text ranking for the question query, not by the JSON-LD wrapper around it. This was always true and remains true with or without the accordion.',
+            '**AI Overviews and AI-mode citation** — Google\'s current generative-search guidance says structured data continues to help its systems parse and potentially cite content. This is the closest thing to a live successor to the old rich-result benefit.',
+            '**Crawler-level semantic clarity** — a machine-readable Q&A structure is still a cleaner signal than expecting Google to infer the same thing from unstructured HTML.',
           ],
         },
       ],
@@ -602,7 +643,7 @@ const FAQ_SCHEMA = {
             ['Who writes answers', 'The site owner — one authoritative answer per question', 'The community — multiple answers, voted or scored'],
             ['Accepted answers per question', 'Exactly one', 'One or more, with ranking'],
             ['Typical use case', 'Official company FAQ, product FAQ, help center', 'Forums, Stack Overflow-style platforms, Reddit'],
-            ['Google rich result support', 'Active — shows accordion in SERP', 'Limited — no dedicated rich result format'],
+            ['Google rich result support', 'None — the accordion was retired May 2026; only crawler-level understanding remains', 'None — never had a dedicated rich result format'],
             ['Schema.org type to use', 'FAQPage + Question + Answer', 'QAPage + Question + Answer (with upvoteCount)'],
             ['Risk of misuse', 'Manual action if content is spammy or not visible on page', 'Less commonly misused'],
           ],
@@ -614,8 +655,12 @@ const FAQ_SCHEMA = {
       ],
     },
     {
-      heading: 'When FAQ Schema delivers results — and when it is a liability',
+      heading: 'Where a visible FAQ section still helps — and where the schema still makes sense',
       blocks: [
+        {
+          type: 'p',
+          text: 'Worth separating two decisions that used to be bundled: whether to write a Q&A section on the page (still a good idea, unrelated to the accordion), and whether to also add FAQPage schema on top of it (still harmless and possibly still useful, just no longer a growth lever on its own).',
+        },
         {
           type: 'h3',
           text: 'Pages where FAQ Schema is the right choice',
@@ -624,8 +669,8 @@ const FAQ_SCHEMA = {
           type: 'ul',
           items: [
             '**Dedicated FAQ pages** — a page whose entire purpose is answering common questions. This is the textbook use case: every question in the schema is visible on the page, the content is written by the site owner, and the answers are authoritative.',
-            '**Service and product pages with a Q&A section** — adding a short FAQ section (3–6 questions) to a service landing page is a proven tactic for capturing long-tail query traffic while also qualifying for the FAQ accordion.',
-            '**Long-form articles with a "Frequently Asked Questions" block** — pairing FAQPage schema with Article schema on the same page is valid and gives Google two distinct rich result opportunities from the same URL.',
+            '**Service and product pages with a Q&A section** — a short FAQ section (3–6 questions) on a service landing page still captures long-tail query traffic through the visible text itself; adding the schema on top costs nothing extra.',
+            '**Long-form articles with a "Frequently Asked Questions" block** — pairing FAQPage schema with Article schema on the same page is still valid markup and gives Google two distinct, clearly labeled content blocks to parse from the same URL.',
             '**Help center and support documentation** — individual help articles answering a specific user question are ideal candidates, especially if they already rank for question-format queries.',
             '**Local business pages answering location-specific questions** — "Do you offer delivery to X?", "What are your hours during holidays?" — FAQ schema on these pages can appear in local search results.',
           ],
@@ -651,11 +696,11 @@ const FAQ_SCHEMA = {
       blocks: [
         {
           type: 'p',
-          text: '**The visible content rule** is the most critical technical constraint for FAQPage schema. Every Question and Answer in your JSON-LD must correspond to content that a user can actually read on the page. Google\'s crawler verifies this by comparing the schema text against the rendered page content. The comparison is fuzzy — minor wording differences are tolerated — but the Q&A content must be genuinely present and accessible. Hidden content (display:none, visibility:hidden, behind a tab that requires JavaScript) does not count. If the FAQ is in a collapsed accordion on the page, that is acceptable as long as the HTML content is present in the DOM even when collapsed.',
+          text: '**The visible content rule** is still the most important technical constraint for FAQPage schema, and it did not go away with the accordion. Every Question and Answer in your JSON-LD must correspond to content that a user can actually read on the page — this is a general structured-data integrity requirement under Google\'s spam policies, not something specific to the retired rich result. Hidden content (display:none, visibility:hidden, behind a tab that requires JavaScript) does not count. If the FAQ is in a collapsed accordion on the page itself, that is fine as long as the HTML content is present in the DOM even when visually collapsed.',
         },
         {
           type: 'p',
-          text: '**Answer length** in the schema can be much longer than what Google displays in the SERP accordion. Google typically shows approximately 300–500 characters of the answer in the expanded accordion view and truncates with "See more". Write complete, useful answers in the schema even if they are long — Google uses the full text for relevance matching, not just the truncated visible portion. Short, vague answers that omit key details score lower for voice search and featured snippet competition.',
+          text: '**Answer length** — with the accordion gone, there is no more SERP truncation limit to write around. Write complete, useful answers regardless of length: Google uses the full text for relevance matching and, per its own generative-search guidance, for parsing content into AI Overviews. Short, vague answers that omit key details still compete worse for featured snippets and AI citations than thorough, specific ones.',
         },
         {
           type: 'p',
@@ -694,20 +739,28 @@ const FAQ_SCHEMA = {
   ],
   faq: [
     {
-      question: 'How many FAQ questions should I add for best results in Google?',
-      answer: 'Google typically displays 2–3 questions in the SERP accordion, regardless of how many are in the schema. In practice, 3–8 well-written questions work best. Fewer than 3 reduces the accordion impact; more than 10 rarely adds SERP value and may look spammy. Focus on quality and genuine user intent rather than quantity. Put the most valuable, search-relevant questions first.',
+      question: 'Does FAQ schema still work in 2026?',
+      answer: 'The schema itself still works — it is valid schema.org markup and Google still parses it without error. What stopped working is the visual result it used to trigger: Google retired the FAQ rich result accordion sitewide on May 7, 2026, confirmed in its own Search Central changelog. So "does it work" depends on what you mean — as structured data, yes; as a way to get an expandable accordion in the SERP, no, and that is not coming back for anyone.',
+    },
+    {
+      question: 'Is FAQ schema still worth adding in 2026?',
+      answer: 'If you already have a genuine FAQ section on the page, yes — the schema costs nothing to add, stays valid, and Google\'s own generative-search guidance says structured data continues to help AI Overviews and AI Mode parse and potentially cite content. If your only goal was the old accordion, that specific payoff is gone, and building a schema-only FAQ section purely to chase it is no longer worth the effort.',
+    },
+    {
+      question: 'Does Google no longer support FAQ schema at all?',
+      answer: 'Google still supports FAQPage as valid structured data — your schema will pass validation and Google will not reject or penalize it. What Google no longer supports is the FAQ rich result: the expandable accordion feature was explicitly deprecated and removed from Search as of May 7, 2026. Support for the markup and support for the visual rich result are two different things, and only the second one ended.',
+    },
+    {
+      question: 'How many FAQ questions should I add?',
+      answer: 'With no SERP accordion limiting display to 2–3 items, there is no longer a Google-imposed number to write for. Add as many questions as genuinely serve your readers — typically 3–8 for a focused page. Padding the list with thin or repetitive questions still looks low-quality to both users and Google\'s general spam policies, accordion or not.',
     },
     {
       question: 'Can I put FAQPage schema on every page of my website?',
-      answer: 'Technically yes, but Google has deprioritized sitewide FAQPage use since 2023 and limits FAQ rich results to a small number of results per search query. Adding FAQPage to every page — especially if the questions are generic or repeated — signals low-quality schema implementation. Reserve FAQPage for pages where a genuine Q&A section adds informational value: FAQ pages, service pages, help articles.',
-    },
-    {
-      question: 'Does FAQ schema still work in 2025?',
-      answer: 'Yes, FAQPage schema is still supported and generates accordion rich results in 2025. Google updated its guidance in 2023 to limit how often FAQ rich results appear — they now show less frequently for large sites that deployed FAQPage sitewide, and are more selective about which queries trigger the accordion. Well-implemented FAQ schema on pages with genuine Q&A content continues to generate rich results consistently.',
+      answer: 'You can, but it was never a good idea and matters even less now. Google deprioritized sitewide FAQPage use back in 2023, well before the 2026 retirement, specifically because generic or duplicated Q&A blocks signal low-quality schema use. Reserve FAQPage for pages with a genuine, page-specific Q&A section: FAQ pages, service pages, help articles.',
     },
     {
       question: 'What is the character limit for FAQ answers in Google Search?',
-      answer: 'Google displays approximately 300–500 characters in the expanded accordion view before truncating with "See more." However, you should write the full answer in the schema — Google uses the complete text for relevance matching, voice search, and featured snippet competition. There is no hard technical limit in the schema specification itself; the truncation is purely a SERP display decision.',
+      answer: 'There never was a hard technical limit in the schema specification, and the old ~300–500 character SERP truncation no longer applies to anything, since there is no accordion left to truncate into. Write complete, useful answers regardless of length — Google still uses the full text for relevance matching and, per its current generative-search guidance, for parsing content into AI Overviews.',
     },
     {
       question: 'Can FAQ answers contain HTML formatting?',
@@ -715,31 +768,27 @@ const FAQ_SCHEMA = {
     },
     {
       question: 'What happens if my FAQ questions are in a collapsed accordion on the page?',
-      answer: 'This is acceptable. Google\'s crawler evaluates the DOM — if the Q&A content is in the HTML even when visually collapsed (using CSS or a details/summary element), Google counts it as visible content. What is not acceptable: content hidden behind JavaScript that requires a click to inject the HTML, or content with display:none applied permanently. If the FAQ accordion uses CSS to show/hide content, the HTML is still in the page source and Google will see it.',
+      answer: 'This is acceptable. Google\'s crawler evaluates the DOM — if the Q&A content is in the HTML even when visually collapsed (using CSS or a details/summary element), Google counts it as visible content. What is not acceptable: content hidden behind JavaScript that requires a click to inject the HTML, or content with display:none applied permanently. This on-page UI pattern is unrelated to the retired SERP accordion — you can still design your own page however you like.',
     },
     {
       question: 'Does FAQPage schema help with voice search?',
-      answer: 'Yes — Google Assistant and other voice search interfaces frequently use FAQPage schema answers when responding to spoken questions. Short, direct answers (1–3 sentences) that directly address the question are most likely to be selected for voice responses. Write each answer so it reads naturally when spoken aloud, not just when read on screen.',
+      answer: 'This is genuinely uncertain and worth stating as such rather than guessing. Older guidance claimed Google Assistant pulled answers from FAQPage schema, but Google Assistant is being folded into Gemini and there is no current, official documentation confirming FAQPage still feeds voice responses. Treat any claim that it definitely still works — including older advice elsewhere — as unverified.',
     },
     {
       question: 'Can I combine FAQPage schema with Article or Product schema on the same page?',
-      answer: 'Yes — multiple schema types coexist on the same page in separate <script type="application/ld+json"> blocks. A common pattern is Article + FAQPage on a long-form guide that includes a Q&A section, or Product + FAQPage on a product page with a product-specific FAQ. Google reads each block independently and may show rich results from multiple types simultaneously.',
+      answer: 'Yes — multiple schema types coexist on the same page in separate <script type="application/ld+json"> blocks. A common pattern is Article + FAQPage on a long-form guide that includes a Q&A section, or Product + FAQPage on a product page with a product-specific FAQ. Google reads each block independently for content understanding; note that Article and Product can still generate rich results of their own, while the FAQPage block itself no longer produces a visual result.',
     },
     {
       question: 'What is the difference between FAQPage and QAPage schema?',
-      answer: 'FAQPage is for pages where the site owner provides one authoritative answer per question — a standard FAQ page, help article, or product Q&A section. QAPage is for community-driven Q&A platforms where multiple users submit answers that are voted or scored, like Stack Overflow or Reddit-style sites. Google supports rich results for FAQPage but has limited rich result formats for QAPage. Use FAQPage for virtually all standard website use cases.',
+      answer: 'FAQPage is for pages where the site owner provides one authoritative answer per question — a standard FAQ page, help article, or product Q&A section. QAPage is for community-driven Q&A platforms where multiple users submit answers that are voted or scored, like Stack Overflow or Reddit-style sites. Neither currently generates a dedicated Google rich result — FAQPage lost its accordion in May 2026, and QAPage never had a widely deployed one. Use FAQPage for virtually all standard website use cases regardless.',
     },
     {
-      question: 'Will Google show my FAQ accordion immediately after I add the schema?',
-      answer: 'No — Google needs to crawl and process the page first. This can take anywhere from a few days to several weeks, depending on your site\'s crawl frequency. Request re-indexing via Google Search Console → URL Inspection → Request Indexing to speed up the process. Even after crawling, Google may not show the FAQ accordion for every query — it decides based on the query type and available rich results from competing pages.',
+      question: 'Should I remove FAQPage schema now that the accordion is gone?',
+      answer: 'No need to. Google has stated that unused or no-longer-rewarded structured data does not cause problems — leaving valid FAQPage schema on a page with a real Q&A section is harmless, and it may still feed AI Overviews, AI Mode, and general semantic understanding. Remove it only if the underlying Q&A content itself is thin, outdated, or was never genuinely visible on the page — that was always a problem independent of the 2026 change.',
     },
     {
       question: 'Can the questions in my FAQ schema link to other pages?',
       answer: 'Yes — you can include <a href="..."> tags in the answer text. Google supports anchor tags in Answer text. Cross-linking to related pages within answers is valid and can be useful for users. However, do not use FAQ answers purely as a vehicle for internal link building — the primary purpose must be to genuinely answer the question. Answers that are mostly links with thin text may be ignored by Google.',
-    },
-    {
-      question: 'My FAQPage schema is valid but Google is not showing the accordion — why?',
-      answer: 'Several reasons are common: (1) Google has not yet re-crawled the page since you added schema — request indexing. (2) Google is limiting FAQ rich results for your query type — FAQ accordions appear less frequently for navigational or transactional queries. (3) Your site has sitewide FAQPage on too many pages and Google has deprioritized it — remove FAQ schema from low-value pages. (4) The page does not rank high enough — FAQ accordions appear most often in positions 1–5.',
     },
   ],
   relatedTools: [
@@ -787,7 +836,7 @@ const GENERIC = {
           rows: [
             ['Product', 'Price, rating, availability badge', 'name + price + currency', 'E-commerce product pages'],
             ['Article', 'Author byline, date, image in News/Discover', 'No strict requirements', 'Blog posts, news articles'],
-            ['FAQPage', 'Expandable Q&A accordion in SERP', 'At least 1 Q&A pair', 'Help pages, FAQ sections'],
+            ['FAQPage', 'Semantic Q&A understanding — the SERP accordion was retired in May 2026', 'At least 1 Q&A pair', 'Help pages, FAQ sections'],
             ['Organization', 'Knowledge Panel, brand signals', 'No strict requirements', 'About page, homepage'],
             ['LocalBusiness', 'Map card, hours, phone in Search', 'name + full address', 'Physical business locations'],
             ['BreadcrumbList', 'Path trail in SERP snippet', 'At least 2 named items', 'Any page with navigation depth'],

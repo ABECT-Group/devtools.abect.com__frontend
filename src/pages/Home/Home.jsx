@@ -28,7 +28,13 @@ const POPULAR_ROUTES = [
   '/jpg-to-webp',
   '/compress-jpg',
   '/favicon-generator',
-  '/article-schema-generator',
+  // Swapped from /article-schema-generator (Aug 2026): FAQ's own sidebar
+  // entry sits at the bottom of a collapsed "SEO & Schema" group with the
+  // weakest visibility on the site, right after its content was rewritten
+  // to correct the FAQ rich result deprecation — this compensates with a
+  // homepage link while Google re-crawls. Article had the worst
+  // impressions-to-clicks ratio of the six Popular tiles anyway.
+  '/faq-schema-generator',
 ]
 
 const TECH_STACK = [

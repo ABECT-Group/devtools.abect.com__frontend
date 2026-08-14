@@ -20,6 +20,39 @@ const L = 'ChangelogCard__link'
 
 export const CHANGELOG = [
   {
+    title: 'FAQ Schema Generator updated — Google retired the FAQ rich result on May 7, 2026',
+    summary: 'Google removed the FAQ accordion from Search results in May 2026. We rewrote the FAQ Schema Generator page to explain what changed, what still works (AI Overviews, semantic understanding), and what does not — instead of describing a feature that no longer exists.',
+    date: 'August 14, 2026',
+    datetime: '2026-08-14',
+    body: (
+      <>
+        <p>
+          Google retired the FAQ rich result — the expandable Q&A accordion that used to appear beneath a
+          search snippet — on May 7, 2026, and removed its documentation entirely in June. The{' '}
+          <Link to="/faq-schema-generator" className={L}>FAQ Schema Generator</Link> page previously described
+          that accordion as an active feature, so we rewrote it top to bottom: a new section explains exactly
+          what changed and how to verify it yourself, the FAQ accordion on the page itself now answers the
+          questions people are actually asking in 2026 ("does FAQ schema still work?", "is it still worth
+          adding?"), and every claim about what the schema does or does not unlock has been checked against
+          Google's current documentation rather than left as-is.
+        </p>
+        <p>
+          <strong>What still holds.</strong> FAQPage schema remains valid structured data — it does not break
+          anything, and Google has said unused structured data causes no harm. It may still help AI Overviews
+          and AI Mode parse and cite page content. What it no longer does is generate any visual rich result in
+          the SERP, for anyone, regardless of implementation quality.
+        </p>
+        <p>
+          <strong>Site-wide fix.</strong> While auditing the page we also found that inline links generated
+          from page content had no defined color anywhere in the stylesheet — they fell back to the browser
+          default instead of the site's accent color, and external links opened in the same tab without{' '}
+          <code>rel="noopener noreferrer"</code>. Both are fixed for every tool page that renders inline links
+          from its content data, not just this one.
+        </p>
+      </>
+    ),
+  },
+  {
     title: 'QR code generator — links, text, WiFi and contact cards, with logos and SVG export',
     summary: 'Four new tools generate QR codes for a link, plain text, a WiFi network or a contact card. Pick your own colors and module shape, drop a logo in the center, and export as PNG or print-ready vector SVG. Every code is static — nothing expires, nothing is tracked.',
     date: 'August 12, 2026',

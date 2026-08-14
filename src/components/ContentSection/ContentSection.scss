@@ -95,4 +95,19 @@
       }
     }
   }
+
+  // Inline links produced by renderText's [text](url) syntax, inside
+  // __text paragraphs or __list items.
+  &__link {
+    color: var(--accent);
+    text-decoration: underline;
+
+    &:visited {
+      color: var(--accent);
+    }
+
+    &:hover {
+      color: var(--accent-hover);
+    }
+  }
 }
