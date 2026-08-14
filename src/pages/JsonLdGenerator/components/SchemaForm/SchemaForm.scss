@@ -110,7 +110,9 @@
     color: var(--text-faint);
     transition: color 0.15s;
 
-    &--warn { color: var(--color-warning); }
+    &--warn {
+      color: var(--color-warning);
+    }
   }
 
   &__hint {
@@ -134,10 +136,18 @@
     transition: border-color 0.15s;
     font-family: inherit;
 
-    &::placeholder { color: var(--text-placeholder); }
-    &:focus { border-color: var(--accent); }
+    &::placeholder {
+      color: var(--text-placeholder);
+    }
 
-    &--array { flex: 1; min-width: 0; }
+    &:focus {
+      border-color: var(--accent);
+    }
+
+    &--array {
+      flex: 1;
+      min-width: 0;
+    }
   }
 
   &__textarea {
@@ -154,10 +164,17 @@
     line-height: 1.55;
     transition: border-color 0.15s;
 
-    &::placeholder { color: var(--text-placeholder); }
-    &:focus { border-color: var(--accent); }
+    &::placeholder {
+      color: var(--text-placeholder);
+    }
 
-    &--faq { margin-top: 6px; }
+    &:focus {
+      border-color: var(--accent);
+    }
+
+    &--faq {
+      margin-top: 6px;
+    }
   }
 
   &__select {
@@ -172,7 +189,9 @@
       background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23475569' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
     }
 
-    option { background: var(--bg-content); }
+    option {
+      background: var(--bg-content);
+    }
   }
 
   // ── Array field ───────────────────────────────────────────
@@ -243,13 +262,15 @@
   }
 
   &__faq-item {
-    background: var(--bg-content);
-    border: 1px solid var(--border-blue);
-    border-radius: var(--radius-md);
-    padding: 12px 14px;
     display: flex;
     flex-direction: column;
     gap: 8px;
+    margin-top: 6px;
+  }
+
+  &__faq-item:first-child {
+    margin-top: 0px;
+    padding-top: 0px;
   }
 
   &__faq-item-header {
@@ -276,7 +297,9 @@
     transition: color 0.15s;
     line-height: 1;
 
-    &:hover { color: var(--color-error); }
+    &:hover {
+      color: var(--color-error);
+    }
   }
 
   // ── Breadcrumb items ──────────────────────────────────────
