@@ -14,17 +14,18 @@
 
 [devtools.abect.com](https://devtools.abect.com) has two clearly separated layers.
 
-**Layer 1 — 49 free browser tools.** No backend, no uploads, no account. Everything runs in the browser via native APIs (Canvas, File, Blob URL, TypedArrays). Files never leave the device.
+**Layer 1 — 53 free browser tools.** No backend, no uploads, no account. Everything runs in the browser via native APIs (Canvas, File, Blob URL, TypedArrays). Files never leave the device.
 
 | Category | Count | Tools |
 |----------|-------|-------|
 | **Images** | 27 | 22 format conversions (PNG/JPG/JPEG/WebP/GIF/BMP/AVIF/TIFF/HEIC pairs), 3 compressors (JPG, PNG, WebP), WebP Converter, Favicon Generator |
 | **Text & Code** | 14 | HTML ↔ Markdown, HTML ↔ JSX, HTML ↔ TSX, JSON ↔ CSV, XML ↔ JSON, YAML ↔ JSON, Base64 encode/decode |
 | **SEO** | 8 | Meta Tag Generator, OG Image Generator, and 6 JSON-LD schema generators (Product, Article, FAQ, Organization, Local Business, Breadcrumb) |
+| **Utilities** | 4 | QR code generators: link, plain text, WiFi, vCard — custom colours, centre logo, PNG / SVG export |
 
 **Layer 2 — Lora, an AI assistant** at `/ai`. Unlike everything above, it runs server-side: it requires a free account and spends tokens from a monthly allowance, calling `devtools-api.abect.com` (a separate repository) which proxies DeepSeek. The free browser tools are unaffected by it and stay account-free.
 
-The distinction matters throughout the codebase and the copy: the home page counts and describes **only** the 49 free tools.
+The distinction matters throughout the codebase and the copy: the home page counts and describes **only** the free tools (every `tools.js` entry except `category: 'AI'`). Don't hardcode the number in new copy — derive it from the registry, and update the figure above when a tool is added.
 
 ---
 
@@ -136,6 +137,7 @@ node tests/<name>.test.mjs   # plain Node assertions, no framework
 │   │   ├── CompressImage/        # family page: 3 compressor routes
 │   │   ├── TextConverter/        # family page: 14 routes
 │   │   ├── JsonLdGenerator/      # family page: 6 schema routes
+│   │   ├── QrCodeGenerator/      # family page: 4 QR routes (Utilities)
 │   │   ├── FaviconGenerator/  WebPConverter/  MetaTagsGenerator/  OGImageGenerator/
 │   │   ├── AiPage/               # Lora — chat, SSE streaming, skills
 │   │   ├── About/  Terms/  PrivacyPolicy/  NotFound/
@@ -147,7 +149,7 @@ node tests/<name>.test.mjs   # plain Node assertions, no framework
 ├── docs/
 │   ├── contribution.md           # how to add a tool — read this before contributing
 │   └── technical_specification.md
-├── tests/                        # plain Node assertion tests for the text converters
+├── tests/                        # plain Node assertion tests (text converters, QR payload encoding)
 ├── vercel.json
 └── index.html                    # HTML shell
 ```
@@ -278,7 +280,7 @@ One file feeds two pages: the home page shows the three newest entries as `summa
 - [ ] Route added in `src/App.jsx`, entry added to `Sidebar.jsx`
 - [ ] Changelog entry in `src/pages/Changelog/data/entries.jsx` (new tools and big updates only, one per day)
 - [ ] Visible text ≥ 5 000 characters, FAQ ≥ 10 items
-- [ ] `npm run lint` clean of new errors, text-converter tests pass
+- [ ] `npm run lint` clean of new errors, `tests/*.test.mjs` pass
 - [ ] `npm run build` completes without errors
 
 ---

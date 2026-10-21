@@ -1,10 +1,11 @@
 import { formatSize } from '../../utils/formatSize'
 import FileRow from '../FileRow/FileRow'
+import QualityPopover from '../QualityPopover/QualityPopover'
 import { ClearAllButton, PrimaryButton, AccentButton } from '../../../../components/Buttons/Buttons'
 import Tooltip from '../../../../components/Tooltip/Tooltip'
 import './FileTable.scss'
 
-export default function FileTable({ files, onQualityChange, onConvert, onConvertAll, onDownload, onDownloadAll, onDelete, onClearAll, onPreviewClick }) {
+export default function FileTable({ files, globalQuality, onGlobalQualityChange, onQualityChange, onConvert, onConvertAll, onDownload, onDownloadAll, onDelete, onClearAll, onPreviewClick }) {
   const doneFiles = files.filter(file => file.status === 'done')
   const hasConverted = doneFiles.length > 0
   // Compare only converted files: original vs result (apples-to-apples)
@@ -18,6 +19,7 @@ export default function FileTable({ files, onQualityChange, onConvert, onConvert
         <div className="FileTable__th"></div>
         <div className="FileTable__th">File</div>
         <div className="FileTable__th">
+          <QualityPopover value={globalQuality} onChange={onGlobalQualityChange} />
           Quality
           <Tooltip>
             <span className="Tooltip__row"><b>100%</b> — max quality, file barely shrinks</span>

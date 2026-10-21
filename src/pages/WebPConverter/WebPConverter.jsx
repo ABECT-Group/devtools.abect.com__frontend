@@ -22,8 +22,18 @@ import './WebPConverter.scss'
 
 const DEFAULT_QUALITY = 85
 
+// A finished result belongs to the quality it was encoded at, so changing the
+// slider sends the file back to "ready" instead of leaving a stale blob.
+function withQuality(file, quality) {
+  if (file.quality === quality) return file
+  if (file.status === 'done') return { ...file, quality, status: 'ready', resultBlob: null, resultSize: null }
+  return { ...file, quality }
+}
+
 export default function WebPConverter() {
   const [files, setFiles] = useState([])
+  // Seeds every newly added file; per-file sliders can still override it.
+  const [globalQuality, setGlobalQuality] = useState(DEFAULT_QUALITY)
   const [lightboxUrl, setLightboxUrl] = useState(null)
   const filesRef = useRef(files)
   filesRef.current = files
@@ -46,7 +56,7 @@ export default function WebPConverter() {
         name: file.name,
         type: isHeic ? 'HEIC' : (file.type.split('/')[1]?.toUpperCase() || 'UNKNOWN'),
         originalSize: file.size,
-        quality: DEFAULT_QUALITY,
+        quality: globalQuality,
         status: 'ready',
         resultBlob: null,
         resultSize: null,
@@ -101,11 +111,13 @@ export default function WebPConverter() {
   }
 
   function handleQualityChange(id, quality) {
-    setFiles(prev => prev.map(file => {
-      if (file.id !== id) return file
-      if (file.status === 'done') return { ...file, quality, status: 'ready', resultBlob: null, resultSize: null }
-      return { ...file, quality }
-    }))
+    setFiles(prev => prev.map(file => file.id === id ? withQuality(file, quality) : file))
+  }
+
+  function handleGlobalQualityChange(quality) {
+    setGlobalQuality(quality)
+    // Files mid-conversion keep the quality they started with; the rest follow.
+    setFiles(prev => prev.map(file => file.status === 'converting' ? file : withQuality(file, quality)))
   }
 
   function handleDownload(id) {
@@ -158,6 +170,8 @@ export default function WebPConverter() {
           {files.length > 0 && (
             <FileTable
               files={files}
+              globalQuality={globalQuality}
+              onGlobalQualityChange={handleGlobalQualityChange}
               onQualityChange={handleQualityChange}
               onConvert={handleConvert}
               onConvertAll={handleConvertAll}

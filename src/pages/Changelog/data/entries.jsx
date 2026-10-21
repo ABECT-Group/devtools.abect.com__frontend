@@ -20,6 +20,22 @@ const L = 'ChangelogCard__link'
 
 export const CHANGELOG = [
   {
+    title: 'WebP Converter — one quality setting for all files at once',
+    summary: 'The WebP Converter now has a gear icon next to the Quality column. Click it, drag the slider once, and every file in the list gets that quality — including files you add afterwards. Per-file sliders still work for fine-tuning.',
+    date: 'October 21, 2026',
+    datetime: '2026-10-21',
+    body: (
+      <p>
+        Setting quality file by file was tedious on a batch. The{' '}
+        <Link to="/webp-converter" className={L}>WebP Converter</Link> table now has a gear icon beside the
+        Quality column header that opens a small slider. Moving it applies the value to every file in the
+        list, and newly added files start at the same value. Each file's own slider still overrides it, so you
+        can set 85 for everything and drop one heavy photo to 70. Files already converted at a different
+        quality go back to "ready" so a stale result never sits next to a slider that no longer matches it.
+      </p>
+    ),
+  },
+  {
     title: 'FAQ Schema Generator updated — Google retired the FAQ rich result on May 7, 2026',
     summary: 'Google removed the FAQ accordion from Search results in May 2026. We rewrote the FAQ Schema Generator page to explain what changed, what still works (AI Overviews, semantic understanding), and what does not — instead of describing a feature that no longer exists.',
     date: 'August 14, 2026',
