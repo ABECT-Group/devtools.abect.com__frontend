@@ -14,11 +14,11 @@
 
 [devtools.abect.com](https://devtools.abect.com) has two clearly separated layers.
 
-**Layer 1 — 53 free browser tools.** No backend, no uploads, no account. Everything runs in the browser via native APIs (Canvas, File, Blob URL, TypedArrays). Files never leave the device.
+**Layer 1 — 54 free browser tools.** No backend, no uploads, no account. Everything runs in the browser via native APIs (Canvas, File, Blob URL, TypedArrays). Files never leave the device.
 
 | Category | Count | Tools |
 |----------|-------|-------|
-| **Images** | 27 | 22 format conversions (PNG/JPG/JPEG/WebP/GIF/BMP/AVIF/TIFF/HEIC pairs), 3 compressors (JPG, PNG, WebP), WebP Converter, Favicon Generator |
+| **Images** | 28 | 22 format conversions (PNG/JPG/JPEG/WebP/GIF/BMP/AVIF/TIFF/HEIC pairs), 3 compressors (JPG, PNG, WebP), WebP Converter, Image to Pixel Art, Favicon Generator |
 | **Text & Code** | 14 | HTML ↔ Markdown, HTML ↔ JSX, HTML ↔ TSX, JSON ↔ CSV, XML ↔ JSON, YAML ↔ JSON, Base64 encode/decode |
 | **SEO** | 8 | Meta Tag Generator, OG Image Generator, and 6 JSON-LD schema generators (Product, Article, FAQ, Organization, Local Business, Breadcrumb) |
 | **Utilities** | 4 | QR code generators: link, plain text, WiFi, vCard — custom colours, centre logo, PNG / SVG export |
@@ -137,6 +137,7 @@ node tests/<name>.test.mjs   # plain Node assertions, no framework
 │   │   ├── CompressImage/        # family page: 3 compressor routes
 │   │   ├── TextConverter/        # family page: 14 routes
 │   │   ├── JsonLdGenerator/      # family page: 6 schema routes
+│   │   ├── ImageToPixelArt/      # single tool: pixel size + color-palette sliders, PNG export
 │   │   ├── QrCodeGenerator/      # family page: 4 QR routes (Utilities)
 │   │   ├── FaviconGenerator/  WebPConverter/  MetaTagsGenerator/  OGImageGenerator/
 │   │   ├── AiPage/               # Lora — chat, SSE streaming, skills

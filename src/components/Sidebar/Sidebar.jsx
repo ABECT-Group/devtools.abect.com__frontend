@@ -96,6 +96,7 @@ const NAV_SECTIONS = [
     items: [
       { name: 'Favicon Generator', route: '/favicon-generator', ready: true },
       { name: 'WebP Converter', route: '/webp-converter', ready: true },
+      { name: 'Image to Pixel Art', route: '/image-to-pixel-art', ready: true },
       {
         name: 'Image Converter',
         group: true,

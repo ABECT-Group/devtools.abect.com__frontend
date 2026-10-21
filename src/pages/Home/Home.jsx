@@ -130,7 +130,7 @@ const CATEGORIES = [
   {
     category: 'Images',
     heading: 'Image tools',
-    desc: 'Convert between image format pairs — JPG, PNG, WebP, AVIF, GIF, BMP, TIFF, HEIC. Compress JPG, PNG and WebP with a per-file quality slider. Generate favicons from text, emoji or an image. All processing happens locally — no uploads.',
+    desc: 'Convert between image format pairs — JPG, PNG, WebP, AVIF, GIF, BMP, TIFF, HEIC. Compress JPG, PNG and WebP with a per-file quality slider. Turn photos into pixel art. Generate favicons from text, emoji or an image. All processing happens locally — no uploads.',
   },
   {
     category: 'SEO',

@@ -32,7 +32,7 @@ export const LLMS_SECTIONS = [
   {
     category: 'Images',
     heading: 'Images',
-    note: 'Format conversion, compression and favicon generation via the Canvas API. Batch processing and ZIP download. Files never leave the device.',
+    note: 'Format conversion, compression, pixel art and favicon generation via the Canvas API. Batch processing and ZIP download. Files never leave the device.',
   },
   {
     category: 'SEO',

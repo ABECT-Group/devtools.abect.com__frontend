@@ -1,0 +1,92 @@
+.SettingPopover {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+
+  &__btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    background: none;
+    border: none;
+    color: var(--text-faint);
+    cursor: pointer;
+    transition: color 0.15s;
+
+    svg { width: 14px; height: 14px; }
+
+    &:hover,
+    &--open { color: var(--accent-light); }
+  }
+
+  &__popup {
+    position: absolute;
+    top: calc(100% + 9px);
+    left: -8px;
+    width: 220px;
+    padding: 12px 14px;
+    background: var(--bg-sidebar);
+    border: 1px solid var(--border-blue);
+    border-radius: var(--radius-md);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+    z-index: 100;
+    text-transform: none;
+    letter-spacing: 0;
+    font-weight: 400;
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: -5px;
+      left: 11px;
+      width: 8px;
+      height: 8px;
+      background: var(--bg-sidebar);
+      border-left: 1px solid var(--border-blue);
+      border-top: 1px solid var(--border-blue);
+      transform: rotate(45deg);
+    }
+  }
+
+  &__title {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    margin-bottom: 10px;
+  }
+
+  &__control {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  &__slider {
+    -webkit-appearance: none;
+    appearance: none;
+    flex: 1;
+    min-width: 0;
+    height: 3px;
+    border-radius: 2px;
+    background: var(--border-base);
+    outline: none;
+    cursor: pointer;
+
+    &::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: var(--accent);
+      cursor: pointer;
+    }
+  }
+
+  &__value {
+    font-size: 0.8125rem;
+    font-family: monospace;
+    color: var(--accent-light);
+    min-width: 36px;
+    text-align: right;
+  }
+}

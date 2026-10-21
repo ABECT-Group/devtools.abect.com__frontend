@@ -52,7 +52,7 @@ export default function PrivacyPolicy() {
         <h2>Short version</h2>
         <ul>
           <li>
-            The 53 browser tools — image converters, compressors, text converters, form-based
+            The 54 browser tools — image converters, compressors, text converters, form-based
             schema generators, QR code generators — collect <strong>nothing</strong>. They need no account and your
             files never leave your device.
           </li>

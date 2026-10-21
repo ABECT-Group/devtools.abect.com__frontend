@@ -14,6 +14,7 @@ import PrivacyPolicy from './pages/PrivacyPolicy/PrivacyPolicy'
 import Terms from './pages/Terms/Terms'
 import Changelog from './pages/Changelog/Changelog'
 import WebPConverter from './pages/WebPConverter/WebPConverter'
+import ImageToPixelArt from './pages/ImageToPixelArt/ImageToPixelArt'
 import OGImageGenerator from './pages/OGImageGenerator/OGImageGenerator'
 import JsonLdGenerator from './pages/JsonLdGenerator/JsonLdGenerator'
 import AiPage from './pages/AiPage/AiPage'
@@ -101,6 +102,7 @@ export default function App() {
           <Route key={slug} path={slug} element={<QrCodeGenerator />} />
         ))}
         <Route path="webp-converter" element={<WebPConverter />} />
+        <Route path="image-to-pixel-art" element={<ImageToPixelArt />} />
         {IMAGE_CONVERTER_SLUGS.map(slug => (
           <Route key={slug} path={slug} element={<ImageConverter />} />
         ))}

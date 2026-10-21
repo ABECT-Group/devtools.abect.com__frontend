@@ -90,4 +90,5 @@ export const RELATED_TOOLS = [
   { to: '/png-to-webp',         name: 'PNG to WebP',         desc: 'Convert PNG images to WebP — up to 26% smaller files' },
   { to: '/compress-png',        name: 'Compress PNG',        desc: 'Reduce PNG file size — lossless compression, no quality loss' },
   { to: '/webp-converter',      name: 'WebP Converter',      desc: 'Convert JPG, PNG, GIF and more to WebP format' },
+  { to: '/image-to-pixel-art',  name: 'Image to Pixel Art',  desc: 'Turn a logo or photo into a crisp pixel-style icon' },
 ]

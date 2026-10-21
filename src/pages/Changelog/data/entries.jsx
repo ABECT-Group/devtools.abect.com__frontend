@@ -20,19 +20,33 @@ const L = 'ChangelogCard__link'
 
 export const CHANGELOG = [
   {
-    title: 'WebP Converter — one quality setting for all files at once',
-    summary: 'The WebP Converter now has a gear icon next to the Quality column. Click it, drag the slider once, and every file in the list gets that quality — including files you add afterwards. Per-file sliders still work for fine-tuning.',
+    title: 'New Image to Pixel Art converter, and one quality setting for all files in WebP Converter',
+    summary: 'Image to Pixel Art turns photos into pixel art with a 1–10 pixel size and a color-palette quality slider, in the browser. The WebP Converter gained a gear icon beside Quality that sets one value for every file at once.',
     date: 'October 21, 2026',
     datetime: '2026-10-21',
     body: (
-      <p>
-        Setting quality file by file was tedious on a batch. The{' '}
-        <Link to="/webp-converter" className={L}>WebP Converter</Link> table now has a gear icon beside the
-        Quality column header that opens a small slider. Moving it applies the value to every file in the
-        list, and newly added files start at the same value. Each file's own slider still overrides it, so you
-        can set 85 for everything and drop one heavy photo to 70. Files already converted at a different
-        quality go back to "ready" so a stale result never sits next to a slider that no longer matches it.
-      </p>
+      <>
+        <p>
+          <strong>Image to Pixel Art.</strong> The new{' '}
+          <Link to="/image-to-pixel-art" className={L}>Image to Pixel Art</Link> converter turns JPG, PNG, GIF,
+          AVIF, BMP and WebP images into pixel art. Pixel size runs from 1 (the finest grid that still reads as
+          pixel art) to 10 (large chunky pixels), and the Quality slider controls the color palette — from every
+          color down to just four. Transparency is preserved, files are processed in batch and exported as PNG or
+          a ZIP. Like every free tool here, it runs entirely in the browser, so nothing is uploaded.
+        </p>
+        <p>
+          <strong>WebP Converter.</strong> Setting quality file by file was tedious on a batch. The{' '}
+          <Link to="/webp-converter" className={L}>WebP Converter</Link> table now has a gear icon beside the
+          Quality column header that opens a small slider. Moving it applies the value to every file in the
+          list, and newly added files start at the same value. Each file's own slider still overrides it. Files
+          already converted at a different quality go back to "ready" so a stale result never sits next to a
+          slider that no longer matches it.
+        </p>
+        <p>
+          <strong>Navigation fix.</strong> Opening a page from the bottom of another one no longer leaves you
+          scrolled to the bottom — every page now starts at the top.
+        </p>
+      </>
     ),
   },
   {
