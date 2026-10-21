@@ -34,7 +34,7 @@ export default function PrivacyPolicy() {
         This Privacy Policy explains what data we collect when you use Abect Dev Tools
         (devtools.abect.com), why we collect it, who it is shared with, and what rights you have
         over it. See also our <Link to="/terms">Terms of Service</Link>.
-        Last updated: August 5, 2026.
+        Last updated: October 21, 2026.
       </p>
 
       <section className="PrivacyPolicy__section">
@@ -52,8 +52,8 @@ export default function PrivacyPolicy() {
         <h2>Short version</h2>
         <ul>
           <li>
-            The 49 browser tools — image converters, compressors, text converters, form-based
-            schema generators — collect <strong>nothing</strong>. They need no account and your
+            The 53 browser tools — image converters, compressors, text converters, form-based
+            schema generators, QR code generators — collect <strong>nothing</strong>. They need no account and your
             files never leave your device.
           </li>
           <li>

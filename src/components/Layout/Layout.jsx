@@ -10,7 +10,14 @@ import './Layout.scss'
 
 export default function Layout() {
   const [sidebarOpen, setSidebarOpen] = useState(false)
-  const { pathname } = useLocation()
+  const { pathname, hash } = useLocation()
+
+  // The router keeps the old scroll offset on navigation, so a page opened from
+  // the bottom of another lands at the bottom. Skipped for #anchors (changelog
+  // links) so the browser can scroll to the target itself.
+  useEffect(() => {
+    if (!hash) window.scrollTo({ top: 0, left: 0, behavior: 'instant' })
+  }, [pathname, hash])
 
   // Site-wide structured data. Declared once here instead of in 50 page
   // components: the publisher entity on every page, and a Home › Tool

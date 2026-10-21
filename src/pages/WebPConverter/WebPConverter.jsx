@@ -36,7 +36,8 @@ export default function WebPConverter() {
   const [globalQuality, setGlobalQuality] = useState(DEFAULT_QUALITY)
   const [lightboxUrl, setLightboxUrl] = useState(null)
   const filesRef = useRef(files)
-  filesRef.current = files
+  // Synced after commit, not during render: async handlers read the latest list from here.
+  useEffect(() => { filesRef.current = files })
 
   useEffect(() => {
     return () => {
